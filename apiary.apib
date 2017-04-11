@@ -1,0 +1,1005 @@
+FORMAT: 1A
+HOST: http://mqa.cz/api/v1/
+
+# Sudop - MQA
+
+MQA API is the REST API project for managing trains.
+
+# Data Structures
+
+
+
+## Auth (object)
++ username: "hrabalo" (string, required)
++ password: "123456" (string, required)
+
+## Credential (object)
++ token: "fc7ef14ba27e29c89ec640cec3b91fb374db9b5abaa5e4699680c8c561bd9f5a" (string, required)
++ validity: "2015-09-09T21:58:31+02:00" (string, required)
++ user (User, required)
+
+
+
+
+## User (object)
++ id: "d93f61c2-42c5-11e6-beb8-9e71128cae77" (string, required)
++ name: "Saňák" (string, required)
++ role: "USER"  (string, required)
+
+## UpdateUser (object)
++ name: "Saňák" (string, required)
++ role: "USER"  (string, required)
+
+## UserRole (object)
++ id: 1 (number, required)
++ name: "USER" (string, required)
+
+
+
+
+## DatabaseType (object)
++ id: 1 (number, required)
++ name: "oficiální" (string, required)
+
+## DatabaseExport (object)
++ id: "d93f61c2-42c5-11e6-beb8-9e71128cae77" (string, required)
+
+## DatabaseImport (object)
++ id: "d93f61c2-42c5-11e6-beb8-9e71128cae77" (string, required)
+
+
+
+
+## VehicleType (object)
++ id: 1 (number, required)
++ group: 2 (number, required)
++ title: "Současné hnací vozidlo ČD" (string, required)
+
+## VehicleGroupType (object)
++ id: 1 (number, required)
++ title: "Současné hnací vozidlo ČD" (string, required)
+
+## VehicleChassis (object)
++ id: 1 (number, required)
++ title: "A1" (string, required)
+
+## VehicleListItem (object)
++ id: "d93f61c2-42c5-11e6-beb8-9e71128cae77" (string, required)
++ edited: "2015-09-09T21:58:31+02:00" (string, required)
++ editor: "Teichman" (string, required)
++ name: "Mašina1" (string, required)
++ vehicleType: 3 (number, required)
++ databaseType: 1 (number, required)
++ totalAxles: 5 (number, required)
+
+## Vehicle (object)
++ id: "7d4846be-42c4-11e6-beb8-9e71128cae77" (string, required)
++ edited: "2015-09-09T21:58:31+02:00" (string, required)
++ editor: "Teichman" (string, required)
++ name: "Mašina1" (string, required)
++ vehicleType: 2 (number, required)
++ databaseType: 1 (number, required)
++ chassisType: 12 (number, required)
++ series: "705" (string, required)
++ oldSeries: "T239.1" (string, optional)
++ note: "Prvni masina" (string, optional)
++ icon: "BASE64 icon data" (string, optional)
++ forwardSpeed: 150 (number, required)
++ backwardSpeed: 15 (number, required)
++ gravityCenterHight: 110 (number, required)
++ bumberHight: 10 (number, required)
++ pivotDistance: 12 (number, required)
++ pivotHeight: 7 (number, required)
++ dynamicForceFactor: 1.98 (number, required)
++ basicLoadFactor: 1.7 (number, required)
++ basicPassiveLoadFactor: 1.0 (number, required)
++ totalWorkingVehicles: 8 (number, required)
++ totalAxles: 5 (number, required)
++ axleForces (array[VehicleAxleForce], required)
++ totalAxles (array[VehicleForce], required)
++ totalAxles (array[VehicleForce], required)
+
+## VehicleAxleForce (object)
++ axlePoint: 0 (number, required)
++ nextAxlePoint: 2.375 (number, required)
++ force: 220.0 (number, required)
++ passiveForce: 0 (number, required)
+
+## VehicleForce (object)
++ velocity: 10 (number, required)
++ force: 220.0 (number, required)
+
+## VehicleNote (object)
++ id: "7d4846be-42c4-11e6-beb8-9e71128cae77" (string, required)
++ edited: "2015-09-09T21:58:31+02:00" (string, required)
++ editor: "Teichman" (string, required)
+
+## VehicleAttachment (object)
++ id: "7d4846be-42c4-11e6-beb8-9e71128cae77" (string, required)
++ edited: "2015-09-09T21:58:31+02:00" (string, required)
++ editor: "Teichman" (string, required)
+
+
+
+
+## Trainsets (array)
++ id: "d93f61c2-42c5-11e6-beb8-9e71128cae77" (string, required)
++ name: "Shimns" (string, required)
++ dbType: - (DBType, required)
++ editor: "Saňák" (string, required)
+
+## Trainset (object)
++ id: "d93f61c2-42c5-11e6-beb8-9e71128cae77" (string, required)
++ name: "Shimns" (string, required)
++ databaseType (DatabaseType, required)
++ editor: "Saňák" (string, required)
+
+
+
+## Crossbeams (array)
++ id: "d93f61c2-42c5-11e6-beb8-9e71128cae77" (string, required)
+
+
+# Group Authentication
+The authentication resources can be used for **log in** and **log out** the user to the Tubis application.
+
+## /authentication
+
+### POST
+Returns the private API token key for the user with its validity.
+
+
++ Request (application/json)
+    + Attributes (Auth)
+
+    + Body
+    
+            {
+                "username" : "username",
+                "password" : "123456"
+            }
+
++ Response 200 (application/json)
+
+    + Attributes(Credential)
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+
+            {
+                "credential": {
+                    "token": "fc7ef14ba27e29c89ec640cec3b91fb374db9b5abaa5e4699680c8c561bd9f5a",
+                    "validity": "2015-09-09T21:58:31+02:00",
+                    "user": {
+                        "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                        "name": "Jan Novák",
+                        "role": "ADMIN"
+                    }
+                }
+            }
+
++ Response 400
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+### DELETE
+Logs out the user by the Api-Key, if the response is successful.
+
++ Request (application/json)
+
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+
++ Response 204
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+        
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+# Group User
+The User administration API
+
+## /users{?offset}{?limit}
+
+### GET
+List users
+
++ Request (application/json)
+
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
++ Response 200 (application/json)
+
+    + Attributes(array[User])
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+    
+            {
+                "users": [
+                    {
+                        "id": "d93f61c2-42c5-11e6-beb8-9e71128cae77",
+                        "name": "Admin",
+                        "role": "ADMIN"
+                    },
+                    {
+                        "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                        "name": "Pepik",
+                        "role": "USER"
+                    }
+                ]
+            }
+        
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+## /users/{id}
+
+### GET
+Get current user
+
++ Paramters
+    + id - `id of user`
+    
++ Request (application/json)
+
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
++ Response 200 (application/json)
+
+    + Attributes(User)
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+    
+            {
+                "id": "d93f61c2-42c5-11e6-beb8-9e71128cae77",
+                "name": "Admin",
+                "role": "ADMIN"
+            }
+        
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+### PUT
+Update user (include change password too)
+
++ Paramters
+    + id - `id of user`
+    
++ Request (application/json)
+
+    + Attributes(UpdateUser)
+    
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
+    + Body
+    
+            {
+                "user": {
+                    "name": "Admin",
+                    "role": "ADMIN"
+                }
+            }
+            
++ Response 201 (application/json)
+
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+## /users/sync
+
+### POST
+Force sync user from Active Directory
+
++ Request (application/json)
+
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
++ Response 201 (application/json)
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+## /users/roles
+
+The role resources can be used for managing roles.
+
+### GET
+
++ Request (application/json)
+
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
++ Response 200 (application/json)
+
+    + Attributes(array[UserRole])
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+    
+            {
+                "roles": [
+                    {
+                        "id": 0,
+                        "name": "USER"
+                    },
+                    {
+                        "id": 1,
+                        "name": "ADMIN"
+                    }
+                ]
+            }
+        
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+
+
+# Group Database
+The database types resources can be used for managing database types.
+
+## /database/types
+
+### GET
+
++ Request (application/json)
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
++ Response 200 (application/json)
+
+    + Attributes(array[DatabaseType])
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+    
+            {
+                "types": [
+                    {
+                        "id": 1,
+                        "name": "oficiální"
+                    },
+                    {
+                        "id": 2,
+                        "name": "uživatelská"
+                    }
+                ]
+            }
+
+        
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /database/export
+The export resources can be used for database exports.
+<!-- TODO: ... -->
+
+### POST
+
++ Request (application/json)
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
++ Response 201 (application/json)
+
+
+## /exports/{id}
+<!-- TODO: ... -->
+
+
+## /database/import
+The import resources can be used for database CSV imports.
+<!-- TODO: ... -->
+
+### POST
+
++ Request (application/json)
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
++ Response 201 (application/json)
+
+
+
+
+
+# Group Vehicle
+The vehicle resources can be used for managing vehicles.
+
+## /vehicles
+
+### GET
+Gets the collection of vehicles.
+
++ Request (application/json)
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
++ Response 200 (application/json)
+
+    + Attributes(array[VehicleListItem])
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+    
+            {
+                "vehicles": [
+                    {
+                        "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                        "edited": "2015-09-09T21:58:31+02:00",
+                        "editor": "Administrátor"
+                        "name": "Mašina1",
+                        "vehicleType": 1,
+                        "databaseType": 1,
+                        "totalAxles": 2
+                    },
+                    {
+                        "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                        "edited": "2015-09-09T21:58:31+02:00",
+                        "editor": "Tomáš Novák"
+                        "name": "Mašina2",
+                        "vehicleType": 2,
+                        "databaseType": 0,
+                        "totalAxles": 5
+                }
+              ]
+            }
+        
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+### POST
+Creates a vehicle.
+
++ Request (application/json)
+
+    + Attributes(Vehicle)
+
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
+    + Body
+    
+            {
+                "name": "Mašina1",
+                "vehicleType": 2,
+                "databaseType": 1,
+                "note": "Prvni masina",
+                "icon": "base64 vehicle icon",
+                "series": "705",
+                "oldSeries": "T239.1",
+                "chassisType": 2,
+                "forwardSpeed": 150,
+                "backwardSpeed": 15,
+                "gravityCenterHight": 110,
+                "bumberHight": 10,
+                "pivotDistance": 1,
+                "pivotHeight": 12.5
+                "dynamicForceFactor": 1.90,
+                "basicLoadFactor": 1.84,
+                "basicPassiveLoadFactor": 1.12,
+                "totalWorkingVehicles": 12,
+                "totalAxles": 2,
+                "axleForces": [
+                    {
+                        "axlePoint": 0,
+                        "nextAxlePoint": 2.375,
+                        "force": 220.0,
+                        "passiveForce": 0
+                    },
+                    {
+                        "axlePoint": 2.375,
+                        "nextAxlePoint": 4.700,
+                        "force": 220.0,
+                        "passiveForce": 0
+                    }
+                ],
+                "brakingForces": [
+                    {
+                        "velocity": 0,
+                        "force": 10.2
+                    },
+                    {
+                        "velocity": 10,
+                        "force": 20.0
+                    }
+                ],
+                "tractiveForces": [
+                    {
+                        "velocity": 0,
+                        "force": 20.2
+                    },
+                    {
+                        "velocity": 10,
+                        "force": 40.0
+                    }
+                ]
+            }
+            
++ Response 201 (application/json)
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            Location: /vehicles/12834734-42c9-11e6-beb8-9e71128cae77
+        
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+
+
+
+## /vehicles/{id}
+
+### GET
+Gets the vehicle attributes.
+
++ Request (application/json)
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
++ Response 200 (application/json)
+
+    + Attributes(Vehicle)
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+    
+            {
+                "vehicle": {
+                    "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                    "edited": "2015-09-09T21:58:31+02:00",
+                    "editor": "Tomáš Novák",
+                    "name": "Mašina1",
+                    "vehicleType": 2,
+                    "databaseType": 1,
+                    "note": "Prvni masina",
+                    "icon": "base64 vehicle icon",
+                    "series": "705",
+                    "oldSeries": "T239.1",
+                    "chassisType": 2,
+                    "forwardSpeed": 150,
+                    "backwardSpeed": 15,
+                    "gravityCenterHight": 110,
+                    "bumberHight": 10,
+                    "pivotDistance": 1,
+                    "pivotHeight": 12.5
+                    "dynamicForceFactor": 1.90,
+                    "basicLoadFactor": 1.84,
+                    "basicPassiveLoadFactor": 1.12,
+                    "totalWorkingVehicles": 12,
+                    "totalAxles": 2,
+                    "axleForces": [
+                        {
+                            "axlePoint": 0,
+                            "nextAxlePoint": 2.375,
+                            "force": 220.0,
+                            "passiveForce": 0
+                        },
+                        {
+                            "axlePoint": 2.375,
+                            "nextAxlePoint": 4.700,
+                            "force": 220.0,
+                            "passiveForce": 0
+                        }
+                    ],
+                    "brakingForces": [
+                        {
+                            "velocity": 0,
+                            "force": 10.2
+                        },
+                        {
+                            "velocity": 10,
+                            "force": 20.0
+                        }
+                    ],
+                    "tractiveForces": [
+                        {
+                            "velocity": 0,
+                            "force": 20.2
+                        },
+                        {
+                            "velocity": 10,
+                            "force": 40.0
+                        }
+                    ]
+                }
+            }
+        
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+### PUT
+Updates the vehicle attributes.
+
++ Request (application/json)
+
+    + Attributes(Vehicle)
+
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
+    + Body
+    
+            {
+               "vehicle": {
+                    "name": "Mašina1",
+                    "vehicleType": 2,
+                    "databaseType": 1,
+                    "note": "Prvni masina",
+                    "icon": "base64 vehicle icon",
+                    "series": "705",
+                    "oldSeries": "T239.1",
+                    "chassisType": 2,
+                    "forwardSpeed": 150,
+                    "backwardSpeed": 15,
+                    "gravityCenterHight": 110,
+                    "bumberHight": 10,
+                    "pivotDistance": 1,
+                    "pivotHeight": 12.5
+                    "dynamicForceFactor": 1.90,
+                    "basicLoadFactor": 1.84,
+                    "basicPassiveLoadFactor": 1.12,
+                    "totalWorkingVehicles": 12,
+                    "totalAxles": 2,
+                    "axleForces": [
+                        {
+                            "axlePoint": 0,
+                            "nextAxlePoint": 2.375,
+                            "force": 220.0,
+                            "passiveForce": 0
+                        },
+                        {
+                            "axlePoint": 2.375,
+                            "nextAxlePoint": 4.700,
+                            "force": 220.0,
+                            "passiveForce": 0
+                        }
+                    ],
+                    "brakingForces": [
+                        {
+                            "velocity": 0,
+                            "force": 10.2
+                        },
+                        {
+                            "velocity": 10,
+                            "force": 20.0
+                        }
+                    ],
+                    "tractiveForces": [
+                        {
+                            "velocity": 0,
+                            "force": 20.2
+                        },
+                        {
+                            "velocity": 10,
+                            "force": 40.0
+                        }
+                    ]
+                }
+            }
+            
++ Response 200
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+        
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+### DELETE
+Deletes the vehicle completely.
+
++ Request (application/json)
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
++ Response 200
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /vehicles/{id}/notes
+
+<!-- POST, GET vsech (mozna i konkretniho), DELETE -->
+
+## /vehicles/{id}/attachments
+
+<!-- POST, GET vsech (+ stazeni konkretniho), DELETE -->
+
+
+## /vehicles/types
+
+### GET
+Gets the vehicle types collection.
+
++ Request (application/json)
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
++ Response 200 (application/json)
+
+    + Attributes(array[VehicleType])
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+    
+            {
+                "types": [
+                    {
+                        "id": 1,
+                        "group": 2,
+                        "title": "Současné hnací vozidlo ČD"
+                    },
+                    {
+                        "id": 2,
+                        "group": 2,
+                        "title": "Kolejový jeřáb"
+                    }
+                ]
+            }
+        
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /vehicles/groups
+
+### GET
+Gets the vehicle type groups collection.
+
++ Request (application/json)
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
++ Response 200 (application/json)
+
+    + Attributes(array[VehicleGroupType])
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+    
+            {
+                "groups": [
+                    {
+                        "id": 1,
+                        "title": "Hnací vozidla"
+                    },
+                    {
+                        "id": 2,
+                        "title": "Tažená vozidla"
+                    },
+                    {
+                        "id": 3,
+                        "title": "Části zatěžovacích schémat"
+                    }
+                ]
+            }
+        
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /vehicles/groups/{id}/chassis
+
+### GET
+Gets the vehicle groups chassis collection.
+
++ Parameters
+
+    + id (required, number, `/vehicles/groups/10/chassis`) ... Number `id` identification vehicle group type chassis collection.
+ 
+
++ Request (application/json)
+
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
++ Response 200 (application/json)
+
+    + Attributes(array[VehicleChassis])
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+    
+            {
+                "chassis": [
+                    {
+                        "id": 1,
+                        "title": "A1"
+                    },
+                    {
+                        "id": 2,
+                        "title": "A2"
+                    },
+                    {
+                        "id": 3,
+                        "title": "A3"
+                    }
+                ]
+            }
+        
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+
+
+
+# Group Trainset
+The trainset resources can be used for managing trainsets.
+
+## /trainsets
+<!-- POST s duplikaci, GET vsech -->
+
+## /trainsets/{id}
+<!-- Seznam dostupnych vozidel = seznam vsech vozidel nebo zvlast funkce? -->
+<!-- PUT, GET konkretniho - pozor poradi hraje roli!, DELETE -->
+
+
+
+# Group Crossbeam
+The crossbeam resources can be used for managing crossbeams.
+
+## /crossbeams
+<!-- POST s duplikaci, GET vsech -->
+
+## /crossbeams/{id}
+<!-- PUT, GET, DELETE -->
