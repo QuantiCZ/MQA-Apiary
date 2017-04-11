@@ -111,8 +111,11 @@ MQA API is the REST API project for managing trains.
 
 ## VehicleNote (object)
 + id: "7d4846be-42c4-11e6-beb8-9e71128cae77" (string, required)
++ created: "2015-09-09T21:58:31+02:00" (string, required)
++ creator: "Teichman" (string, required)
 + edited: "2015-09-09T21:58:31+02:00" (string, required)
 + editor: "Teichman" (string, required)
++ content: "A hlavne jezdi pomalu" (string, required)
 
 ## VehicleAttachment (object)
 + id: "7d4846be-42c4-11e6-beb8-9e71128cae77" (string, required)
@@ -546,6 +549,7 @@ Gets the collection of vehicles.
 
 ### POST
 Creates a vehicle.
+<!--TODO: Samostatny endpoint na Duplikaci - nebo se bude datove dit na strane FrontEndu -->
 
 + Request (application/json)
 
@@ -829,13 +833,427 @@ Deletes the vehicle completely.
 + Response 503
 
 
-## /vehicles/{id}/notes
+## /vehicles/{vehicleId}/notes
 
-<!-- POST, GET vsech (mozna i konkretniho), DELETE -->
+    + Parameters
 
-## /vehicles/{id}/attachments
+        + vehicleId (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/notes`) ... Number `vehicleId`  unique identification vehicle.
 
-<!-- POST, GET vsech (+ stazeni konkretniho), DELETE -->
+### GET
+Gets the collection of vehicles notes.
+
++ Request (application/json)
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
++ Response 200 (application/json)
+
+    + Attributes(array[VehicleNote])
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+    
+            {
+                "notes": [
+                    {
+                        "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                        "created": "2015-09-09T21:58:31+02:00",
+                        "creator": "Pepa z Depa",
+                        "edited": "2015-09-09T21:58:31+02:00",
+                        "editor": "Administrátor"
+                        "content": "Toto masina jezdi na naftu"
+                    },
+                    {
+                        "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                        "created": "2015-09-09T21:58:31+02:00",
+                        "creator": "Jana Mala",
+                        "edited": "2015-09-09T21:58:31+02:00",
+                        "editor": "Tomas Novak"
+                        "content": "A hlavne jezdi pomalu"
+                    }
+              ]
+            }
+        
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+### POST
+Creates a vehicle Note.
+
++ Request (application/json)
+
+    + Attributes(VehicleNote)
+
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
+    + Body
+    
+            {
+                "content": "A hlavne jezdi pomalu"
+            }
+
++ Response 201 (application/json)
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            Location: /vehicles/12834734-42c9-11e6-beb8-9e71128cae77/notes/92834734-42c9-11e6-beb8-9e71128cae77
+        
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /vehicles/{vehicleId}/notes/{id}
+
+    + Parameters
+
+        + vehicleId (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/notes/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `vehicleId`  unique identification vehicle.
+        + id (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/notes/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `id`  unique identification note of vehicle.
+
+### GET
+Gets the vehicle note.
+
++ Request (application/json)
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes(VehicleNote)
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+    
+            {
+                "note": {
+                    "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                    "created": "2015-09-09T21:58:31+02:00",
+                    "creator": "Jana Mala",
+                    "edited": "2015-09-09T21:58:31+02:00",
+                    "editor": "Tomas Novak"
+                    "content": "A hlavne jezdi pomalu"
+                }
+            }
+        
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+### PUT
+Updates the vehicle note.
+
++ Request (application/json)
+
+    + Attributes(VehicleNote)
+
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
+    + Body
+    
+            {
+                "note": {
+                    "content": "A hlavne jezdi pomalu"
+                }
+            }
+            
++ Response 200
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+        
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+### DELETE
+Delete the vehicle note.
+
++ Request (application/json)
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
++ Response 200
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /vehicles/{vehicleId}/attachments
+
+    + Parameters
+
+        + vehicleId (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/attachments`) ... Number `vehicleId`  unique identification vehicle.
+
+### GET
+Gets the collection of vehicles attachments.
+
++ Request (application/json)
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
++ Response 200 (application/json)
+
+    + Attributes(array[VehicleAttachment])
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+    
+            {
+                "attachments": [
+                    {
+                        "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                        "created": "2015-09-09T21:58:31+02:00",
+                        "creator": "Pepa z Depa",
+                        "edited": null,
+                        "editor": null,
+                        "fileName": "pekny_obrazek.png"
+                        "fileType": "image/png",
+                        "note": "moc pekny obrazek"
+                    },
+                    {
+                        "id": "92834734-42c9-11e6-beb8-9e71128cae77",
+                        "created": "2015-09-09T21:58:31+02:00",
+                        "creator": "Jana Mala",
+                        "edited": "2015-09-09T21:58:31+02:00",
+                        "editor": "Tomas Novak"
+                        "fileName": "specifikace.pdf"
+                        "fileType": "document/pdf",
+                        "note": "Specifikace lokomotivy"
+                    }
+              ]
+            }
+        
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+### POST
+Creates a vehicle attachment.
+
++ Request (application/json)
+
+    + Attributes(VehicleAttachment)
+
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
+    + Body
+    
+            {
+                "fileName": "pekny_obrazek.png"
+                "fileType": "image/png"
+                "content": "BASE64 file content",
+                "note": "moc pekny obrazek"
+            }
+
++ Response 201 (application/json)
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            Location: /vehicles/12834734-42c9-11e6-beb8-9e71128cae77/attachments/92834734-42c9-11e6-beb8-9e71128cae77
+        
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /vehicles/{vehicleId}/attachments/{id}
+
+    + Parameters
+
+        + vehicleId (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/attachments/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `vehicleId`  unique identification vehicle.
+        + id (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/attachments/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `id`  unique identification attachment of vehicle.
+
+### GET
+Gets the vehicle attachment info.
+
++ Request (application/json)
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes(VehicleAttachment)
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+    
+            {
+                "attachment": {
+                     "id": "92834734-42c9-11e6-beb8-9e71128cae77",
+                     "created": "2015-09-09T21:58:31+02:00",
+                     "creator": "Jana Mala",
+                     "edited": "2015-09-09T21:58:31+02:00",
+                     "editor": "Tomas Novak"
+                     "fileName": "specifikace.pdf"
+                     "fileType": "document/pdf",
+                     "note": "Specifikace lokomotivy"
+                }
+            }
+        
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+### PUT
+Updates the vehicle attachment.
+
++ Request (application/json)
+
+    + Attributes(VehicleAttachment)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
+    + Body
+
+            {
+                "attachment": {
+                    "fileName": "pekny_obrazek.png"
+                    "fileType": "image/png"
+                    "content": "BASE64 file content",
+                    "note": "moc pekny obrazek"
+                }
+            }
+
++ Response 200
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+        
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+### DELETE
+Delete the vehicle attachment.
+
++ Request (application/json)
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
++ Response 200
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+## /vehicles/{vehicleId}/attachments/{id}/file
+
+    + Parameters
+
+        + vehicleId (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/attachments/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `vehicleId`  unique identification vehicle.
+        + id (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/attachments/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `id`  unique identification attachment of vehicle.
+
+### GET
+Gets the vehicle attchment file stream.
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (content-type of file)
+
+    + Attributes(VehicleAttachment)
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+
+            `File content as stream`
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
 
 
 ## /vehicles/types
