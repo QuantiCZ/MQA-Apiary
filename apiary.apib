@@ -7,6 +7,15 @@ MQA API is the REST API project for managing trains.
 
 # Data Structures
 
+## Error (object)
++ errorCode: 1004 (number, required)
++ httpStatusCode: 404 (number, required)
++ errorTitle: `(1004) InvalidUser` (string, required)
++ errorMessage: `User not found` (string, required)
++ errorDetail: `detail of errors` (string)
+
+
+
 ## Auth (object)
 + username: "hrabalo" (string, required)
 + password: "123456" (string, required)
@@ -21,11 +30,11 @@ MQA API is the REST API project for managing trains.
 ## User (object)
 + id: "d93f61c2-42c5-11e6-beb8-9e71128cae77" (string, required)
 + name: "Saňák" (string, required)
-+ role: "USER"  (string, required)
++ role: 1 (number, required)
 
 ## UpdateUser (object)
 + name: "Saňák" (string, required)
-+ role: "USER"  (string, required)
++ role: 1  (number, required)
 
 ## UserRole (object)
 + id: 1 (number, required)
@@ -63,6 +72,7 @@ MQA API is the REST API project for managing trains.
 ## VehicleChassis (object)
 + id: 1 (number, required)
 + title: "A1" (string, required)
++ totalAxles: 5 (number, required)
 
 ## VehicleListItem (object)
 + id: "d93f61c2-42c5-11e6-beb8-9e71128cae77" (string, required)
@@ -89,8 +99,8 @@ MQA API is the REST API project for managing trains.
 + icon: "BASE64 icon data" (string, optional)
 + forwardSpeed: 150 (number, required)
 + backwardSpeed: 15 (number, required)
-+ gravityCenterHight: 110 (number, required)
-+ bumberHight: 10 (number, required)
++ gravityCenterHeight: 110 (number, required)
++ bumperHeight: 10 (number, required)
 + pivotDistance: 12 (number, required)
 + pivotHeight: 7 (number, required)
 + dynamicForceFactor: 1.98 (number, required)
@@ -116,9 +126,12 @@ MQA API is the REST API project for managing trains.
 ## VehicleNote (object)
 + id: "7d4846be-42c4-11e6-beb8-9e71128cae77" (string, required)
 + created: "2015-09-09T21:58:31+02:00" (string, required)
-+ creator: "Teichman" (string, required)
++ creator (User, required)
 + edited: "2015-09-09T21:58:31+02:00" (string, required)
 + editor (User, required)
++ content: "A hlavne jezdi pomalu" (string, required)
+
+## VehicleNoteCreate (object)
 + content: "A hlavne jezdi pomalu" (string, required)
 
 ## VehicleAttachment (object)
@@ -181,7 +194,9 @@ Returns the private API token key for the user with its validity.
 
 + Response 200 (application/json)
 
-    + Attributes(Credential)
+    + Attributes (object)
+
+        + credential (Credential)
 
     + Header
 
@@ -196,7 +211,7 @@ Returns the private API token key for the user with its validity.
                     "user": {
                         "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                         "name": "Jan Novák",
-                        "role": "ADMIN"
+                        "role": 1
                     }
                 }
             }
@@ -253,7 +268,9 @@ List users
 
 + Response 200 (application/json)
 
-    + Attributes(array[User])
+    + Attributes (object)
+
+        + users (array[User])
 
     + Header
 
@@ -266,12 +283,12 @@ List users
                     {
                         "id": "d93f61c2-42c5-11e6-beb8-9e71128cae77",
                         "name": "Admin",
-                        "role": "ADMIN"
+                        "role": 1
                     },
                     {
                         "id": "12834734-42c9-11e6-beb8-9e71128cae77",
                         "name": "Pepik",
-                        "role": "USER"
+                        "role": 2
                     }
                 ]
             }
@@ -312,7 +329,7 @@ Get current user
             {
                 "id": "d93f61c2-42c5-11e6-beb8-9e71128cae77",
                 "name": "Admin",
-                "role": "ADMIN"
+                "role": 1
             }
 
 + Response 401
@@ -332,7 +349,9 @@ Update user (include change password too)
 
 + Request (application/json)
 
-    + Attributes(UpdateUser)
+    + Attributes (object)
+
+        + user (UpdateUser)
 
     + Header
 
@@ -343,7 +362,7 @@ Update user (include change password too)
             {
                 "user": {
                     "name": "Admin",
-                    "role": "ADMIN"
+                    "role": 1
                 }
             }
 
@@ -401,7 +420,9 @@ The role resources can be used for managing roles.
 
 + Response 200 (application/json)
 
-    + Attributes(array[UserRole])
+    + Attributes (object)
+
+        + roles (array[UserRole])
 
     + Header
 
@@ -447,7 +468,9 @@ The database types resources can be used for managing database types and catalog
 
 + Response 200 (application/json)
 
-    + Attributes(array[DatabaseType])
+    + Attributes (object)
+
+        + types (array[DatabaseType])
 
     + Header
 
@@ -489,7 +512,9 @@ The database types resources can be used for managing database types and catalog
 
 + Response 200 (application/json)
 
-    + Attributes(array[DatabaseCatalogue])
+    + Attributes (object)
+
+        + normative (array[DatabaseCatalogue])
 
     + Header
 
@@ -592,7 +617,9 @@ Get database exports logs
 
 + Response 200 (application/json)
 
-    + Attributes(array[DatabaseExportLog])
+    + Attributes (object)
+
+        + logs (array[DatabaseExportLog])
 
     + Header
 
@@ -607,7 +634,7 @@ Get database exports logs
                         "user": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jan Novák",
-                            "role": "ADMIN"
+                            "role": 1
                         }
                     },
                     {
@@ -615,7 +642,7 @@ Get database exports logs
                         "user": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Pepik",
-                            "role": "ADMIN"
+                            "role": 2
                         }
                     }
                 ]
@@ -672,7 +699,9 @@ Get database imports logs
 
 + Response 200 (application/json)
 
-    + Attributes(array[DatabaseImportLog])
+    + Attributes (object)
+
+        + logs (array[DatabaseImportLog])
 
     + Header
 
@@ -687,7 +716,7 @@ Get database imports logs
                         "user": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jan Novák",
-                            "role": "ADMIN"
+                            "role": 1
                         }
                     },
                     {
@@ -695,7 +724,7 @@ Get database imports logs
                         "user": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Pepik",
-                            "role": "ADMIN"
+                            "role": 2
                         }
                     }
                 ]
@@ -726,7 +755,9 @@ Gets the collection of vehicles.
 
 + Response 200 (application/json)
 
-    + Attributes(array[VehicleListItem])
+    + Attributes (object)
+
+        + vehicles (array[VehicleListItem])
 
     + Header
     
@@ -738,7 +769,7 @@ Gets the collection of vehicles.
                 "vehicles": [
                     {
                         "id": "12834734-42c9-11e6-beb8-9e71128cae77",
-                        "edited": "2015-09-09T21:58:31+02:00",                        
+                        "edited": "2015-09-09T21:58:31+02:00",
                         "name": "Mašina1",
                         "vehicleType": 1,
                         "databaseType": 1,
@@ -746,7 +777,7 @@ Gets the collection of vehicles.
                         "editor": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jan Novák",
-                            "role": "ADMIN"
+                            "role": 1
                         }
                     },
                     {
@@ -759,7 +790,7 @@ Gets the collection of vehicles.
                         "editor": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jan Novák",
-                            "role": "ADMIN"
+                            "role": 2
                         }
                 }
               ]
@@ -801,8 +832,8 @@ Creates a vehicle.
                 "chassisType": 2,
                 "forwardSpeed": 150,
                 "backwardSpeed": 15,
-                "gravityCenterHight": 110,
-                "bumberHight": 10,
+                "gravityCenterHeight": 110,
+                "bumperHeight": 10,
                 "pivotDistance": 1,
                 "pivotHeight": 12.5
                 "dynamicForceFactor": 1.90,
@@ -874,20 +905,23 @@ Creates a vehicle.
 Gets the vehicle attributes.
 
 + Request (application/json)
+
     + Header
 
             X-Api-Key: <your-private-token-key>
 
 + Response 200 (application/json)
 
-    + Attributes(Vehicle)
+    + Attributes (object)
+
+        + vehicle (Vehicle)
 
     + Header
-    
+
             X-Time: 2014-09-11T17:02:27.761+02:00
-            
+
     + Body
-    
+
             {
                 "vehicle": {
                     "id": "12834734-42c9-11e6-beb8-9e71128cae77",
@@ -895,7 +929,7 @@ Gets the vehicle attributes.
                     "editor": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jan Novák",
-                            "role": "ADMIN"
+                            "role": 1
                         },
                     "name": "Mašina1",
                     "partName": "Nazev casti schematu",
@@ -909,8 +943,8 @@ Gets the vehicle attributes.
                     "chassisType": 2,
                     "forwardSpeed": 150,
                     "backwardSpeed": 15,
-                    "gravityCenterHight": 110,
-                    "bumberHight": 10,
+                    "gravityCenterHeight": 110,
+                    "bumperHeight": 10,
                     "pivotDistance": 1,
                     "pivotHeight": 12.5
                     "dynamicForceFactor": 1.90,
@@ -969,7 +1003,9 @@ Updates the vehicle attributes.
 
 + Request (application/json)
 
-    + Attributes(Vehicle)
+    + Attributes (object)
+
+        + vehicle (Vehicle)
 
     + Header
     
@@ -989,8 +1025,8 @@ Updates the vehicle attributes.
                     "chassisType": 2,
                     "forwardSpeed": 150,
                     "backwardSpeed": 15,
-                    "gravityCenterHight": 110,
-                    "bumberHight": 10,
+                    "gravityCenterHeight": 110,
+                    "bumperHeight": 10,
                     "pivotDistance": 1,
                     "pivotHeight": 12.5
                     "dynamicForceFactor": 1.90,
@@ -1089,7 +1125,9 @@ Gets the collection of vehicles notes.
 
 + Response 200 (application/json)
 
-    + Attributes(array[VehicleNote])
+    + Attributes (object)
+
+        + notes (array[VehicleNote])
 
     + Header
 
@@ -1102,25 +1140,33 @@ Gets the collection of vehicles notes.
                     {
                         "id": "12834734-42c9-11e6-beb8-9e71128cae77",
                         "created": "2015-09-09T21:58:31+02:00",
-                        "creator": "Pepa z Depa",
+                        "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jana Mala",
+                            "role":2
+                        },
                         "edited": "2015-09-09T21:58:31+02:00",
                         "content": "Toto masina jezdi na naftu",
                         "editor": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jan Novák",
-                            "role": "ADMIN"
+                            "role": 1
                         }
                     },
                     {
                         "id": "12834734-42c9-11e6-beb8-9e71128cae77",
                         "created": "2015-09-09T21:58:31+02:00",
-                        "creator": "Jana Mala",
+                        "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jana Mala",
+                            "role": 2
+                        },
                         "edited": "2015-09-09T21:58:31+02:00",
                         "content": "A hlavne jezdi pomalu",
                         "editor": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jan Novák",
-                            "role": "ADMIN"
+                            "role": 1
                         }
                     }
               ]
@@ -1140,7 +1186,7 @@ Creates a vehicle Note.
 
 + Request (application/json)
 
-    + Attributes(VehicleNote)
+    + Attributes(VehicleNoteCreate)
 
     + Header
 
@@ -1172,8 +1218,8 @@ Creates a vehicle Note.
 
 + Parameters:
 
-        + vehicleId (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/notes/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `vehicleId`  unique identification vehicle.
-        + id (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/notes/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `id`  unique identification note of vehicle.
+    + vehicleId (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/notes/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `vehicleId`  unique identification vehicle.
+    + id (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/notes/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `id`  unique identification note of vehicle.
 
 
 ### GET
@@ -1187,7 +1233,9 @@ Gets the vehicle note.
 
 + Response 200 (application/json)
 
-    + Attributes(VehicleNote)
+    + Attributes (object)
+
+        + note (VehicleNote)
 
     + Header
 
@@ -1199,13 +1247,17 @@ Gets the vehicle note.
                 "note": {
                     "id": "12834734-42c9-11e6-beb8-9e71128cae77",
                     "created": "2015-09-09T21:58:31+02:00",
-                    "creator": "Jana Mala",
+                    "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jana Mala",
+                            "role": 2
+                        },
                     "edited": "2015-09-09T21:58:31+02:00",
                     "content": "A hlavne jezdi pomalu",
                     "editor": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jan Novák",
-                            "role": "ADMIN"
+                            "role": 1
                         }
                 }
             }
@@ -1224,7 +1276,9 @@ Updates the vehicle note.
 
 + Request (application/json)
 
-    + Attributes(VehicleNote)
+    + Attributes (object)
+
+        + note (VehicleNoteCreate)
 
     + Header
 
@@ -1282,7 +1336,7 @@ Delete the vehicle note.
 
 + Parameters:
 
-        + vehicleId (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/attachments`) ... Number `vehicleId`  unique identification vehicle.
+    + vehicleId (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/attachments`) ... Number `vehicleId`  unique identification vehicle.
 
 
 ### GET
@@ -1296,7 +1350,9 @@ Gets the collection of vehicles attachments.
 
 + Response 200 (application/json)
 
-    + Attributes(array[VehicleAttachment])
+    + Attributes (object)
+
+        + attachments (array[VehicleAttachment])
 
     + Header
 
@@ -1309,7 +1365,11 @@ Gets the collection of vehicles attachments.
                     {
                         "id": "12834734-42c9-11e6-beb8-9e71128cae77",
                         "created": "2015-09-09T21:58:31+02:00",
-                        "creator": "Pepa z Depa",
+                        "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jana Mala",
+                            "role": 1
+                        },
                         "edited": null,
                         "editor": null,
                         "fileName": "pekny_obrazek.png"
@@ -1319,7 +1379,11 @@ Gets the collection of vehicles attachments.
                     {
                         "id": "92834734-42c9-11e6-beb8-9e71128cae77",
                         "created": "2015-09-09T21:58:31+02:00",
-                        "creator": "Jana Mala",
+                        "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jana Mala",
+                            "role": 2
+                        },
                         "edited": "2015-09-09T21:58:31+02:00",
                         "fileName": "specifikace.pdf"
                         "fileType": "document/pdf",
@@ -1327,7 +1391,7 @@ Gets the collection of vehicles attachments.
                         "editor": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jan Novák",
-                            "role": "ADMIN"
+                            "role": 1
                         }
                     }
               ]
@@ -1382,8 +1446,8 @@ Creates a vehicle attachment.
 
 + Parameters:
 
-        + vehicleId (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/attachments/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `vehicleId`  unique identification vehicle.
-        + id (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/attachments/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `id`  unique identification attachment of vehicle.
+    + vehicleId (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/attachments/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `vehicleId`  unique identification vehicle.
+    + id (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/attachments/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `id`  unique identification attachment of vehicle.
 
 
 ### GET
@@ -1397,7 +1461,9 @@ Gets the vehicle attachment info.
 
 + Response 200 (application/json)
 
-    + Attributes(VehicleAttachment)
+    + Attributes (object)
+
+        + attachment (VehicleAttachment)
 
     + Header
 
@@ -1408,8 +1474,12 @@ Gets the vehicle attachment info.
             {
                 "attachment": {
                      "id": "92834734-42c9-11e6-beb8-9e71128cae77",
-                     "created": "2015-09-09T21:58:31+02:00",
-                     "creator": "Jana Mala",
+                     "created": "2015-09-09T21:58:31+02:00",                     
+                     "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jana Mala",
+                            "role": 2
+                        },
                      "edited": "2015-09-09T21:58:31+02:00",
                      "fileName": "specifikace.pdf"
                      "fileType": "document/pdf",
@@ -1417,7 +1487,7 @@ Gets the vehicle attachment info.
                      "editor": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jan Novák",
-                            "role": "ADMIN"
+                            "role": 1
                         }
                 }
             }
@@ -1436,7 +1506,9 @@ Updates the vehicle attachment.
 
 + Request (application/json)
 
-    + Attributes(VehicleAttachment)
+    + Attributes (object)
+
+        + attachment (VehicleAttachment)
 
     + Header
 
@@ -1496,8 +1568,8 @@ Delete the vehicle attachment.
 
 + Parameters:
 
-        + vehicleId (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/attachments/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `vehicleId`  unique identification vehicle.
-        + id (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/attachments/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `id`  unique identification attachment of vehicle.
+    + vehicleId (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/attachments/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `vehicleId`  unique identification vehicle.
+    + id (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/attachments/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `id`  unique identification attachment of vehicle.
 
 ### GET
 Gets the vehicle attchment file stream.
@@ -1509,8 +1581,6 @@ Gets the vehicle attchment file stream.
             X-Api-Key: <your-private-token-key>
 
 + Response 200 (content-type of file)
-
-    + Attributes(VehicleAttachment)
 
     + Header
 
@@ -1543,7 +1613,9 @@ Gets the vehicle types collection.
 
 + Response 200 (application/json)
 
-    + Attributes(array[VehicleType])
+    + Attributes (object)
+
+        + types (array[VehicleType])
 
     + Header
 
@@ -1588,7 +1660,9 @@ Gets the vehicle type groups collection.
 
 + Response 200 (application/json)
 
-    + Attributes(array[VehicleGroupType])
+    + Attributes (object)
+
+        + groups (array[VehicleGroupType])
 
     + Header
 
@@ -1640,7 +1714,9 @@ Gets the vehicle groups chassis collection.
 
 + Response 200 (application/json)
 
-    + Attributes(array[VehicleChassis])
+    + Attributes (object)
+
+        + chassis (array[VehicleChassis])
 
     + Header
 
@@ -1652,15 +1728,18 @@ Gets the vehicle groups chassis collection.
                 "chassis": [
                     {
                         "id": 1,
-                        "title": "A1"
+                        "title": "A1",
+                        "totalAxles": 5
                     },
                     {
                         "id": 2,
-                        "title": "A2"
+                        "title": "A2",
+                        "totalAxles": 5
                     },
                     {
                         "id": 3,
-                        "title": "A3"
+                        "title": "A3",
+                        "totalAxles": 7
                     }
                 ]
             }
@@ -1692,7 +1771,9 @@ Gets the collection of trainsets.
 
 + Response 200 (application/json)
 
-    + Attributes(array[TrainsetListItem])
+    + Attributes (object)
+
+        + trainsets (array[TrainsetListItem])
 
     + Header
 
@@ -1712,7 +1793,7 @@ Gets the collection of trainsets.
                         "editor": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jan Novák",
-                            "role": "ADMIN"
+                            "role": 1
                         }
                     },
                     {
@@ -1725,7 +1806,7 @@ Gets the collection of trainsets.
                         "editor": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jan Novák",
-                            "role": "ADMIN"
+                            "role": 1
                         }
                 }
               ]
@@ -1796,7 +1877,9 @@ Gets the trainsets types collection.
 
 + Response 200 (application/json)
 
-    + Attributes(array[TrainsetType])
+    + Attributes (object)
+
+        + types (array[TrainsetType])
 
     + Header
 
@@ -1846,7 +1929,9 @@ Gets the trainsets type groups collection.
 
 + Response 200 (application/json)
 
-    + Attributes(array[TrainsetGroupType])
+    + Attributes (object)
+
+        + groups (array[TrainsetGroupType])
 
     + Header
 
@@ -1887,3 +1972,18 @@ The crossbeam resources can be used for managing crossbeams.
 
 ## /crossbeams/{id}
 <!-- PUT, GET, DELETE -->
+
+
+
+# Group Errors
+
+## /{error}
+
+### GET
+Global error response structure
+
++ Response 404 (application/json)
+
+    + Attributes (object)
+
+        + error (Error)
