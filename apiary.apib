@@ -7,8 +7,6 @@ MQA API is the REST API project for managing trains.
 
 # Data Structures
 
-
-
 ## Auth (object)
 + username: "hrabalo" (string, required)
 + password: "123456" (string, required)
@@ -17,7 +15,6 @@ MQA API is the REST API project for managing trains.
 + token: "fc7ef14ba27e29c89ec640cec3b91fb374db9b5abaa5e4699680c8c561bd9f5a" (string, required)
 + validity: "2015-09-09T21:58:31+02:00" (string, required)
 + user (User, required)
-
 
 
 
@@ -36,17 +33,21 @@ MQA API is the REST API project for managing trains.
 
 
 
-
 ## DatabaseType (object)
 + id: 1 (number, required)
 + name: "oficiální" (string, required)
 
-## DatabaseExport (object)
-+ id: "d93f61c2-42c5-11e6-beb8-9e71128cae77" (string, required)
+## DatabaseExportLog (object)
++ date: "2015-09-09T21:58:31+02:00" (string, required)
++ user (User, required)
 
-## DatabaseImport (object)
-+ id: "d93f61c2-42c5-11e6-beb8-9e71128cae77" (string, required)
+## DatabaseImportLog (object)
++ date: "2015-09-09T21:58:31+02:00" (string, required)
++ user (User, required)
 
+## DatabaseCatalogue (object)
++ id: 1 (number, required)
++ title: "ČSN1230" (string, required)
 
 
 
@@ -66,7 +67,7 @@ MQA API is the REST API project for managing trains.
 ## VehicleListItem (object)
 + id: "d93f61c2-42c5-11e6-beb8-9e71128cae77" (string, required)
 + edited: "2015-09-09T21:58:31+02:00" (string, required)
-+ editor: "Teichman" (string, required)
++ editor (User, required)
 + name: "Mašina1" (string, required)
 + vehicleType: 3 (number, required)
 + databaseType: 1 (number, required)
@@ -75,11 +76,13 @@ MQA API is the REST API project for managing trains.
 ## Vehicle (object)
 + id: "7d4846be-42c4-11e6-beb8-9e71128cae77" (string, required)
 + edited: "2015-09-09T21:58:31+02:00" (string, required)
-+ editor: "Teichman" (string, required)
++ editor (User, required)
 + name: "Mašina1" (string, required)
++ partName: "Nazev casti zatez. schematu" (string, optional)
 + vehicleType: 2 (number, required)
 + databaseType: 1 (number, required)
 + chassisType: 12 (number, required)
++ normativeType: 3 (number, required)
 + series: "705" (string, required)
 + oldSeries: "T239.1" (string, optional)
 + note: "Prvni masina" (string, optional)
@@ -94,10 +97,11 @@ MQA API is the REST API project for managing trains.
 + basicLoadFactor: 1.7 (number, required)
 + basicPassiveLoadFactor: 1.0 (number, required)
 + totalWorkingVehicles: 8 (number, required)
++ maxVelocity: 160 (number, required)
 + totalAxles: 5 (number, required)
 + axleForces (array[VehicleAxleForce], required)
-+ totalAxles (array[VehicleForce], required)
-+ totalAxles (array[VehicleForce], required)
++ tractiveForces (array[VehicleForce], required)
++ breakingForces (array[VehicleForce], required)
 
 ## VehicleAxleForce (object)
 + axlePoint: 0 (number, required)
@@ -114,33 +118,45 @@ MQA API is the REST API project for managing trains.
 + created: "2015-09-09T21:58:31+02:00" (string, required)
 + creator: "Teichman" (string, required)
 + edited: "2015-09-09T21:58:31+02:00" (string, required)
-+ editor: "Teichman" (string, required)
++ editor (User, required)
 + content: "A hlavne jezdi pomalu" (string, required)
 
 ## VehicleAttachment (object)
 + id: "7d4846be-42c4-11e6-beb8-9e71128cae77" (string, required)
 + edited: "2015-09-09T21:58:31+02:00" (string, required)
-+ editor: "Teichman" (string, required)
++ editor (User, required)
 
 
 
-
-## Trainsets (array)
+## TrainsetListItem (object)
 + id: "d93f61c2-42c5-11e6-beb8-9e71128cae77" (string, required)
++ edited: "2015-09-09T21:58:31+02:00" (string, required)
++ editor (User, required)
 + name: "Shimns" (string, required)
-+ dbType: - (DBType, required)
-+ editor: "Saňák" (string, required)
++ note: "Strojirna Brno" (string, required)
++ trainsetType: 5 (number, required)
++ databaseType: 1 (number, required)
 
 ## Trainset (object)
 + id: "d93f61c2-42c5-11e6-beb8-9e71128cae77" (string, required)
 + name: "Shimns" (string, required)
-+ databaseType (DatabaseType, required)
-+ editor: "Saňák" (string, required)
++ databaseType: 1 (number, required)
++ editor (User, required)
+
+## TrainsetType (object)
++ id: 1 (number, required)
++ group: 2 (number, required)
++ title: "Schema tratovych trid" (string, required)
+
+## TrainsetGroupType (object)
++ id: 1 (number, required)
++ title: "Uzivatelske soupravy" (string, required)
 
 
 
 ## Crossbeams (array)
 + id: "d93f61c2-42c5-11e6-beb8-9e71128cae77" (string, required)
+
 
 
 # Group Authentication
@@ -153,6 +169,7 @@ Returns the private API token key for the user with its validity.
 
 
 + Request (application/json)
+
     + Attributes (Auth)
 
     + Body
@@ -167,9 +184,9 @@ Returns the private API token key for the user with its validity.
     + Attributes(Credential)
 
     + Header
-    
+
             X-Time: 2014-09-11T17:02:27.761+02:00
-            
+
     + Body
 
             {
@@ -193,21 +210,22 @@ Returns the private API token key for the user with its validity.
 + Response 500
 + Response 503
 
+
 ### DELETE
 Logs out the user by the Api-Key, if the response is successful.
 
 + Request (application/json)
 
     + Header
-    
+
             X-Api-Key: <your-private-token-key>
 
 + Response 204
 
     + Header
-    
+
             X-Time: 2014-09-11T17:02:27.761+02:00
-        
+
 + Response 401
 + Response 403
 + Response 404
@@ -217,8 +235,10 @@ Logs out the user by the Api-Key, if the response is successful.
 + Response 503
 
 
+
 # Group User
 The User administration API
+
 
 ## /users{?offset}{?limit}
 
@@ -228,19 +248,19 @@ List users
 + Request (application/json)
 
     + Header
-    
+
             X-Api-Key: <your-private-token-key>
-            
+
 + Response 200 (application/json)
 
     + Attributes(array[User])
 
     + Header
-    
+
             X-Time: 2014-09-11T17:02:27.761+02:00
-            
+
     + Body
-    
+
             {
                 "users": [
                     {
@@ -255,7 +275,7 @@ List users
                     }
                 ]
             }
-        
+
 + Response 401
 + Response 403
 + Response 404
@@ -264,36 +284,37 @@ List users
 + Response 500
 + Response 503
 
+
 ## /users/{id}
 
 ### GET
 Get current user
 
-+ Paramters
++ Paramters:
     + id - `id of user`
-    
+
 + Request (application/json)
 
     + Header
-    
+
             X-Api-Key: <your-private-token-key>
-            
+
 + Response 200 (application/json)
 
     + Attributes(User)
 
     + Header
-    
+
             X-Time: 2014-09-11T17:02:27.761+02:00
-            
+
     + Body
-    
+
             {
                 "id": "d93f61c2-42c5-11e6-beb8-9e71128cae77",
                 "name": "Admin",
                 "role": "ADMIN"
             }
-        
+
 + Response 401
 + Response 403
 + Response 404
@@ -306,33 +327,32 @@ Get current user
 ### PUT
 Update user (include change password too)
 
-+ Paramters
++ Paramters:
     + id - `id of user`
-    
+
 + Request (application/json)
 
     + Attributes(UpdateUser)
-    
+
     + Header
-    
+
             X-Api-Key: <your-private-token-key>
-            
+
     + Body
-    
+
             {
                 "user": {
                     "name": "Admin",
                     "role": "ADMIN"
                 }
             }
-            
+
 + Response 201 (application/json)
 
-
     + Header
-    
+
             X-Time: 2014-09-11T17:02:27.761+02:00
-            
+
 + Response 401
 + Response 403
 + Response 404
@@ -340,6 +360,7 @@ Update user (include change password too)
 + Response 406
 + Response 500
 + Response 503
+
 
 ## /users/sync
 
@@ -349,15 +370,15 @@ Force sync user from Active Directory
 + Request (application/json)
 
     + Header
-    
+
             X-Api-Key: <your-private-token-key>
-            
+
 + Response 201 (application/json)
 
     + Header
-    
+
             X-Time: 2014-09-11T17:02:27.761+02:00
-            
+
 + Response 401
 + Response 403
 + Response 404
@@ -375,19 +396,19 @@ The role resources can be used for managing roles.
 + Request (application/json)
 
     + Header
-    
+
             X-Api-Key: <your-private-token-key>
-            
+
 + Response 200 (application/json)
 
     + Attributes(array[UserRole])
 
     + Header
-    
+
             X-Time: 2014-09-11T17:02:27.761+02:00
-            
+
     + Body
-    
+
             {
                 "roles": [
                     {
@@ -400,7 +421,7 @@ The role resources can be used for managing roles.
                     }
                 ]
             }
-        
+
 + Response 401
 + Response 403
 + Response 404
@@ -411,29 +432,29 @@ The role resources can be used for managing roles.
 
 
 
-
 # Group Database
-The database types resources can be used for managing database types.
+The database types resources can be used for managing database types and catalogues.
 
 ## /database/types
 
 ### GET
 
 + Request (application/json)
+
     + Header
-    
+
             X-Api-Key: <your-private-token-key>
-            
+
 + Response 200 (application/json)
 
     + Attributes(array[DatabaseType])
 
     + Header
-    
+
             X-Time: 2014-09-11T17:02:27.761+02:00
-            
+
     + Body
-    
+
             {
                 "types": [
                     {
@@ -447,7 +468,6 @@ The database types resources can be used for managing database types.
                 ]
             }
 
-        
 + Response 401
 + Response 403
 + Response 404
@@ -457,39 +477,237 @@ The database types resources can be used for managing database types.
 + Response 503
 
 
-## /database/export
-The export resources can be used for database exports.
-<!-- TODO: ... -->
+## /database/normative
 
-### POST
+### GET
 
 + Request (application/json)
+
     + Header
-    
+
             X-Api-Key: <your-private-token-key>
-            
+
++ Response 200 (application/json)
+
+    + Attributes(array[DatabaseCatalogue])
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
+    + Body
+
+            {
+                "normative": [
+                    {
+                        "id": 1,
+                        "title": "ČSN1230"
+                    },
+                    {
+                        "id": 2,
+                        "title": "NP1250"
+                    }
+                ]
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+
+## /database/export
+The export resources can be used for full database exports.
+
+
+### POST
+Request to create database backup
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
 + Response 201 (application/json)
 
+    + Header
 
-## /exports/{id}
-<!-- TODO: ... -->
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            Location: /database/export/12834734-42c9-11e6-beb8-9e71128cae77
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /database/export/{id}
+
+### GET
+Download database backup link
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (file-stream)
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
+    + Body
+
+            `export file stream`
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /database/export/logs
+
+### GET
+Get database exports logs
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes(array[DatabaseExportLog])
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
+    + Body
+
+            {
+                "logs": [
+                    {
+                        "date": "2015-09-09T21:58:31+02:00",
+                        "user": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jan Novák",
+                            "role": "ADMIN"
+                        }
+                    },
+                    {
+                        "date": "2015-09-09T21:58:31+02:00",
+                        "user": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Pepik",
+                            "role": "ADMIN"
+                        }
+                    }
+                ]
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
 
 
 ## /database/import
 The import resources can be used for database CSV imports.
-<!-- TODO: ... -->
 
 ### POST
+Import database catlogs from CSV file
 
-+ Request (application/json)
++ Request (application/csv)
+
     + Header
-    
+
             X-Api-Key: <your-private-token-key>
-            
+
+    + Body
+
+            `CSV file stream`
+
 + Response 201 (application/json)
 
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
 
 
+### GET
+Get database imports logs
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes(array[DatabaseImportLog])
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
+    + Body
+
+            {
+                "logs": [
+                    {
+                        "date": "2015-09-09T21:58:31+02:00",
+                        "user": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jan Novák",
+                            "role": "ADMIN"
+                        }
+                    },
+                    {
+                        "date": "2015-09-09T21:58:31+02:00",
+                        "user": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Pepik",
+                            "role": "ADMIN"
+                        }
+                    }
+                ]
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
 
 
 # Group Vehicle
@@ -501,10 +719,11 @@ The vehicle resources can be used for managing vehicles.
 Gets the collection of vehicles.
 
 + Request (application/json)
+
     + Header
-    
+
             X-Api-Key: <your-private-token-key>
-            
+
 + Response 200 (application/json)
 
     + Attributes(array[VehicleListItem])
@@ -512,32 +731,40 @@ Gets the collection of vehicles.
     + Header
     
             X-Time: 2014-09-11T17:02:27.761+02:00
-            
+
     + Body
-    
+
             {
                 "vehicles": [
                     {
                         "id": "12834734-42c9-11e6-beb8-9e71128cae77",
-                        "edited": "2015-09-09T21:58:31+02:00",
-                        "editor": "Administrátor"
+                        "edited": "2015-09-09T21:58:31+02:00",                        
                         "name": "Mašina1",
                         "vehicleType": 1,
                         "databaseType": 1,
-                        "totalAxles": 2
+                        "totalAxles": 2,
+                        "editor": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jan Novák",
+                            "role": "ADMIN"
+                        }
                     },
                     {
                         "id": "12834734-42c9-11e6-beb8-9e71128cae77",
                         "edited": "2015-09-09T21:58:31+02:00",
-                        "editor": "Tomáš Novák"
                         "name": "Mašina2",
                         "vehicleType": 2,
                         "databaseType": 0,
-                        "totalAxles": 5
+                        "totalAxles": 5,
+                        "editor": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jan Novák",
+                            "role": "ADMIN"
+                        }
                 }
               ]
             }
-        
+
 + Response 401
 + Response 403
 + Response 404
@@ -556,15 +783,17 @@ Creates a vehicle.
     + Attributes(Vehicle)
 
     + Header
-    
+
             X-Api-Key: <your-private-token-key>
-            
+
     + Body
     
             {
                 "name": "Mašina1",
+                "partName": "Nazev casti schematu",
                 "vehicleType": 2,
                 "databaseType": 1,
+                "normativeType": 12,
                 "note": "Prvni masina",
                 "icon": "base64 vehicle icon",
                 "series": "705",
@@ -580,6 +809,7 @@ Creates a vehicle.
                 "basicLoadFactor": 1.84,
                 "basicPassiveLoadFactor": 1.12,
                 "totalWorkingVehicles": 12,
+                "maxVelocity": 160,
                 "totalAxles": 2,
                 "axleForces": [
                     {
@@ -616,14 +846,14 @@ Creates a vehicle.
                     }
                 ]
             }
-            
+
 + Response 201 (application/json)
 
     + Header
-    
+
             X-Time: 2014-09-11T17:02:27.761+02:00
             Location: /vehicles/12834734-42c9-11e6-beb8-9e71128cae77
-        
+
 + Response 401
 + Response 403
 + Response 404
@@ -634,18 +864,20 @@ Creates a vehicle.
 
 
 
-
-
 ## /vehicles/{id}
+
++ Parameters:
+
+    + id (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77`) ... Number `id`  unique identification vehicle.
 
 ### GET
 Gets the vehicle attributes.
 
 + Request (application/json)
     + Header
-    
+
             X-Api-Key: <your-private-token-key>
-            
+
 + Response 200 (application/json)
 
     + Attributes(Vehicle)
@@ -660,10 +892,16 @@ Gets the vehicle attributes.
                 "vehicle": {
                     "id": "12834734-42c9-11e6-beb8-9e71128cae77",
                     "edited": "2015-09-09T21:58:31+02:00",
-                    "editor": "Tomáš Novák",
+                    "editor": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jan Novák",
+                            "role": "ADMIN"
+                        },
                     "name": "Mašina1",
+                    "partName": "Nazev casti schematu",
                     "vehicleType": 2,
                     "databaseType": 1,
+                    "normativeType": 3,
                     "note": "Prvni masina",
                     "icon": "base64 vehicle icon",
                     "series": "705",
@@ -679,6 +917,7 @@ Gets the vehicle attributes.
                     "basicLoadFactor": 1.84,
                     "basicPassiveLoadFactor": 1.12,
                     "totalWorkingVehicles": 12,
+                    "maxVelocity": 160,
                     "totalAxles": 2,
                     "axleForces": [
                         {
@@ -835,28 +1074,29 @@ Deletes the vehicle completely.
 
 ## /vehicles/{vehicleId}/notes
 
-    + Parameters
++ Parameters:
 
-        + vehicleId (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/notes`) ... Number `vehicleId`  unique identification vehicle.
+    + vehicleId (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/notes`) ... Number `vehicleId`  unique identification vehicle.
 
 ### GET
 Gets the collection of vehicles notes.
 
 + Request (application/json)
+
     + Header
-    
+
             X-Api-Key: <your-private-token-key>
-            
+
 + Response 200 (application/json)
 
     + Attributes(array[VehicleNote])
 
     + Header
-    
+
             X-Time: 2014-09-11T17:02:27.761+02:00
-            
+
     + Body
-    
+
             {
                 "notes": [
                     {
@@ -864,20 +1104,28 @@ Gets the collection of vehicles notes.
                         "created": "2015-09-09T21:58:31+02:00",
                         "creator": "Pepa z Depa",
                         "edited": "2015-09-09T21:58:31+02:00",
-                        "editor": "Administrátor"
-                        "content": "Toto masina jezdi na naftu"
+                        "content": "Toto masina jezdi na naftu",
+                        "editor": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jan Novák",
+                            "role": "ADMIN"
+                        }
                     },
                     {
                         "id": "12834734-42c9-11e6-beb8-9e71128cae77",
                         "created": "2015-09-09T21:58:31+02:00",
                         "creator": "Jana Mala",
                         "edited": "2015-09-09T21:58:31+02:00",
-                        "editor": "Tomas Novak"
-                        "content": "A hlavne jezdi pomalu"
+                        "content": "A hlavne jezdi pomalu",
+                        "editor": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jan Novák",
+                            "role": "ADMIN"
+                        }
                     }
               ]
             }
-        
+
 + Response 401
 + Response 403
 + Response 404
@@ -895,11 +1143,11 @@ Creates a vehicle Note.
     + Attributes(VehicleNote)
 
     + Header
-    
+
             X-Api-Key: <your-private-token-key>
-            
+
     + Body
-    
+
             {
                 "content": "A hlavne jezdi pomalu"
             }
@@ -907,10 +1155,10 @@ Creates a vehicle Note.
 + Response 201 (application/json)
 
     + Header
-    
+
             X-Time: 2014-09-11T17:02:27.761+02:00
             Location: /vehicles/12834734-42c9-11e6-beb8-9e71128cae77/notes/92834734-42c9-11e6-beb8-9e71128cae77
-        
+
 + Response 401
 + Response 403
 + Response 404
@@ -922,15 +1170,17 @@ Creates a vehicle Note.
 
 ## /vehicles/{vehicleId}/notes/{id}
 
-    + Parameters
++ Parameters:
 
         + vehicleId (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/notes/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `vehicleId`  unique identification vehicle.
         + id (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/notes/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `id`  unique identification note of vehicle.
+
 
 ### GET
 Gets the vehicle note.
 
 + Request (application/json)
+
     + Header
 
             X-Api-Key: <your-private-token-key>
@@ -940,22 +1190,26 @@ Gets the vehicle note.
     + Attributes(VehicleNote)
 
     + Header
-    
+
             X-Time: 2014-09-11T17:02:27.761+02:00
-            
+
     + Body
-    
+
             {
                 "note": {
                     "id": "12834734-42c9-11e6-beb8-9e71128cae77",
                     "created": "2015-09-09T21:58:31+02:00",
                     "creator": "Jana Mala",
                     "edited": "2015-09-09T21:58:31+02:00",
-                    "editor": "Tomas Novak"
-                    "content": "A hlavne jezdi pomalu"
+                    "content": "A hlavne jezdi pomalu",
+                    "editor": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jan Novák",
+                            "role": "ADMIN"
+                        }
                 }
             }
-        
+
 + Response 401
 + Response 403
 + Response 404
@@ -963,6 +1217,7 @@ Gets the vehicle note.
 + Response 406
 + Response 500
 + Response 503
+
 
 ### PUT
 Updates the vehicle note.
@@ -972,23 +1227,23 @@ Updates the vehicle note.
     + Attributes(VehicleNote)
 
     + Header
-    
+
             X-Api-Key: <your-private-token-key>
-            
+
     + Body
-    
+
             {
                 "note": {
                     "content": "A hlavne jezdi pomalu"
                 }
             }
-            
+
 + Response 200
 
     + Header
-    
+
             X-Time: 2014-09-11T17:02:27.761+02:00
-        
+
 + Response 401
 + Response 403
 + Response 404
@@ -996,19 +1251,21 @@ Updates the vehicle note.
 + Response 406
 + Response 500
 + Response 503
+
 
 ### DELETE
 Delete the vehicle note.
 
 + Request (application/json)
+
     + Header
-    
+
             X-Api-Key: <your-private-token-key>
             
 + Response 200
 
     + Header
-    
+
             X-Time: 2014-09-11T17:02:27.761+02:00
 
 + Response 401
@@ -1020,28 +1277,31 @@ Delete the vehicle note.
 + Response 503
 
 
+
 ## /vehicles/{vehicleId}/attachments
 
-    + Parameters
++ Parameters:
 
         + vehicleId (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/attachments`) ... Number `vehicleId`  unique identification vehicle.
+
 
 ### GET
 Gets the collection of vehicles attachments.
 
 + Request (application/json)
+
     + Header
-    
+
             X-Api-Key: <your-private-token-key>
-            
+
 + Response 200 (application/json)
 
     + Attributes(array[VehicleAttachment])
 
     + Header
-    
+
             X-Time: 2014-09-11T17:02:27.761+02:00
-            
+
     + Body
     
             {
@@ -1061,14 +1321,18 @@ Gets the collection of vehicles attachments.
                         "created": "2015-09-09T21:58:31+02:00",
                         "creator": "Jana Mala",
                         "edited": "2015-09-09T21:58:31+02:00",
-                        "editor": "Tomas Novak"
                         "fileName": "specifikace.pdf"
                         "fileType": "document/pdf",
-                        "note": "Specifikace lokomotivy"
+                        "note": "Specifikace lokomotivy",
+                        "editor": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jan Novák",
+                            "role": "ADMIN"
+                        }
                     }
               ]
             }
-        
+
 + Response 401
 + Response 403
 + Response 404
@@ -1101,10 +1365,10 @@ Creates a vehicle attachment.
 + Response 201 (application/json)
 
     + Header
-    
+
             X-Time: 2014-09-11T17:02:27.761+02:00
             Location: /vehicles/12834734-42c9-11e6-beb8-9e71128cae77/attachments/92834734-42c9-11e6-beb8-9e71128cae77
-        
+
 + Response 401
 + Response 403
 + Response 404
@@ -1116,15 +1380,17 @@ Creates a vehicle attachment.
 
 ## /vehicles/{vehicleId}/attachments/{id}
 
-    + Parameters
++ Parameters:
 
         + vehicleId (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/attachments/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `vehicleId`  unique identification vehicle.
         + id (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/attachments/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `id`  unique identification attachment of vehicle.
+
 
 ### GET
 Gets the vehicle attachment info.
 
 + Request (application/json)
+
     + Header
 
             X-Api-Key: <your-private-token-key>
@@ -1134,24 +1400,28 @@ Gets the vehicle attachment info.
     + Attributes(VehicleAttachment)
 
     + Header
-    
+
             X-Time: 2014-09-11T17:02:27.761+02:00
-            
+
     + Body
-    
+
             {
                 "attachment": {
                      "id": "92834734-42c9-11e6-beb8-9e71128cae77",
                      "created": "2015-09-09T21:58:31+02:00",
                      "creator": "Jana Mala",
                      "edited": "2015-09-09T21:58:31+02:00",
-                     "editor": "Tomas Novak"
                      "fileName": "specifikace.pdf"
                      "fileType": "document/pdf",
-                     "note": "Specifikace lokomotivy"
+                     "note": "Specifikace lokomotivy",
+                     "editor": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jan Novák",
+                            "role": "ADMIN"
+                        }
                 }
             }
-        
+
 + Response 401
 + Response 403
 + Response 404
@@ -1159,6 +1429,7 @@ Gets the vehicle attachment info.
 + Response 406
 + Response 500
 + Response 503
+
 
 ### PUT
 Updates the vehicle attachment.
@@ -1185,9 +1456,9 @@ Updates the vehicle attachment.
 + Response 200
 
     + Header
-    
+
             X-Time: 2014-09-11T17:02:27.761+02:00
-        
+
 + Response 401
 + Response 403
 + Response 404
@@ -1195,19 +1466,21 @@ Updates the vehicle attachment.
 + Response 406
 + Response 500
 + Response 503
+
 
 ### DELETE
 Delete the vehicle attachment.
 
 + Request (application/json)
+
     + Header
-    
+
             X-Api-Key: <your-private-token-key>
-            
+
 + Response 200
 
     + Header
-    
+
             X-Time: 2014-09-11T17:02:27.761+02:00
 
 + Response 401
@@ -1218,9 +1491,10 @@ Delete the vehicle attachment.
 + Response 500
 + Response 503
 
+
 ## /vehicles/{vehicleId}/attachments/{id}/file
 
-    + Parameters
++ Parameters:
 
         + vehicleId (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/attachments/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `vehicleId`  unique identification vehicle.
         + id (required, number, `/vehicles/12834734-42c9-11e6-beb8-9e71128cae77/attachments/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `id`  unique identification attachment of vehicle.
@@ -1239,9 +1513,9 @@ Gets the vehicle attchment file stream.
     + Attributes(VehicleAttachment)
 
     + Header
-    
+
             X-Time: 2014-09-11T17:02:27.761+02:00
-            
+
     + Body
 
             `File content as stream`
@@ -1262,20 +1536,21 @@ Gets the vehicle attchment file stream.
 Gets the vehicle types collection.
 
 + Request (application/json)
+
     + Header
-    
+
             X-Api-Key: <your-private-token-key>
-            
+
 + Response 200 (application/json)
 
     + Attributes(array[VehicleType])
 
     + Header
-    
+
             X-Time: 2014-09-11T17:02:27.761+02:00
             
     + Body
-    
+
             {
                 "types": [
                     {
@@ -1290,7 +1565,7 @@ Gets the vehicle types collection.
                     }
                 ]
             }
-        
+
 + Response 401
 + Response 403
 + Response 404
@@ -1300,26 +1575,27 @@ Gets the vehicle types collection.
 + Response 503
 
 
-## /vehicles/groups
+## /vehicles/types/groups
 
 ### GET
 Gets the vehicle type groups collection.
 
 + Request (application/json)
+
     + Header
-    
+
             X-Api-Key: <your-private-token-key>
-            
+
 + Response 200 (application/json)
 
     + Attributes(array[VehicleGroupType])
 
     + Header
-    
+
             X-Time: 2014-09-11T17:02:27.761+02:00
-            
+
     + Body
-    
+
             {
                 "groups": [
                     {
@@ -1336,7 +1612,7 @@ Gets the vehicle type groups collection.
                     }
                 ]
             }
-        
+
 + Response 401
 + Response 403
 + Response 404
@@ -1346,32 +1622,32 @@ Gets the vehicle type groups collection.
 + Response 503
 
 
-## /vehicles/groups/{id}/chassis
+## /vehicles/types/groups/{id}/chassis
 
 ### GET
 Gets the vehicle groups chassis collection.
 
-+ Parameters
++ Parameters:
 
-    + id (required, number, `/vehicles/groups/10/chassis`) ... Number `id` identification vehicle group type chassis collection.
+    + id (required, number, `/vehicles/types/groups/10/chassis`) ... Number `id` identification vehicle group type chassis collection.
  
 
 + Request (application/json)
 
     + Header
-    
+
             X-Api-Key: <your-private-token-key>
-            
+
 + Response 200 (application/json)
 
     + Attributes(array[VehicleChassis])
 
     + Header
-    
+
             X-Time: 2014-09-11T17:02:27.761+02:00
-            
+
     + Body
-    
+
             {
                 "chassis": [
                     {
@@ -1388,7 +1664,7 @@ Gets the vehicle groups chassis collection.
                     }
                 ]
             }
-        
+
 + Response 401
 + Response 403
 + Response 404
@@ -1399,25 +1675,215 @@ Gets the vehicle groups chassis collection.
 
 
 
-
-
 # Group Trainset
 The trainset resources can be used for managing trainsets.
 
+
 ## /trainsets
-<!-- POST s duplikaci, GET vsech -->
+
+### GET
+Gets the collection of trainsets.
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes(array[TrainsetListItem])
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
+    + Body
+
+            {
+                "trainsets": [
+                    {
+                        "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                        "edited": "2015-09-09T21:58:31+02:00",
+                        "name": "Shimns",
+                        "note": "Strojirna Brno",
+                        "trainsetType": 5,
+                        "databaseType": 1,
+                        "editor": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jan Novák",
+                            "role": "ADMIN"
+                        }
+                    },
+                    {
+                        "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                        "edited": "2015-09-09T21:58:31+02:00",
+                        "name": "Shimns",
+                        "note": "Skoda",
+                        "trainsetType": 7,
+                        "databaseType": 0,
+                        "editor": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jan Novák",
+                            "role": "ADMIN"
+                        }
+                }
+              ]
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+### POST
+Create a Trainset
+<!-- TODO: andpoint na pop-up s vozidly? -->
+
++ Request (application/json)
+
+    + Attributes(Trainset)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
+    + Body
+
+            {
+
+            }
+
++ Response 201 (application/json)
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
 
 ## /trainsets/{id}
 <!-- Seznam dostupnych vozidel = seznam vsech vozidel nebo zvlast funkce? -->
 <!-- PUT, GET konkretniho - pozor poradi hraje roli!, DELETE -->
+
++ Paramters:
+
+    + id - `id of user`
+
+
+
+## /trainsets/types
+
+### GET
+Gets the trainsets types collection.
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes(array[TrainsetType])
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+
+            {
+                "types": [
+                    {
+                        "id": 1,
+                        "group": 1,
+                        "title": "Vicenasobne jodnotky (MU)"
+                    },
+                    {
+                        "id": 2,
+                        "group": 1,
+                        "title": "Navrhova zatezovaci schemata"
+                    },
+                    {
+                        "id": 1,
+                        "group": 2,
+                        "title": "Uzivatelska souprava"
+                    }
+                ]
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /trainsets/types/groups
+
+### GET
+Gets the trainsets type groups collection.
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes(array[TrainsetGroupType])
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
+    + Body
+
+            {
+                "groups": [
+                    {
+                        "id": 1,
+                        "title": "Zatezovaci schemata"
+                    },
+                    {
+                        "id": 2,
+                        "title": "Uzivatelske soupravy"
+                    }
+                ]
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
 
 
 
 # Group Crossbeam
 The crossbeam resources can be used for managing crossbeams.
 
+
 ## /crossbeams
 <!-- POST s duplikaci, GET vsech -->
+
 
 ## /crossbeams/{id}
 <!-- PUT, GET, DELETE -->
