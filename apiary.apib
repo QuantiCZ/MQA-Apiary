@@ -56,22 +56,22 @@ MQA API is the REST API project for managing trains.
 
 ## DatabaseCatalogue (object)
 + id: 1 (number, required)
-+ title: "ČSN1230" (string, required)
++ name: "ČSN1230" (string, required)
 
 
 
 ## VehicleType (object)
 + id: 1 (number, required)
 + group: 2 (number, required)
-+ title: "Současné hnací vozidlo ČD" (string, required)
++ name: "Současné hnací vozidlo ČD" (string, required)
 
 ## VehicleGroupType (object)
 + id: 1 (number, required)
-+ title: "Současné hnací vozidlo ČD" (string, required)
++ name: "Současné hnací vozidlo ČD" (string, required)
 
 ## VehicleChassis (object)
 + id: 1 (number, required)
-+ title: "A1" (string, required)
++ name: "A1" (string, required)
 + totalAxles: 5 (number, required)
 
 ## VehicleListItem (object)
@@ -96,7 +96,7 @@ MQA API is the REST API project for managing trains.
 + series: "705" (string, required)
 + oldSeries: "T239.1" (string, optional)
 + note: "Prvni masina" (string, optional)
-+ icon: "BASE64 icon data" (string, optional)
++ photo: "BASE64 ilustrarion photo data" (string, optional)
 + forwardSpeed: 150 (number, required)
 + backwardSpeed: 15 (number, required)
 + gravityCenterHeight: 110 (number, required)
@@ -159,11 +159,11 @@ MQA API is the REST API project for managing trains.
 ## TrainsetType (object)
 + id: 1 (number, required)
 + group: 2 (number, required)
-+ title: "Schema tratovych trid" (string, required)
++ name: "Schema tratovych trid" (string, required)
 
 ## TrainsetGroupType (object)
 + id: 1 (number, required)
-+ title: "Uzivatelske soupravy" (string, required)
++ name: "Uzivatelske soupravy" (string, required)
 
 
 
@@ -500,7 +500,7 @@ The database types resources can be used for managing database types and catalog
 + Response 503
 
 
-## /database/normative
+## /database/normatives
 
 ### GET
 
@@ -514,7 +514,7 @@ The database types resources can be used for managing database types and catalog
 
     + Attributes (object)
 
-        + normative (array[DatabaseCatalogue])
+        + normatives (array[DatabaseCatalogue])
 
     + Header
 
@@ -523,14 +523,14 @@ The database types resources can be used for managing database types and catalog
     + Body
 
             {
-                "normative": [
+                "normatives": [
                     {
                         "id": 1,
-                        "title": "ČSN1230"
+                        "name": "ČSN1230"
                     },
                     {
                         "id": 2,
-                        "title": "NP1250"
+                        "name": "NP1250"
                     }
                 ]
             }
@@ -826,7 +826,7 @@ Creates a vehicle.
                 "databaseType": 1,
                 "normativeType": 12,
                 "note": "Prvni masina",
-                "icon": "base64 vehicle icon",
+                "photo": "base64 vehicle photo",
                 "series": "705",
                 "oldSeries": "T239.1",
                 "chassisType": 2,
@@ -937,7 +937,7 @@ Gets the vehicle attributes.
                     "databaseType": 1,
                     "normativeType": 3,
                     "note": "Prvni masina",
-                    "icon": "base64 vehicle icon",
+                    "photo": "base64 vehicle photo",
                     "series": "705",
                     "oldSeries": "T239.1",
                     "chassisType": 2,
@@ -1019,7 +1019,7 @@ Updates the vehicle attributes.
                     "vehicleType": 2,
                     "databaseType": 1,
                     "note": "Prvni masina",
-                    "icon": "base64 vehicle icon",
+                    "photo": "base64 vehicle photo",
                     "series": "705",
                     "oldSeries": "T239.1",
                     "chassisType": 2,
@@ -1628,12 +1628,12 @@ Gets the vehicle types collection.
                     {
                         "id": 1,
                         "group": 2,
-                        "title": "Současné hnací vozidlo ČD"
+                        "name": "Současné hnací vozidlo ČD"
                     },
                     {
                         "id": 2,
                         "group": 2,
-                        "title": "Kolejový jeřáb"
+                        "name": "Kolejový jeřáb"
                     }
                 ]
             }
@@ -1674,15 +1674,15 @@ Gets the vehicle type groups collection.
                 "groups": [
                     {
                         "id": 1,
-                        "title": "Hnací vozidla"
+                        "name": "Hnací vozidla"
                     },
                     {
                         "id": 2,
-                        "title": "Tažená vozidla"
+                        "name": "Tažená vozidla"
                     },
                     {
                         "id": 3,
-                        "title": "Části zatěžovacích schémat"
+                        "name": "Části zatěžovacích schémat"
                     }
                 ]
             }
@@ -1728,17 +1728,17 @@ Gets the vehicle groups chassis collection.
                 "chassis": [
                     {
                         "id": 1,
-                        "title": "A1",
+                        "name": "A1",
                         "totalAxles": 5
                     },
                     {
                         "id": 2,
-                        "title": "A2",
+                        "name": "A2",
                         "totalAxles": 5
                     },
                     {
                         "id": 3,
-                        "title": "A3",
+                        "name": "A3",
                         "totalAxles": 7
                     }
                 ]
@@ -1892,17 +1892,17 @@ Gets the trainsets types collection.
                     {
                         "id": 1,
                         "group": 1,
-                        "title": "Vicenasobne jodnotky (MU)"
+                        "name": "Vicenasobne jodnotky (MU)"
                     },
                     {
                         "id": 2,
                         "group": 1,
-                        "title": "Navrhova zatezovaci schemata"
+                        "name": "Navrhova zatezovaci schemata"
                     },
                     {
                         "id": 1,
                         "group": 2,
-                        "title": "Uzivatelska souprava"
+                        "name": "Uzivatelska souprava"
                     }
                 ]
             }
@@ -1943,11 +1943,11 @@ Gets the trainsets type groups collection.
                 "groups": [
                     {
                         "id": 1,
-                        "title": "Zatezovaci schemata"
+                        "name": "Zatezovaci schemata"
                     },
                     {
                         "id": 2,
-                        "title": "Uzivatelske soupravy"
+                        "name": "Uzivatelske soupravy"
                     }
                 ]
             }
