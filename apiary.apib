@@ -555,7 +555,7 @@ The export resources can be used for full database exports.
 
 
 ### POST
-Request to create database backup
+Request to create database dump file
 
 + Request (application/json)
 
@@ -563,42 +563,16 @@ Request to create database backup
 
             X-Api-Key: <your-private-token-key>
 
-+ Response 201 (application/json)
++ Response 200 (application/sql)
 
     + Header
 
             X-Time: 2014-09-11T17:02:27.761+02:00
-            Location: /database/export/12834734-42c9-11e6-beb8-9e71128cae77
-
-+ Response 401
-+ Response 403
-+ Response 404
-+ Response 405
-+ Response 406
-+ Response 500
-+ Response 503
-
-
-## /database/export/{id}
-
-### GET
-Download database backup link
-
-+ Request (application/json)
-
-    + Header
-
-            X-Api-Key: <your-private-token-key>
-
-+ Response 200 (file-stream)
-
-    + Header
-
-            X-Time: 2014-09-11T17:02:27.761+02:00
+            Content-Disposition: "attachment; filename=\"ppt_database_export-2015-09-09T21:58:31+02:00.sql>\""
 
     + Body
 
-            `export file stream`
+            `database dump file stream`
 
 + Response 401
 + Response 403
@@ -668,7 +642,7 @@ The import resources can be used for database CSV imports.
 ### POST
 Import database catlogs from CSV file
 
-+ Request (application/csv)
++ Request (multipart/form-data)
 
     + Header
 
@@ -693,8 +667,10 @@ Import database catlogs from CSV file
 + Response 503
 
 
-### GET
+## /database/import/logs
 Get database imports logs
+
+### GET
 
 + Request (application/json)
 
@@ -1576,8 +1552,7 @@ Gets the vehicle attchment file stream.
     + Header
 
             X-Time: 2014-09-11T17:02:27.761+02:00
-            Ccontent-disposition: "attachment; filename=\"<jemno prilohy>\""
-            
+            Content-Disposition: "attachment; filename=\"<jemno prilohy>\""
 
     + Body
 
