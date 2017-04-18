@@ -1414,9 +1414,7 @@ Gets the collection of vehicles attachments.
 ### POST
 Creates a vehicle attachment.
 
-+ Request (application/json)
-
-    + Attributes(VehicleAttachment)
++ Request (multipart/form-data)
 
     + Header
     
@@ -1425,9 +1423,6 @@ Creates a vehicle attachment.
     + Body
     
             {
-                "fileName": "pekny_obrazek.png"
-                "fileType": "image/png"
-                "content": "BASE64 file content",
                 "note": "moc pekny obrazek"
             }
 
@@ -1509,11 +1504,7 @@ Gets the vehicle attachment info.
 ### PUT
 Updates the vehicle attachment.
 
-+ Request (application/json)
-
-    + Attributes (object)
-
-        + attachment (VehicleAttachment)
++ Request (multipart/form-data)
 
     + Header
 
@@ -1522,12 +1513,7 @@ Updates the vehicle attachment.
     + Body
 
             {
-                "attachment": {
-                    "fileName": "pekny_obrazek.png"
-                    "fileType": "image/png"
-                    "content": "BASE64 file content",
-                    "note": "moc pekny obrazek"
-                }
+                "note": "moc pekny obrazek"
             }
 
 + Response 200
@@ -1590,6 +1576,8 @@ Gets the vehicle attchment file stream.
     + Header
 
             X-Time: 2014-09-11T17:02:27.761+02:00
+            Ccontent-disposition: "attachment; filename=\"<jemno prilohy>\""
+            
 
     + Body
 
