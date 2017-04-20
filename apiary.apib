@@ -29,6 +29,7 @@ MQA API is the REST API project for managing trains.
 
 ## User (object)
 + id: "d93f61c2-42c5-11e6-beb8-9e71128cae77" (string, required)
++ username "sanak" (string, required)
 + name: "Saňák" (string, required)
 + role: 1 (number, required)
 
@@ -48,10 +49,12 @@ MQA API is the REST API project for managing trains.
 
 ## DatabaseExportLog (object)
 + date: "2015-09-09T21:58:31+02:00" (string, required)
++ message: "Export {dumpFileName} byl úspěšně vytvořen." (string, optional)
 + user (User, required)
 
 ## DatabaseImportLog (object)
 + date: "2015-09-09T21:58:31+02:00" (string, required)
++ message: "{fileName} byl úspěšně importován." (string, optional)
 + user (User, required)
 
 ## DatabaseCatalogue (object)
@@ -610,6 +613,7 @@ Get database exports logs
                 "logs": [
                     {
                         "date": "2015-09-09T21:58:31+02:00",
+                        "message": "Export {dumpFileName} byl úspěšně vytvořen.",
                         "user": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jan Novák",
@@ -618,6 +622,7 @@ Get database exports logs
                     },
                     {
                         "date": "2015-09-09T21:58:31+02:00",
+                        "message": "Chyba při vytváření exportu: {e.Message}",
                         "user": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Pepik",
@@ -694,6 +699,7 @@ Get database imports logs
                 "logs": [
                     {
                         "date": "2015-09-09T21:58:31+02:00",
+                        "message": "{fileName} byl úspěšně importován.",
                         "user": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jan Novák",
@@ -702,6 +708,8 @@ Get database imports logs
                     },
                     {
                         "date": "2015-09-09T21:58:31+02:00",
+                        Chyba importu: {e.Message}
+                        "message": "Chyba importu: {e.Message}",
                         "user": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Pepik",
@@ -1567,7 +1575,6 @@ Gets the vehicle attchment file stream.
 + Response 503
 
 
-
 ## /vehicles/types
 
 ### GET
@@ -1602,6 +1609,63 @@ Gets the vehicle types collection.
                         "id": 2,
                         "group": 2,
                         "name": "Kolejový jeřáb"
+                    }
+                ]
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /vehicles/types/{id}/chassis
+
+### GET
+Gets the vehicle groups chassis collection.
+
++ Parameters:
+
+    + id (required, number, `/vehicles/types/10/chassis`) ... Number `id` identification vehicle type for its chassis collection.
+ 
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+
+        + chassis (array[VehicleChassis])
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
+    + Body
+
+            {
+                "chassis": [
+                    {
+                        "id": 1,
+                        "name": "A1",
+                        "totalAxles": 5
+                    },
+                    {
+                        "id": 2,
+                        "name": "A2",
+                        "totalAxles": 5
+                    },
+                    {
+                        "id": 3,
+                        "name": "A3",
+                        "totalAxles": 7
                     }
                 ]
             }
@@ -1662,64 +1726,6 @@ Gets the vehicle type groups collection.
 + Response 406
 + Response 500
 + Response 503
-
-
-## /vehicles/types/groups/{id}/chassis
-
-### GET
-Gets the vehicle groups chassis collection.
-
-+ Parameters:
-
-    + id (required, number, `/vehicles/types/groups/10/chassis`) ... Number `id` identification vehicle group type chassis collection.
- 
-
-+ Request (application/json)
-
-    + Header
-
-            X-Api-Key: <your-private-token-key>
-
-+ Response 200 (application/json)
-
-    + Attributes (object)
-
-        + chassis (array[VehicleChassis])
-
-    + Header
-
-            X-Time: 2014-09-11T17:02:27.761+02:00
-
-    + Body
-
-            {
-                "chassis": [
-                    {
-                        "id": 1,
-                        "name": "A1",
-                        "totalAxles": 5
-                    },
-                    {
-                        "id": 2,
-                        "name": "A2",
-                        "totalAxles": 5
-                    },
-                    {
-                        "id": 3,
-                        "name": "A3",
-                        "totalAxles": 7
-                    }
-                ]
-            }
-
-+ Response 401
-+ Response 403
-+ Response 404
-+ Response 405
-+ Response 406
-+ Response 500
-+ Response 503
-
 
 
 # Group Trainset
