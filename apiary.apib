@@ -80,16 +80,46 @@ MQA API is the REST API project for managing trains.
 ## VehicleListItem (object)
 + id: "d93f61c2-42c5-11e6-beb8-9e71128cae77" (string, required)
 + edited: "2015-09-09T21:58:31+02:00" (string, required)
-+ editor (User, required)
++ editor: "karel" (string, required)
 + name: "Mašina1" (string, required)
++ note: "Rychla kola" (string, optional)
 + vehicleType: 3 (number, required)
 + databaseType: 1 (number, required)
 + totalAxles: 5 (number, required)
 
 ## Vehicle (object)
 + id: "7d4846be-42c4-11e6-beb8-9e71128cae77" (string, required)
-+ edited: "2015-09-09T21:58:31+02:00" (string, required)
-+ editor (User, required)
++ created: "2015-09-09T21:58:31+02:00" (string, required)
++ creator (User, required)
++ edited: "2015-09-09T21:58:31+02:00" (string, optional)
++ editor (User, optional)
++ name: "Mašina1" (string, required)
++ partName: "Nazev casti zatez. schematu" (string, optional)
++ vehicleType: 2 (number, required)
++ databaseType: 1 (number, required)
++ chassisType: 12 (number, required)
++ normativeType: 3 (number, required)
++ series: "705" (string, required)
++ oldSeries: "T239.1" (string, optional)
++ note: "Prvni masina" (string, optional)
++ photo: "BASE64 ilustrarion photo data" (string, optional)
++ forwardSpeed: 150 (number, required)
++ backwardSpeed: 15 (number, required)
++ gravityCenterHeight: 110 (number, required)
++ bumperHeight: 10 (number, required)
++ pivotDistance: 12 (number, required)
++ pivotHeight: 7 (number, required)
++ dynamicForceFactor: 1.98 (number, required)
++ basicLoadFactor: 1.7 (number, required)
++ basicPassiveLoadFactor: 1.0 (number, required)
++ totalWorkingVehicles: 8 (number, required)
++ maxVelocity: 160 (number, required)
++ totalAxles: 5 (number, required)
++ axleForces (array[VehicleAxleForce], required)
++ tractiveForces (array[VehicleForce], required)
++ breakingForces (array[VehicleForce], required)
+
+## VehicleCreate (object)
 + name: "Mašina1" (string, required)
 + partName: "Nazev casti zatez. schematu" (string, optional)
 + vehicleType: 2 (number, required)
@@ -146,23 +176,42 @@ MQA API is the REST API project for managing trains.
 + fileName: "pekny_obrazek.png" (string, required)
 + fileType: "image/png" (string, required)
 + note: "moc pekny obrazek" (string, optional)
-          
 
 
 ## TrainsetListItem (object)
 + id: "d93f61c2-42c5-11e6-beb8-9e71128cae77" (string, required)
 + edited: "2015-09-09T21:58:31+02:00" (string, required)
-+ editor (User, required)
++ editor (string, required)
 + name: "Shimns" (string, required)
-+ note: "Strojirna Brno" (string, required)
++ note: "Strojirna Brno" (string, optional)
 + trainsetType: 5 (number, required)
 + databaseType: 1 (number, required)
 
 ## Trainset (object)
 + id: "d93f61c2-42c5-11e6-beb8-9e71128cae77" (string, required)
++ created: "2015-09-09T21:58:31+02:00" (string, required)
++ creator (User, required)
++ edited: "2015-09-09T21:58:31+02:00" (string, optional)
++ editor (User, optional)
 + name: "Shimns" (string, required)
++ note: "Extra kratky vlak" (string, optional)
 + databaseType: 1 (number, required)
-+ editor (User, required)
++ trainsetType: 3 (number, required)
++ vehicles (array[TrainsetVehicleItem], required)
+
+## TrainsetCreate (object)
++ name: "Shimns" (string, required)
++ note: "Extra kratky vlak" (string, optional)
++ databaseType: 1 (number, required)
++ trainsetType: 3 (number, required)
++ vehicles (array[TrainsetVehicleItem], required)
+
+## TrainsetVehicleItem (object)
++ vehicleId: "9a871e1e-11f0-4960-add6-e2f9eaa4c03d" (string, required)
++ count: 3 (number, required)
++ order: 2 (number, optional)
++ backward: false (boolean, required)
++ isOperational: true (boolean, required)
 
 ## TrainsetType (object)
 + id: 1 (number, required)
@@ -218,6 +267,7 @@ Returns the private API token key for the user with its validity.
                     "expiry": "2015-09-09T21:58:31+02:00",
                     "user": {
                         "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                        "username": "stanek",
                         "name": "Jan Novák",
                         "role": 1
                     }
@@ -291,11 +341,13 @@ List users
                     {
                         "id": "d93f61c2-42c5-11e6-beb8-9e71128cae77",
                         "name": "Admin",
+                        "username": "stanek",
                         "role": 1
                     },
                     {
                         "id": "12834734-42c9-11e6-beb8-9e71128cae77",
                         "name": "Pepik",
+                        "username": "karel",
                         "role": 2
                     }
                 ]
@@ -337,6 +389,7 @@ Get current user
             {
                 "id": "d93f61c2-42c5-11e6-beb8-9e71128cae77",
                 "name": "Admin",
+                "username": "stanek",
                 "role": 1
             }
 
@@ -617,6 +670,7 @@ Get database exports logs
                         "user": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jan Novák",
+                            "username": "stanek",
                             "role": 1
                         }
                     },
@@ -626,6 +680,7 @@ Get database exports logs
                         "user": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Pepik",
+                            "username": "karel",
                             "role": 2
                         }
                     }
@@ -703,16 +758,17 @@ Get database imports logs
                         "user": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jan Novák",
+                            "username": "stanek",
                             "role": 1
                         }
                     },
                     {
                         "date": "2015-09-09T21:58:31+02:00",
-                        Chyba importu: {e.Message}
                         "message": "Chyba importu: {e.Message}",
                         "user": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Pepik",
+                            "username": "karel",
                             "role": 2
                         }
                     }
@@ -760,27 +816,21 @@ Gets the collection of vehicles.
                         "id": "12834734-42c9-11e6-beb8-9e71128cae77",
                         "edited": "2015-09-09T21:58:31+02:00",
                         "name": "Mašina1",
+                        "note": "Rychla kola",
                         "vehicleType": 1,
                         "databaseType": 1,
                         "totalAxles": 2,
-                        "editor": {
-                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
-                            "name": "Jan Novák",
-                            "role": 1
-                        }
+                        "editor": "pepa"
                     },
                     {
                         "id": "12834734-42c9-11e6-beb8-9e71128cae77",
                         "edited": "2015-09-09T21:58:31+02:00",
                         "name": "Mašina2",
+                        "note": null,
                         "vehicleType": 2,
                         "databaseType": 0,
                         "totalAxles": 5,
-                        "editor": {
-                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
-                            "name": "Jan Novák",
-                            "role": 2
-                        }
+                        "editor": "Karel"
                 }
               ]
             }
@@ -800,7 +850,7 @@ Creates a vehicle.
 
 + Request (application/json)
 
-    + Attributes(Vehicle)
+    + Attributes(VehicleCreate)
 
     + Header
 
@@ -914,10 +964,18 @@ Gets the vehicle attributes.
             {
                 "vehicle": {
                     "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                    "created": "2015-09-09T21:58:31+02:00",
+                    "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jan Novák",
+                            "username": "stanek",
+                            "role": 1
+                    },
                     "edited": "2015-09-09T21:58:31+02:00",
                     "editor": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jan Novák",
+                            "username": "stanek",
                             "role": 1
                     },
                     "name": "Mašina1",
@@ -994,7 +1052,7 @@ Updates the vehicle attributes.
 
     + Attributes (object)
 
-        + vehicle (Vehicle)
+        + vehicle (VehicleCreate)
 
     + Header
     
@@ -1132,6 +1190,7 @@ Gets the collection of vehicles notes.
                         "creator": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jana Mala",
+                            "username": "lala",
                             "role":2
                         },
                         "edited": "2015-09-09T21:58:31+02:00",
@@ -1139,6 +1198,7 @@ Gets the collection of vehicles notes.
                         "editor": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jan Novák",
+                            "username": "stanek",
                             "role": 1
                         }
                     },
@@ -1148,6 +1208,7 @@ Gets the collection of vehicles notes.
                         "creator": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jana Mala",
+                            "username": "lala",
                             "role": 2
                         },
                         "edited": "2015-09-09T21:58:31+02:00",
@@ -1155,6 +1216,7 @@ Gets the collection of vehicles notes.
                         "editor": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jan Novák",
+                            "username": "stanek",
                             "role": 1
                         }
                     }
@@ -1239,6 +1301,7 @@ Gets the vehicle note.
                     "creator": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jana Mala",
+                            "username": "lala",
                             "role": 2
                         },
                     "edited": "2015-09-09T21:58:31+02:00",
@@ -1246,6 +1309,7 @@ Gets the vehicle note.
                     "editor": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jan Novák",
+                            "username": "stanek",
                             "role": 1
                         }
                 }
@@ -1357,6 +1421,7 @@ Gets the collection of vehicles attachments.
                         "creator": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jana Mala",
+                            "username": "lala",
                             "role": 1
                         },
                         "edited": null,
@@ -1371,6 +1436,7 @@ Gets the collection of vehicles attachments.
                         "creator": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jana Mala",
+                            "username": "lala",
                             "role": 2
                         },
                         "edited": "2015-09-09T21:58:31+02:00",
@@ -1380,6 +1446,7 @@ Gets the collection of vehicles attachments.
                         "editor": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jan Novák",
+                            "username": "stanek",
                             "role": 1
                         }
                     }
@@ -1461,6 +1528,7 @@ Gets the vehicle attachment info.
                      "created": "2015-09-09T21:58:31+02:00",                     
                      "creator": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "username": "lala",
                             "name": "Jana Mala",
                             "role": 2
                         },
@@ -1470,6 +1538,7 @@ Gets the vehicle attachment info.
                      "note": "Specifikace lokomotivy",
                      "editor": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "username": "stanek",
                             "name": "Jan Novák",
                             "role": 1
                         }
@@ -1758,32 +1827,24 @@ Gets the collection of trainsets.
             {
                 "trainsets": [
                     {
-                        "id": "12834734-42c9-11e6-beb8-9e71128cae77",
-                        "edited": "2015-09-09T21:58:31+02:00",
-                        "name": "Shimns",
-                        "note": "Strojirna Brno",
-                        "trainsetType": 5,
-                        "databaseType": 1,
-                        "editor": {
-                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
-                            "name": "Jan Novák",
-                            "role": 1
-                        }
+                        "id": "3dc0d33d-fa5c-4e0e-830b-6fb76a41b8ef",
+                        "edited": "2017-04-26T07:58:46.008033+02:00",
+                        "name": "Souprava 2",
+                        "note": "Extra kratky vlak",
+                        "editor": "Test User",
+                        "trainsetType": 3,
+                        "databaseType": 2
                     },
                     {
-                        "id": "12834734-42c9-11e6-beb8-9e71128cae77",
-                        "edited": "2015-09-09T21:58:31+02:00",
-                        "name": "Shimns",
-                        "note": "Skoda",
-                        "trainsetType": 7,
-                        "databaseType": 0,
-                        "editor": {
-                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
-                            "name": "Jan Novák",
-                            "role": 1
-                        }
-                }
-              ]
+                        "id": "1e5178ee-0982-490c-9273-f1cdbaf98273",
+                        "edited": "2017-04-25T13:19:39.299362+02:00",
+                        "name": "Souprava 1",
+                        "note": "Extra dlouhy vlak",
+                        "editor": "Test User",
+                        "trainsetType": 2,
+                        "databaseType": 1
+                    }
+                ]
             }
 
 + Response 401
@@ -1797,11 +1858,11 @@ Gets the collection of trainsets.
 
 ### POST
 Create a Trainset
-<!-- TODO: andpoint na pop-up s vozidly? -->
+<!-- TODO: separatni endpoint na pop-up s vozidly? -->
 
 + Request (application/json)
 
-    + Attributes(Trainset)
+    + Attributes(TrainsetCreate)
 
     + Header
 
@@ -1810,7 +1871,36 @@ Create a Trainset
     + Body
 
             {
-
+                "name": "Souprava 2",
+                "note": "Extra kratky vlak",
+                "databaseType": 2,
+                "trainsetType": 3,
+                "vehicles": [
+                    {
+                        "vehicleId": "b1951f6f-6c65-4d0f-a2ec-64e9b35b60be",
+                        "count": 2,
+                        "isOperational": true,
+                        "backward": true
+                    },
+                    {
+                        "vehicleId": "9a871e1e-11f0-4960-add6-e2f9eaa4c03d",
+                        "count": 1,
+                        "isOperational": true,
+                        "backward": false
+                    },
+                    {
+                        "vehicleId": "b1951f6f-6c65-4d0f-a2ec-64e9b35b60be",
+                        "count": 1,
+                        "isOperational": false,
+                        "backward": false
+                    },
+                    {
+                        "vehicleId": "9a871e1e-11f0-4960-add6-e2f9eaa4c03d",
+                        "count": 5,
+                        "isOperational": false,
+                        "backward": true
+                    }
+                ]
             }
 
 + Response 201 (application/json)
@@ -1829,13 +1919,180 @@ Create a Trainset
 
 
 ## /trainsets/{id}
-<!-- Seznam dostupnych vozidel = seznam vsech vozidel nebo zvlast funkce? -->
-<!-- PUT, GET konkretniho - pozor poradi hraje roli!, DELETE -->
 
-+ Paramters:
++ Parameters:
 
-    + id - `id of user`
+    + id (required, number, `/trainsets/12834734-42c9-11e6-beb8-9e71128cae77`) ... Number `id`  unique identification of trainset.
 
+### GET
+Gets the trainset attributes.
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+
+        + trainset (Trainset)
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
+    + Body
+
+            {
+                "trainset": {
+                    "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                    "created": "2015-09-09T21:58:31+02:00",
+                    "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jan Novák",
+                            "username": "stanek",
+                            "role": 1
+                    },
+                    "edited": "2015-09-09T21:58:31+02:00",
+                    "editor": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jan Novák",
+                            "username": "stanek",
+                            "role": 1
+                    },
+                    "name": "Souprava 2",
+                    "note": "Extra kratky vlak",
+                    "databaseType": 2,
+                    "trainsetType": 3,
+                    "vehicles": [
+                        {
+                            "order": 1,
+                            "vehicleId": "b1951f6f-6c65-4d0f-a2ec-64e9b35b60be",
+                            "count": 2,
+                            "isOperational": true,
+                            "backward": true
+                        },
+                        {
+                            "order": 2,
+                            "vehicleId": "9a871e1e-11f0-4960-add6-e2f9eaa4c03d",
+                            "count": 1,
+                            "isOperational": true,
+                            "backward": false
+                        },
+                        {
+                            "order": 3,
+                            "vehicleId": "b1951f6f-6c65-4d0f-a2ec-64e9b35b60be",
+                            "count": 1,
+                            "isOperational": false,
+                            "backward": false
+                        },
+                        {
+                            "order": 4,
+                            "vehicleId": "9a871e1e-11f0-4960-add6-e2f9eaa4c03d",
+                            "count": 5,
+                            "isOperational": false,
+                            "backward": true
+                        }
+                    ]
+                }
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+### PUT
+Updates the trainset attributes.
+
++ Request (application/json)
+
+    + Attributes (object)
+
+        + trainset (TrainsetCreate)
+
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
+    + Body
+
+            {
+                'trainset": {
+                    "name": "Souprava 2",
+                    "note": "Extra kratky vlak",
+                    "databaseType": 2,
+                    "trainsetType": 3,
+                    "vehicles": [
+                        {
+                            "vehicleId": "b1951f6f-6c65-4d0f-a2ec-64e9b35b60be",
+                            "count": 2,
+                            "isOperational": true,
+                            "backward": true
+                        },
+                        {
+                            "vehicleId": "9a871e1e-11f0-4960-add6-e2f9eaa4c03d",
+                            "count": 1,
+                            "isOperational": true,
+                            "backward": false
+                        },
+                        {
+                            "vehicleId": "b1951f6f-6c65-4d0f-a2ec-64e9b35b60be",
+                            "count": 1,
+                            "isOperational": false,
+                            "backward": false
+                        },
+                        {
+                            "vehicleId": "9a871e1e-11f0-4960-add6-e2f9eaa4c03d",
+                            "count": 5,
+                            "isOperational": false,
+                            "backward": true
+                        }
+                    ]
+                }
+            }
+
++ Response 200
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+### DELETE
+Deletes the trainset completely.
+
++ Request (application/json)
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
++ Response 200
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
 
 
 ## /trainsets/types
@@ -1858,25 +2115,31 @@ Gets the trainsets types collection.
     + Header
 
             X-Time: 2014-09-11T17:02:27.761+02:00
-            
+
     + Body
+    
 
             {
                 "types": [
                     {
                         "id": 1,
                         "group": 1,
-                        "name": "Vicenasobne jodnotky (MU)"
+                        "name": "Schémata traťových / lokomotivních tříd"
                     },
                     {
                         "id": 2,
                         "group": 1,
-                        "name": "Navrhova zatezovaci schemata"
+                        "name": "Vícenásobné jednotky (MU)"
                     },
                     {
-                        "id": 1,
+                        "id": 3,
+                        "group": 1,
+                        "name": "Návrhová zatěžovací schémata"
+                    },
+                    {
+                        "id": 4,
                         "group": 2,
-                        "name": "Uzivatelska souprava"
+                        "name": "Uživatelské soupravy"
                     }
                 ]
             }
@@ -1890,49 +2153,6 @@ Gets the trainsets types collection.
 + Response 503
 
 
-## /trainsets/types/groups
-
-### GET
-Gets the trainsets type groups collection.
-
-+ Request (application/json)
-
-    + Header
-
-            X-Api-Key: <your-private-token-key>
-
-+ Response 200 (application/json)
-
-    + Attributes (object)
-
-        + groups (array[TrainsetGroupType])
-
-    + Header
-
-            X-Time: 2014-09-11T17:02:27.761+02:00
-
-    + Body
-
-            {
-                "groups": [
-                    {
-                        "id": 1,
-                        "name": "Zatezovaci schemata"
-                    },
-                    {
-                        "id": 2,
-                        "name": "Uzivatelske soupravy"
-                    }
-                ]
-            }
-
-+ Response 401
-+ Response 403
-+ Response 404
-+ Response 405
-+ Response 406
-+ Response 500
-+ Response 503
 
 
 
