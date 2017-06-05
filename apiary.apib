@@ -247,7 +247,7 @@ MQA API is the REST API project for managing trains.
 + trackSectionCode: 12 (number, required)
 + trackSectionPlacement: 2.75 (number, required)
 + trackLoadClassType: 9 (number, required)
-+ laodCapacity: 0.75 (number, required)
++ loadCapacity: 0.75 (number, required)
 + databaseType: 1 (number, required)
 
 ## NormativeNKElement (object)
@@ -298,7 +298,7 @@ MQA API is the REST API project for managing trains.
 + trackSectionPlacement: 5 (number, required)
 + trackLoadClassType: 3 (number, required)
 + trackLoadClassVelocity: 160 (number, required)
-+ laodCapacity: 1.80 (number, required)
++ loadCapacity: 1.80 (number, required)
 + older30years: true (boolean, required)
 + nkElement (TrackNKElement, required)
 + plainFieldGroup (PlainFieldGroup, required)
@@ -312,7 +312,7 @@ MQA API is the REST API project for managing trains.
 + trackSectionPlacement: 5 (number, required)
 + trackLoadClassType: 3 (number, required)
 + trackLoadClassVelocity: 160 (number, required)
-+ laodCapacity: 1.80 (number, required)
++ loadCapacity: 1.80 (number, required)
 + older30years: true (boolean, required)
 + nkElement (TrackNKElement, required)
 + plainFieldGroup (PlainFieldGroup, required)
@@ -2339,7 +2339,7 @@ Gets the trainsets types collection.
 
 
 
-# Group Tracks
+# Group Track
 The tracks resources can be used for managing track section.
 
 
@@ -2427,7 +2427,7 @@ Gets the users collection of tracks.
                         "name": "Výtoň",
                         "note": "mostovka",
                         "trackLoadClass": 9,
-                        "laodCapacity": 0.75,
+                        "loadCapacity": 0.75,
                         "databaseType": 1
                     },
                     {
@@ -2440,7 +2440,7 @@ Gets the users collection of tracks.
                         "name": "Ocelový most",
                         "note": null,
                         "trackLoadClass": 7,
-                        "laodCapacity": 1.80,
+                        "loadCapacity": 1.80,
                         "databaseType": 2
                     }
                ]
@@ -2478,7 +2478,7 @@ Creates a track.
                 "trackType": 2,
                 "trackLoadClassType": 3,
                 "trackLoadClassVelocity": 7,
-                "laodCapacity": 1.80,
+                "loadCapacity": 1.80,
                 "databaseType": 2
                 "older30years": true,
                 "nkElement": {
@@ -2614,7 +2614,7 @@ Gets the track attributes.
                     "trackType": 2,
                     "trackLoadClassType": 3,
                     "trackLoadClassVelocity": 7,
-                    "laodCapacity": 1.80,
+                    "loadCapacity": 1.80,
                     "databaseType": 2
                     "older30years": true,
                     "nkElement": {
@@ -2715,7 +2715,7 @@ Updates the track attributes.
                     "trackType": 2,
                     "trackLoadClassType": 3,
                     "trackLoadClassVelocity": 7,
-                    "laodCapacity": 1.80,
+                    "loadCapacity": 1.80,
                     "databaseType": 2
                     "older30years": true,
                     "nkElement": {
@@ -3129,7 +3129,7 @@ Gets the track types collection.
 ## /tracks/loadClassTypes
 
 ### GET
-Gets th track laod classes collection.
+Gets th track load classes collection.
 
 + Request (application/json)
 
