@@ -15,6 +15,7 @@ MQA API is the REST API project for managing trains.
 + errorDetail: `detail of errors` (string)
 
 
+<!-- Authentication -->
 
 ## Auth (object)
 + username: `hrabalo` (string, required)
@@ -26,10 +27,11 @@ MQA API is the REST API project for managing trains.
 + user (User, required)
 
 
+<!-- Users -->
 
 ## User (object)
 + id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
-+ username `sanak` (string, required)
++ username: `sanak` (string, required)
 + name: `Saňák` (string, required)
 + role: 1 (number, required)
 
@@ -42,6 +44,7 @@ MQA API is the REST API project for managing trains.
 + name: `USER` (string, required)
 
 
+<!-- Database -->
 
 ## DatabaseType (object)
 + id: 1 (number, required)
@@ -62,6 +65,7 @@ MQA API is the REST API project for managing trains.
 + name: `ČSN1230` (string, required)
 
 
+<!-- Vehicles -->
 
 ## VehicleType (object)
 + id: 1 (number, required)
@@ -178,6 +182,8 @@ MQA API is the REST API project for managing trains.
 + note: `moc pekny obrazek` (string, optional)
 
 
+<!-- Trainset -->
+
 ## TrainsetListItem (object)
 + id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
 + edited: `2015-09-09T21:58:31+02:00` (string, required)
@@ -223,6 +229,185 @@ MQA API is the REST API project for managing trains.
 + name: `Uzivatelske soupravy` (string, required)
 
 
+<!-- Tracks -->
+
+## TrackTabelizedListItem (object)
++ id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
++ created: `2015-09-09T21:58:31+02:00` (string, required)
++ name: `Zatřídění soupravy` (string, required)
++ note: `Automatická tabelizace` (string, optional)
+
+## TrackListItem (object)
++ id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
++ edited: `2015-09-09T21:58:31+02:00` (string, required)
++ editor: `karel` (string, required)
++ name: `Výtoň` (string, required)
++ note: `mostovka` (string, optional)
++ trackType: 1 (number, required)
++ trackSectionCode: 12 (number, required)
++ trackSectionPlacement: 2.75 (number, required)
++ trackLoadClassType: 9 (number, required)
++ laodCapacity: 0.75 (number, required)
++ databaseType: 1 (number, required)
+
+## NormativeNKElement (object)
+<!-- TODO: ... -->
+
+## TrackNKElement (object)
++ crossbeamType: 2 (number, required)
++ crossbeamLength: 10.8 (number, optional)
++ specialCrossbeam (SpecialCrossbeamNKElement, required)
++ normatives (array[NormativeNKElement], required)
+
+## SpecialCrossbeamNKElement (object)
++ name: `Maly most` (string, required)
++ descriptionNote: `null` (string, optional)
++ sourceNote: `Modernizace Čáslav - Chrudim, SO 28-30-16, Příloha 11, Statický  výpočet, SUDOP PRAHA 2004, str. 498)` (string, optional)
++ beamForces (array[BeamForceNKElement], required)
+
+## BeamForceNKElement (object)
++ point: 10 (number, required)
++ leftForce: 40 (number, required)
++ rightForce: 40 (number, required)
+
+## PlainFieldGroup (object)
++ trackQuality: 2 (number, required)
++ trackPlacing: 1 (number, required)
++ tracksOnBridge: 1 (number, required)
++ trackConnection: false (boolean, required)
++ mainCrossbeamDistance: 10.2 (number, required)
++ plainFields (array[PlainFiledElement], required)
++ beamFields (array[PlainFiledElement], required)
+
+## PlainFiledElement (object)
++ initialSpread: 1.0 (number, required)
++ terminalSpread: 10.0 (number, required)
++ increase: 0.2 (number, required)
+
+## Track (object)
++ id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
++ created: `2015-09-09T21:58:31+02:00` (string, required)
++ creator (User, required)
++ edited: `2015-09-09T21:58:31+02:00` (string, optional)
++ editor (User, optional)
++ name: `Ocelový most` (string, required)
++ note: `Jiz notne stary` (string, optional)
++ databaseType: 1 (number, required)
++ trackType: 2 (number, required)
++ trackSectionCode: 12 (number, required)
++ trackSectionPlacement: 5 (number, required)
++ trackLoadClassType: 3 (number, required)
++ trackLoadClassVelocity: 160 (number, required)
++ laodCapacity: 1.80 (number, required)
++ older30years: true (boolean, required)
++ nkElement (TrackNKElement, required)
++ plainFieldGroup (PlainFieldGroup, required)
+
+## TrackCreate (object)
++ name: `Ocelový most` (string, required)
++ note: `Jiz notne stary` (string, optional)
++ databaseType: 1 (number, required)
++ trackType: 2 (number, required)
++ trackSectionCode: 12 (number, required)
++ trackSectionPlacement: 5 (number, required)
++ trackLoadClassType: 3 (number, required)
++ trackLoadClassVelocity: 160 (number, required)
++ laodCapacity: 1.80 (number, required)
++ older30years: true (boolean, required)
++ nkElement (TrackNKElement, required)
++ plainFieldGroup (PlainFieldGroup, required)
+
+## TrackAttachment (object)
++ id: `7d4846be-42c4-11e6-beb8-9e71128cae77` (string, required)
++ created: `2015-09-09T21:58:31+02:00` (string, required)
++ creator (User, required)
++ edited: `2015-09-09T21:58:31+02:00` (string, required)
++ editor (User, required)
++ fileName: `pekny_obrazek.png` (string, required)
++ fileType: `image/png` (string, required)
++ note: `moc pekny obrazek` (string, optional)
+
+## TrackType (object)
++ id: 1 (number, required)
++ name: `Prvek NK` (string, required)
+
+## TrackLoadClassType (object)
++ id: 1 (number, required)
++ name: `E5` (string, required)
+
+## TrackCrossbeamType (object)
++ id: 1 (number, required)
++ name: `S - Speciální příčníková čára` (string, required)
+
+## TrackQualityType (object)
++ id: 1 (number, required)
++ name: `Standardní kvalita jízdní dráhy` (string, required)
+
+## TrackPlacingType (object)
++ id: 1 (number, required)
++ name: `Průběžné kolejové lože` (string, required)
+
+## TracksOnBridgeType (object)
++ id: 1 (number, required)
++ name: `Jednokolejný most` (string, required)
+
+## TrackSectionType (object)
++ id: 1 (number, required)
++ name: `0100` (string, required)
+
+## TrackSectionBridge (object)
++ id: 1 (number, required)
++ section: `0100` (string, required)
++ name: `Zelný most` (string, required)
++ placement: 10.6 (number, required)
++ historical: false (boolean, required)
++ id: 1 (number, required)
+
+
+<!-- Routes -->
+
+## RouteListItem (object)
++ id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
++ edited: `2015-09-09T21:58:31+02:00` (string, required)
++ editor: `Karel Maly` (string, required)
++ databaseType: 1 (number, required)
++ name: `Cargo` (string, required)
++ startStation: `Pardubice` (string, required)
++ endStation: `Ústí n. Labem` (string, required)
++ note: `Transformator` (string, optional)
+
+## Route (object)
++ id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
++ created: `2015-09-09T21:58:31+02:00` (string, required)
++ creator (User, required)
++ edited: `2015-09-09T21:58:31+02:00` (string, optional)
++ editor (User, optional)
++ name: `Transformátor` (string, required)
++ note: `Strojírna Brno` (string, optional)
++ databaseType: 1 (number, required)
++ startStation: `Brno` (string, required)
++ endStation: `Kolín` (string, required)
++ throughStation: `Kutna Hora` (string, optional)
++ tracks (array[RouteTrackItem], required)
+
+## RouteCreate (object)
++ name: `Transformátor` (string, required)
++ note: `Strojírna Brno` (string, optional)
++ databaseType: 1 (number, required)
++ startStation: `Brno` (string, required)
++ endStation: `Kolín` (string, required)
++ throughStation: `Kutna Hora` (string, optional)
++ tracks (array[RouteTrackItem], required)
+
+## RouteTrackItem (object)
++ trackId: `9a871e1e-11f0-4960-add6-e2f9eaa4c03d` (string, required)
++ backward: false (boolean, required)
+
+
+<!-- Normative -->
+
+
+<!-- Crossbeams -->
 
 ## Crossbeams (array)
 + id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
@@ -1303,7 +1488,7 @@ Gets the vehicle note.
                             "name": "Jana Mala",
                             "username": "lala",
                             "role": 2
-                        },
+                    },
                     "edited": "2015-09-09T21:58:31+02:00",
                     "content": "A hlavne jezdi pomalu",
                     "editor": {
@@ -1311,7 +1496,7 @@ Gets the vehicle note.
                             "name": "Jan Novák",
                             "username": "stanek",
                             "role": 1
-                        }
+                    }
                 }
             }
 
@@ -2153,6 +2338,1431 @@ Gets the trainsets types collection.
 + Response 503
 
 
+
+# Group Tracks
+The tracks resources can be used for managing track section.
+
+
+## /tracks/tabelized
+
+### GET
+Gets automatic tabelized collection of tracks.
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+
+        + tracks (array[TrackTabelizedListItem])
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
+    + Body
+
+            {
+                "tracks": [
+                    {
+                        "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                        "created": "2015-09-09T21:58:31+02:00",
+                        "name": "Zatřídění soupravy",
+                        "note": "Automatická tabelizace s příčníky"
+                    },
+                    {
+                        "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                        "created": "2015-09-09T21:58:31+02:00",
+                        "name": "Zatřídění soupravy",
+                        "note": "Automatická tabelizace"
+                    }
+               ]
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /tracks
+
+### GET
+Gets the users collection of tracks.
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+
+        + tracks (array[TrackListItem])
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
+    + Body
+
+            {
+                "tracks": [
+                    {
+                        "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                        "edited": "2015-09-09T21:58:31+02:00",
+                        "editor": "pepa",
+                        "trackType": 1,
+                        "trackSectionCode": 12,
+                        "trackSectionPlacement": 2.75,
+                        "name": "Výtoň",
+                        "note": "mostovka",
+                        "trackLoadClass": 9,
+                        "laodCapacity": 0.75,
+                        "databaseType": 1
+                    },
+                    {
+                        "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                        "edited": "2015-09-09T21:58:31+02:00",
+                        "editor": "karel",
+                        "trackType": 2,
+                        "trackSectionCode": 11,
+                        "trackSectionPlacement": 1.75,
+                        "name": "Ocelový most",
+                        "note": null,
+                        "trackLoadClass": 7,
+                        "laodCapacity": 1.80,
+                        "databaseType": 2
+                    }
+               ]
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+### POST
+Creates a track.
+<!--TODO: Samostatny endpoint na Duplikaci - nebo se bude datove dit na strane FrontEndu -->
+
++ Request (application/json)
+
+    + Attributes(TrackCreate)
+
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
+    + Body
+
+            {
+                "name": "Ocelový most",
+                "note": null,
+                "trackSectionCode": 12,
+                "trackSectionPlacement": 5,
+                "trackType": 2,
+                "trackLoadClassType": 3,
+                "trackLoadClassVelocity": 7,
+                "laodCapacity": 1.80,
+                "databaseType": 2
+                "older30years": true,
+                "nkElement": {
+                    "crossbeamType": 2,
+                    "crossbeamLength": 20.1,
+                    "specialCrossbeam": {
+                        "name": "Maly most",
+                        "descriptionNote": null,
+                        "sourceNote": "Modernizace Čáslav - Chrudim, SO 28-30-16, Příloha 11, Statický  výpočet, SUDOP PRAHA 2004, str. 498)",
+                        "beamForces": [
+                            {
+                                "point": 0,
+                                "leftForce": 0,
+                                "rightForce": 0
+                            },
+                            {
+                                "point": 5,
+                                "leftForce": 20,
+                                "rightForce": 20
+                            },
+                            {
+                                "point": 10,
+                                "leftForce": -40,
+                                "rightForce": -40
+                            },
+                            {
+                                "point": 15,
+                                "leftForce": 0,
+                                "rightForce": 0
+                            },
+                        ]
+                    },
+                    "normatives": []
+                },
+                "plainFieldGroup": {
+                    "trackQuality": 2,
+                    "trackPlacing": 1,
+                    "trackConnection": false,
+                    "tracksOnBridge": 2,
+                    "mainCrossbeamDistance": 10.2
+                    "plainFields": [
+                        {
+                            "initialSpread": 1.0,
+                            "terminalSpread": 10.0,
+                            "increase": 0.2
+                        },
+                        {
+                            "initialSpread": 10.0,
+                            "terminalSpread": 20.0,
+                            "increase": 0.5
+                        }
+                    ],
+                    "beamFields": [
+                        {
+                            "initialSpread": 1.0,
+                            "terminalSpread": 4.0,
+                            "increase": 0.2
+                        },
+                        {
+                            "initialSpread": 4.0,
+                            "terminalSpread": 6.0,
+                            "increase": 0.2
+                        }
+                    ],
+                }
+            }
+
++ Response 201 (application/json)
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            Location: /tracks/12834734-42c9-11e6-beb8-9e71128cae77
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+
+## /tracks/{id}
+
++ Parameters:
+
+    + id (required, number, `/tracks/12834734-42c9-11e6-beb8-9e71128cae77`) ... Number `id`  unique identification of track.
+
+### GET
+Gets the track attributes.
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+
+        + track (Track)
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
+    + Body
+
+            {
+                "track": {
+                    "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                    "created": "2015-09-09T21:58:31+02:00",
+                    "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jan Novák",
+                            "username": "stanek",
+                            "role": 1
+                    },
+                    "edited": "2015-09-09T21:58:31+02:00",
+                    "editor": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jan Novák",
+                            "username": "stanek",
+                            "role": 1
+                    },
+                    "name": "Ocelový most",
+                    "note": null,
+                    "trackSectionCode": 12,
+                    "trackSectionPlacement": 5,
+                    "trackType": 2,
+                    "trackLoadClassType": 3,
+                    "trackLoadClassVelocity": 7,
+                    "laodCapacity": 1.80,
+                    "databaseType": 2
+                    "older30years": true,
+                    "nkElement": {
+                        "crossbeamType": 2,
+                        "crossbeamLength": 20.1,
+                        "specialCrossbeam": {
+                            "name": "Maly most",
+                            "descriptionNote": null,
+                            "sourceNote": "Modernizace Čáslav - Chrudim, SO 28-30-16, Příloha 11, Statický  výpočet, SUDOP PRAHA 2004, str. 498)",
+                            "beamForces": [
+                                {
+                                    "point": 0,
+                                    "leftForce": 0,
+                                    "rightForce": 0
+                                },
+                                {
+                                    "point": 5,
+                                    "leftForce": 20,
+                                    "rightForce": 20
+                                },
+                                {
+                                    "point": 10,
+                                    "leftForce": -40,
+                                    "rightForce": -40
+                                },
+                                {
+                                    "point": 15,
+                                    "leftForce": 0,
+                                    "rightForce": 0
+                                },
+                            ]
+                        },
+                        "normatives": []
+                    },
+                    "plainFieldGroup": {
+                        "trackQuality": 2,
+                        "trackPlacing": 1,
+                        "trackConnection": false,
+                        "tracksOnBridge": 2,
+                        "mainCrossbeamDistance": 10.2
+                        "plainFields": [
+                            {
+                                "initialSpread": 1.0,
+                                "terminalSpread": 10.0,
+                                "increase": 0.2
+                            },
+                            {
+                                "initialSpread": 10.0,
+                                "terminalSpread": 20.0,
+                                "increase": 0.5
+                            }
+                        ],
+                        "beamFields": [
+                            {
+                                "initialSpread": 1.0,
+                                "terminalSpread": 4.0,
+                                "increase": 0.2
+                            },
+                            {
+                                "initialSpread": 4.0,
+                                "terminalSpread": 6.0,
+                                "increase": 0.2
+                            }
+                        ]
+                    }
+                }
+            }
+        
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+### PUT
+Updates the track attributes.
+
++ Request (application/json)
+
+    + Attributes (object)
+
+        + track (TrackCreate)
+
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
+    + Body
+    
+            {
+               "track": {
+                    "name": "Ocelový most",
+                    "note": null,
+                    "trackSectionCode": 12,
+                    "trackSectionPlacement": 5,
+                    "trackType": 2,
+                    "trackLoadClassType": 3,
+                    "trackLoadClassVelocity": 7,
+                    "laodCapacity": 1.80,
+                    "databaseType": 2
+                    "older30years": true,
+                    "nkElement": {
+                        "crossbeamType": 2,
+                        "crossbeamLength": 20.1,
+                        "specialCrossbeam": {
+                            "name": "Maly most",
+                            "descriptionNote": null,
+                            "sourceNote": "Modernizace Čáslav - Chrudim, SO 28-30-16, Příloha 11, Statický  výpočet, SUDOP PRAHA 2004, str. 498)",
+                            "beamForces": [
+                                {
+                                    "point": 0,
+                                    "leftForce": 0,
+                                    "rightForce": 0
+                                },
+                                {
+                                    "point": 5,
+                                    "leftForce": 20,
+                                    "rightForce": 20
+                                },
+                                {
+                                    "point": 10,
+                                    "leftForce": -40,
+                                    "rightForce": -40
+                                },
+                                {
+                                    "point": 15,
+                                    "leftForce": 0,
+                                    "rightForce": 0
+                                },
+                            ]
+                        },
+                        "normatives": []
+                    },
+                    "plainFieldGroup": {
+                        "trackQuality": 2,
+                        "trackPlacing": 1,
+                        "trackConnection": false,
+                        "tracksOnBridge": 2,
+                        "mainCrossbeamDistance": 10.2
+                        "plainFields": [
+                            {
+                                "initialSpread": 1.0,
+                                "terminalSpread": 10.0,
+                                "increase": 0.2
+                            },
+                            {
+                                "initialSpread": 10.0,
+                                "terminalSpread": 20.0,
+                                "increase": 0.5
+                            }
+                        ],
+                        "beamFields": [
+                            {
+                                "initialSpread": 1.0,
+                                "terminalSpread": 4.0,
+                                "increase": 0.2
+                            },
+                            {
+                                "initialSpread": 4.0,
+                                "terminalSpread": 6.0,
+                                "increase": 0.2
+                            }
+                        ],
+                    }
+                }
+            }
+
++ Response 200
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+        
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+### DELETE
+Deletes the track completely.
+
++ Request (application/json)
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
++ Response 200
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+
+## /tracks/{trackId}/attachments
+
++ Parameters:
+
+    + trackId (required, number, `/tracks/12834734-42c9-11e6-beb8-9e71128cae77/attachments`) ... Number `trackId`  unique identification of track.
+
+
+### GET
+Gets the collection of trcks attachments.
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+
+        + attachments (array[TrackAttachment])
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
+    + Body
+    
+            {
+                "attachments": [
+                    {
+                        "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                        "created": "2015-09-09T21:58:31+02:00",
+                        "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jana Mala",
+                            "username": "lala",
+                            "role": 1
+                        },
+                        "edited": null,
+                        "editor": null,
+                        "fileName": "pekny_obrazek.png"
+                        "fileType": "image/png",
+                        "note": "moc pekny obrazek"
+                    },
+                    {
+                        "id": "92834734-42c9-11e6-beb8-9e71128cae77",
+                        "created": "2015-09-09T21:58:31+02:00",
+                        "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jana Mala",
+                            "username": "lala",
+                            "role": 2
+                        },
+                        "edited": "2015-09-09T21:58:31+02:00",
+                        "fileName": "specifikace.pdf"
+                        "fileType": "document/pdf",
+                        "note": "Specifikace lokomotivy",
+                        "editor": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jan Novák",
+                            "username": "stanek",
+                            "role": 1
+                        }
+                    }
+              ]
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+### POST
+Creates a track attachment.
+
++ Request (multipart/form-data)
+
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
+    + Body
+    
+            {
+                "note": "moc pekny obrazek"
+            }
+
++ Response 201 (application/json)
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            Location: /track/12834734-42c9-11e6-beb8-9e71128cae77/attachments/92834734-42c9-11e6-beb8-9e71128cae77
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /tracks/{trackId}/attachments/{id}
+
++ Parameters:
+
+    + trackId (required, number, `/tracks/12834734-42c9-11e6-beb8-9e71128cae77/attachments/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `trackId`  unique identification of track.
+    + id (required, number, `/tracks/12834734-42c9-11e6-beb8-9e71128cae77/attachments/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `id`  unique identification attachment of track.
+
+
+### GET
+Gets the track attachment info.
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+
+        + attachment (TrackAttachment)
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
+    + Body
+
+            {
+                "attachment": {
+                     "id": "92834734-42c9-11e6-beb8-9e71128cae77",
+                     "created": "2015-09-09T21:58:31+02:00",                     
+                     "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "username": "lala",
+                            "name": "Jana Mala",
+                            "role": 2
+                        },
+                     "edited": "2015-09-09T21:58:31+02:00",
+                     "fileName": "specifikace.pdf"
+                     "fileType": "document/pdf",
+                     "note": "Specifikace lokomotivy",
+                     "editor": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "username": "stanek",
+                            "name": "Jan Novák",
+                            "role": 1
+                        }
+                }
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+### PUT
+Updates the track attachment.
+
++ Request (multipart/form-data)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
+    + Body
+
+            {
+                "note": "moc pekny obrazek"
+            }
+
++ Response 200
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+### DELETE
+Delete the track attachment.
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /tracks/{trackId}/attachments/{id}/file
+
++ Parameters:
+
+    + trackId (required, number, `/tracks/12834734-42c9-11e6-beb8-9e71128cae77/attachments/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `trackId`  unique identification track.
+    + id (required, number, `/tracks/12834734-42c9-11e6-beb8-9e71128cae77/attachments/92834734-42c9-11e6-beb8-9e71128cae77`) ... Number `id`  unique identification attachment of track.
+
+### GET
+Gets the track attchment file stream.
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (content-type of file)
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            Content-Disposition: "attachment; filename=\"<jemno prilohy>\""
+
+    + Body
+
+            `File content as stream`
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /tracks/types
+
+### GET
+Gets the track types collection.
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+
+        + types (array[TrackType])
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+
+            {
+                "types": [
+                    {
+                        "id": 1,
+                        "name": "Skupina prostých polí"
+                    },
+                    {
+                        "id": 2,
+                        "name": "Prvek NK"
+                    }
+                ]
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /tracks/loadClassTypes
+
+### GET
+Gets th track laod classes collection.
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+
+        + types (array[TrackLoadClassType])
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+
+            {
+                "types": [
+                    {
+                        "id": 1,
+                        "name": "A"
+                    },
+                    {
+                        "id": 2,
+                        "name": "B1"
+                    },
+                    {
+                        "id": 3,
+                        "name": "B2"
+                    },
+                    {
+                        "id": 4,
+                        "name": "C1"
+                    },
+                    {
+                        "id": 5,
+                        "name": "C2"
+                    },
+                    {
+                        "id": 6,
+                        "name": "C3"
+                    }
+                ]
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /tracks/crossbeamTypes
+
+### GET
+Gets the track crossbeam types collection.
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+
+        + types (array[TrackCrossbeamType])
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+
+            {
+                "types": [
+                    {
+                        "id": 1,
+                        "name": "M - ohybový moment (prostý nosník)"
+                    },
+                    {
+                        "id": 2,
+                        "name": "V - posouvající síla (prostý nosník)"
+                    },
+                    {
+                        "id": 3,
+                        "name": "R - reakce (řetězec prostých polí)"
+                    },
+                    {
+                        "id": 4,
+                        "name": "CS - Speciální příčinková čára"
+                    }
+                ]
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /tracks/qualityTypes
+
+### GET
+Gets the track quality types collection.
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+
+        + types (array[TrackQualityType])
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+
+            {
+                "types": [
+                    {
+                        "id": 1,
+                        "name": "Stadardní kvalita jízní dráhy"
+                    },
+                    {
+                        "id": 2,
+                        "name": "Výjimečná kvalita jízní dráhy"
+                    }
+                ]
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /tracks/placingTypes
+
+### GET
+Gets the track quality types collection.
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+
+        + types (array[TrackPlacingType])
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+
+            {
+                "types": [
+                    {
+                        "id": 1,
+                        "name": "Průběžné kolejové lože"
+                    },
+                    {
+                        "id": 2,
+                        "name": "Jiný"
+                    }
+                ]
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /tracks/tracksOnBridgeTypes
+
+### GET
+Gets the track quality types collection.
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+
+        + types (array[TracksOnBridgeType])
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+
+            {
+                "types": [
+                    {
+                        "id": 1,
+                        "name": "Jednokolejný most"
+                    },
+                    {
+                        "id": 2,
+                        "name": "Dvou a více kolejný most"
+                    }
+                ]
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /tracks/sections
+
+### GET
+Gets the track sections collection.
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+
+        + types (array[TrackSectionType])
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+
+            {
+                "sections": [
+                    {
+                        "id": 1,
+                        "name": "0100"
+                    },
+                    {
+                        "id": 2,
+                        "name": "0600"
+                    },
+                    {
+                        "id": 3,
+                        "name": "0220"
+                    }
+                ]
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /tracks/sections/{id}/bridges
+
++ Parameters:
+
+    + id (required, number, `/tracks/sections/2`) ... Number `id`  unique identification track section.
+
+### GET
+Gets the bridges collection on specific track section.
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+
+        + types (array[TrackSectionBridge])
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+
+            {
+                "bridges": [
+                    {
+                        "id": 1,
+                        "section": "0100",
+                        "name": "Zelný most",
+                        "placement": 10.6,
+                        "historical": false
+                    },
+                    {
+                        "id": 2,
+                        "section": "0100",
+                        "name": "Certuv most",
+                        "placement": 22.6,
+                        "historical": true,
+                    },
+                    {
+                        "id": 3,
+                        "section": "0100",
+                        "name": "Velka dobra",
+                        "placement": 44.6,
+                        "historical": false
+                    }
+                ]
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+
+
+# Group Route
+The route resources can be used for managing routes.
+
+
+## /routes
+
+### GET
+Gets the collection of routes.
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+
+        + routes (array[RouteListItem])
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
+    + Body
+
+            {
+                "routes": [
+                    {
+                        "id": "3dc0d33d-fa5c-4e0e-830b-6fb76a41b8ef",
+                        "edited": "2017-04-26T07:58:46.008033+02:00",
+                        "editor": "Test User",
+                        "databaseType": 2,
+                        "name": "Cargo",
+                        "startStation": "Pardubice",
+                        "endStation": "Ústí n. Labem",
+                        "note": null
+                    },
+                    {
+                        "id": "1e5178ee-0982-490c-9273-f1cdbaf98273",
+                        "edited": "2017-04-25T13:19:39.299362+02:00",
+                        "databaseType": 2,
+                        "name": "Transformátor",
+                        "startStation": "Brno",
+                        "endStation": "Kolín",
+                        "note": "Strojírna Brno"
+                    }
+                ]
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+### POST
+Create a Trainset
+<!-- TODO: separatni endpoint na pop-up s useky? -->
+
++ Request (application/json)
+
+    + Attributes(RouteCreate)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
+    + Body
+
+            {
+                "name": "Transformátor",
+                "note": "Strojírna Brno",
+                "startStation": "Brno",
+                "throughStation": null,
+                "endStation": "Kolín",
+                "databaseType": 2,
+                "tracks": [
+                    {
+                        "trackId": "b1951f6f-6c65-4d0f-a2ec-64e9b35b60be",
+                        "backward": true
+                    },
+                    {
+                        "trackId": "9a871e1e-11f0-4960-add6-e2f9eaa4c03d",
+                        "backward": false
+                    },
+                    {
+                        "trackId": "b1951f6f-6c65-4d0f-a2ec-64e9b35b60be",
+                        "backward": false
+                    },
+                    {
+                        "trackId": "9a871e1e-11f0-4960-add6-e2f9eaa4c03d",
+                        "backward": true
+                    }
+                ]
+            }
+
++ Response 201 (application/json)
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /routes/{id}
+
++ Parameters:
+
+    + id (required, number, `/routes/12834734-42c9-11e6-beb8-9e71128cae77`) ... Number `id`  unique identification of route.
+
+### GET
+Gets the route attributes.
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+
+        + route (Route)
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
+    + Body
+
+            {
+                "route": {
+                    "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                    "created": "2015-09-09T21:58:31+02:00",
+                    "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jan Novák",
+                            "username": "stanek",
+                            "role": 1
+                    },
+                    "edited": "2015-09-09T21:58:31+02:00",
+                    "editor": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jan Novák",
+                            "username": "stanek",
+                            "role": 1
+                    },
+                    "name": "Transformátor",
+                    "note": "Strojírna Brno",
+                    "startStation": "Brno",
+                    "throughStation": null,
+                    "endStation": "Kolín",
+                    "databaseType": 2,
+                    "tracks": [
+                        {
+                            "trackId": "b1951f6f-6c65-4d0f-a2ec-64e9b35b60be",
+                            "backward": true
+                        },
+                        {
+                            "trackId": "9a871e1e-11f0-4960-add6-e2f9eaa4c03d",
+                            "backward": false
+                        },
+                        {
+                            "trackId": "b1951f6f-6c65-4d0f-a2ec-64e9b35b60be",
+                            "backward": false
+                        },
+                        {
+                            "trackId": "9a871e1e-11f0-4960-add6-e2f9eaa4c03d",
+                            "backward": true
+                        }
+                    ]
+                }
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+### PUT
+Updates the route attributes.
+
++ Request (application/json)
+
+    + Attributes (object)
+
+        + route (RouteCreate)
+
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
+    + Body
+
+            {
+                "route": {
+                    "name": "Transformátor",
+                    "note": "Strojírna Brno",
+                    "startStation": "Brno",
+                    "throughStation": null,
+                    "endStation": "Kolín",
+                    "databaseType": 2,
+                    "tracks": [
+                        {
+                            "trackId": "b1951f6f-6c65-4d0f-a2ec-64e9b35b60be",
+                            "backward": true
+                        },
+                        {
+                            "trackId": "9a871e1e-11f0-4960-add6-e2f9eaa4c03d",
+                            "backward": false
+                        },
+                        {
+                            "trackId": "b1951f6f-6c65-4d0f-a2ec-64e9b35b60be",
+                            "backward": false
+                        },
+                        {
+                            "trackId": "9a871e1e-11f0-4960-add6-e2f9eaa4c03d",
+                            "backward": true
+                        }
+                    ]
+                }
+            }
+
++ Response 200
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+### DELETE
+Deletes the route completely.
+
++ Request (application/json)
+    + Header
+    
+            X-Api-Key: <your-private-token-key>
+            
++ Response 200
+
+    + Header
+    
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
 
 
 
