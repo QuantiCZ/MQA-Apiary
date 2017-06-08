@@ -15,7 +15,6 @@ MQA API is the REST API project for managing trains.
 + errorDetail: `detail of errors` (string)
 
 
-<!-- Authentication -->
 
 ## Auth (object)
 + username: `hrabalo` (string, required)
@@ -27,7 +26,6 @@ MQA API is the REST API project for managing trains.
 + user (User, required)
 
 
-<!-- Users -->
 
 ## User (object)
 + id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
@@ -44,7 +42,6 @@ MQA API is the REST API project for managing trains.
 + name: `USER` (string, required)
 
 
-<!-- Database -->
 
 ## DatabaseType (object)
 + id: 1 (number, required)
@@ -65,31 +62,6 @@ MQA API is the REST API project for managing trains.
 + name: `ČSN1230` (string, required)
 
 
-<!-- Vehicles -->
-
-## VehicleType (object)
-+ id: 1 (number, required)
-+ group: 2 (number, required)
-+ name: `Současné hnací vozidlo ČD` (string, required)
-
-## VehicleGroupType (object)
-+ id: 1 (number, required)
-+ name: `Současné hnací vozidlo ČD` (string, required)
-
-## VehicleChassis (object)
-+ id: 1 (number, required)
-+ name: `A1` (string, required)
-+ totalAxles: 5 (number, required)
-
-## VehicleListItem (object)
-+ id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
-+ edited: `2015-09-09T21:58:31+02:00` (string, required)
-+ editor: `karel` (string, required)
-+ name: `Mašina1` (string, required)
-+ note: `Rychla kola` (string, optional)
-+ vehicleType: 3 (number, required)
-+ databaseType: 1 (number, required)
-+ totalAxles: 5 (number, required)
 
 ## Vehicle (object)
 + id: `7d4846be-42c4-11e6-beb8-9e71128cae77` (string, required)
@@ -150,6 +122,30 @@ MQA API is the REST API project for managing trains.
 + tractiveForces (array[VehicleForce], required)
 + breakingForces (array[VehicleForce], required)
 
+## VehicleType (object)
++ id: 1 (number, required)
++ group: 2 (number, required)
++ name: `Současné hnací vozidlo ČD` (string, required)
+
+## VehicleGroupType (object)
++ id: 1 (number, required)
++ name: `Současné hnací vozidlo ČD` (string, required)
+
+## VehicleChassis (object)
++ id: 1 (number, required)
++ name: `A1` (string, required)
++ totalAxles: 5 (number, required)
+
+## VehicleListItem (object)
++ id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
++ edited: `2015-09-09T21:58:31+02:00` (string, required)
++ editor: `karel` (string, required)
++ name: `Mašina1` (string, required)
++ note: `Rychla kola` (string, optional)
++ vehicleType: 3 (number, required)
++ databaseType: 1 (number, required)
++ totalAxles: 5 (number, required)
+
 ## VehicleAxleForce (object)
 + axlePoint: 0 (number, required)
 + axleDistance: 2.375 (number, required)
@@ -182,16 +178,6 @@ MQA API is the REST API project for managing trains.
 + note: `moc pekny obrazek` (string, optional)
 
 
-<!-- Trainset -->
-
-## TrainsetListItem (object)
-+ id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
-+ edited: `2015-09-09T21:58:31+02:00` (string, required)
-+ editor: `Karel Maly` (string, required)
-+ name: `Shimns` (string, required)
-+ note: `Strojirna Brno` (string, optional)
-+ trainsetType: 5 (number, required)
-+ databaseType: 1 (number, required)
 
 ## Trainset (object)
 + id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
@@ -212,6 +198,15 @@ MQA API is the REST API project for managing trains.
 + trainsetType: 3 (number, required)
 + vehicles (array[TrainsetVehicleItem], required)
 
+## TrainsetListItem (object)
++ id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
++ edited: `2015-09-09T21:58:31+02:00` (string, required)
++ editor: `Karel Maly` (string, required)
++ name: `Shimns` (string, required)
++ note: `Strojirna Brno` (string, optional)
++ trainsetType: 5 (number, required)
++ databaseType: 1 (number, required)
+
 ## TrainsetVehicleItem (object)
 + vehicleId: `9a871e1e-11f0-4960-add6-e2f9eaa4c03d` (string, required)
 + count: 3 (number, required)
@@ -229,7 +224,50 @@ MQA API is the REST API project for managing trains.
 + name: `Uzivatelske soupravy` (string, required)
 
 
-<!-- Tracks -->
+
+## Track (object)
++ id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
++ created: `2015-09-09T21:58:31+02:00` (string, required)
++ creator (User, required)
++ edited: `2015-09-09T21:58:31+02:00` (string, optional)
++ editor (User, optional)
++ name: `Ocelový most` (string, required)
++ note: `Jiz notne stary` (string, optional)
++ databaseType: 1 (number, required)
++ trackType: 2 (number, required)
++ trackSectionCode: 12 (number, required)
++ trackSectionPlacementCode: 5 (number, required)
++ trackSectionPlacement: 12.11 (number, required)
++ trackLoadClassType: 3 (number, required)
++ trackLoadClassVelocity: 160 (number, required)
++ loadCapacity: 1.80 (number, required)
++ older30years: true (boolean, required)
++ nkElement (TrackNKElement, required)
++ plainFieldGroup (PlainFieldGroup, required)
+
+## TrackCreate (object)
++ name: `Ocelový most` (string, required)
++ note: `Jiz notne stary` (string, optional)
++ databaseType: 1 (number, required)
++ trackType: 2 (number, required)
++ trackSectionCode: 12 (number, required)
++ trackSectionPlacementCode: 5 (number, required)
++ trackLoadClassType: 3 (number, required)
++ trackLoadClassVelocity: 160 (number, required)
++ loadCapacity: 1.80 (number, required)
++ older30years: true (boolean, required)
++ nkElement (TrackNKElement, required)
++ plainFieldGroup (PlainFieldGroup, required)
+
+## TrackAttachment (object)
++ id: `7d4846be-42c4-11e6-beb8-9e71128cae77` (string, required)
++ created: `2015-09-09T21:58:31+02:00` (string, required)
++ creator (User, required)
++ edited: `2015-09-09T21:58:31+02:00` (string, required)
++ editor (User, required)
++ fileName: `pekny_obrazek.png` (string, required)
++ fileType: `image/png` (string, required)
++ note: `moc pekny obrazek` (string, optional)
 
 ## TrackTabelizedListItem (object)
 + id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
@@ -284,49 +322,6 @@ MQA API is the REST API project for managing trains.
 + terminalSpread: 10.0 (number, required)
 + increase: 0.2 (number, required)
 
-## Track (object)
-+ id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
-+ created: `2015-09-09T21:58:31+02:00` (string, required)
-+ creator (User, required)
-+ edited: `2015-09-09T21:58:31+02:00` (string, optional)
-+ editor (User, optional)
-+ name: `Ocelový most` (string, required)
-+ note: `Jiz notne stary` (string, optional)
-+ databaseType: 1 (number, required)
-+ trackType: 2 (number, required)
-+ trackSectionCode: 12 (number, required)
-+ trackSectionPlacement: 5 (number, required)
-+ trackLoadClassType: 3 (number, required)
-+ trackLoadClassVelocity: 160 (number, required)
-+ loadCapacity: 1.80 (number, required)
-+ older30years: true (boolean, required)
-+ nkElement (TrackNKElement, required)
-+ plainFieldGroup (PlainFieldGroup, required)
-
-## TrackCreate (object)
-+ name: `Ocelový most` (string, required)
-+ note: `Jiz notne stary` (string, optional)
-+ databaseType: 1 (number, required)
-+ trackType: 2 (number, required)
-+ trackSectionCode: 12 (number, required)
-+ trackSectionPlacement: 5 (number, required)
-+ trackLoadClassType: 3 (number, required)
-+ trackLoadClassVelocity: 160 (number, required)
-+ loadCapacity: 1.80 (number, required)
-+ older30years: true (boolean, required)
-+ nkElement (TrackNKElement, required)
-+ plainFieldGroup (PlainFieldGroup, required)
-
-## TrackAttachment (object)
-+ id: `7d4846be-42c4-11e6-beb8-9e71128cae77` (string, required)
-+ created: `2015-09-09T21:58:31+02:00` (string, required)
-+ creator (User, required)
-+ edited: `2015-09-09T21:58:31+02:00` (string, required)
-+ editor (User, required)
-+ fileName: `pekny_obrazek.png` (string, required)
-+ fileType: `image/png` (string, required)
-+ note: `moc pekny obrazek` (string, optional)
-
 ## TrackType (object)
 + id: 1 (number, required)
 + name: `Prvek NK` (string, required)
@@ -364,17 +359,6 @@ MQA API is the REST API project for managing trains.
 + id: 1 (number, required)
 
 
-<!-- Routes -->
-
-## RouteListItem (object)
-+ id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
-+ edited: `2015-09-09T21:58:31+02:00` (string, required)
-+ editor: `Karel Maly` (string, required)
-+ databaseType: 1 (number, required)
-+ name: `Cargo` (string, required)
-+ startStation: `Pardubice` (string, required)
-+ endStation: `Ústí n. Labem` (string, required)
-+ note: `Transformator` (string, optional)
 
 ## Route (object)
 + id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
@@ -397,20 +381,32 @@ MQA API is the REST API project for managing trains.
 + startStation: `Brno` (string, required)
 + endStation: `Kolín` (string, required)
 + throughStation: `Kutna Hora` (string, optional)
-+ tracks (array[RouteTrackItem], required)
++ tracks (array[RouteCreateTrackItem], required)
+
+## RouteListItem (object)
++ id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
++ edited: `2015-09-09T21:58:31+02:00` (string, required)
++ editor: `Karel Maly` (string, required)
++ databaseType: 1 (number, required)
++ name: `Cargo` (string, required)
++ startStation: `Pardubice` (string, required)
++ endStation: `Ústí n. Labem` (string, required)
++ note: `Transformator` (string, optional)
 
 ## RouteTrackItem (object)
 + trackId: `9a871e1e-11f0-4960-add6-e2f9eaa4c03d` (string, required)
 + backward: false (boolean, required)
++ track (TrackListItem, required)
+
+## RouteCreateTrackItem (object)
++ trackId: `9a871e1e-11f0-4960-add6-e2f9eaa4c03d` (string, required)
++ backward: false (boolean, optional)
 
 
-<!-- Normative -->
-
-
-<!-- Crossbeams -->
 
 ## Crossbeams (array)
 + id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
+
 
 
 
@@ -972,7 +968,12 @@ Get database imports logs
 # Group Vehicle
 The vehicle resources can be used for managing vehicles.
 
-## /vehicles
+## /vehicles{?forTrainset}
+
++ Parameters
+
+    + forTrainset (optional, boolean, `true`) ... for `true` value return only vehicles not laod schemas if user is not `admin`.
+
 
 ### GET
 Gets the collection of vehicles.
@@ -1028,6 +1029,8 @@ Gets the collection of vehicles.
 + Response 500
 + Response 503
 
+
+## /vehicles
 
 ### POST
 Creates a vehicle.
@@ -2093,6 +2096,7 @@ Create a Trainset
     + Header
 
             X-Time: 2014-09-11T17:02:27.761+02:00
+            Location: /trainsets/12834734-42c9-11e6-beb8-9e71128cae77
 
 + Response 401
 + Response 403
@@ -2474,7 +2478,7 @@ Creates a track.
                 "name": "Ocelový most",
                 "note": null,
                 "trackSectionCode": 12,
-                "trackSectionPlacement": 5,
+                "trackSectionPlacementCode": 5,
                 "trackType": 2,
                 "trackLoadClassType": 3,
                 "trackLoadClassVelocity": 7,
@@ -2610,7 +2614,8 @@ Gets the track attributes.
                     "name": "Ocelový most",
                     "note": null,
                     "trackSectionCode": 12,
-                    "trackSectionPlacement": 5,
+                    "trackSectionPlacementCode": 5,
+                    "trackSectionPlacement": 11.87,
                     "trackType": 2,
                     "trackLoadClassType": 3,
                     "trackLoadClassVelocity": 7,
@@ -2711,7 +2716,7 @@ Updates the track attributes.
                     "name": "Ocelový most",
                     "note": null,
                     "trackSectionCode": 12,
-                    "trackSectionPlacement": 5,
+                    "trackSectionPlacementCode": 5,
                     "trackType": 2,
                     "trackLoadClassType": 3,
                     "trackLoadClassVelocity": 7,
@@ -3402,15 +3407,18 @@ Gets the track sections collection.
                 "sections": [
                     {
                         "id": 1,
-                        "name": "0100"
+                        "name": "0100",
+                        "historical": false
                     },
                     {
                         "id": 2,
-                        "name": "0600"
+                        "name": "0600",
+                        "historical": false
                     },
                     {
                         "id": 3,
-                        "name": "0220"
+                        "name": "0220",
+                        "historical": true
                     }
                 ]
             }
@@ -3549,7 +3557,7 @@ Gets the collection of routes.
 
 
 ### POST
-Create a Trainset
+Create a Route
 <!-- TODO: separatni endpoint na pop-up s useky? -->
 
 + Request (application/json)
@@ -3594,6 +3602,7 @@ Create a Trainset
     + Header
 
             X-Time: 2014-09-11T17:02:27.761+02:00
+            Location: /routes/12834734-42c9-11e6-beb8-9e71128cae77
 
 + Response 401
 + Response 403
@@ -3657,19 +3666,71 @@ Gets the route attributes.
                     "tracks": [
                         {
                             "trackId": "b1951f6f-6c65-4d0f-a2ec-64e9b35b60be",
-                            "backward": true
+                            "backward": true,
+                            "track": {
+                                "id": "b1951f6f-6c65-4d0f-a2ec-64e9b35b60be",
+                                "edited": "2015-09-09T21:58:31+02:00",
+                                "editor": "pepa",
+                                "trackType": 1,
+                                "trackSectionCode": 12,
+                                "trackSectionPlacement": 2.75,
+                                "name": "Výtoň",
+                                "note": "mostovka",
+                                "trackLoadClass": 9,
+                                "loadCapacity": 0.75,
+                                "databaseType": 1
+                            }
                         },
                         {
                             "trackId": "9a871e1e-11f0-4960-add6-e2f9eaa4c03d",
-                            "backward": false
+                            "backward": false,
+                            "track": {
+                                "id": "9a871e1e-11f0-4960-add6-e2f9eaa4c03d",
+                                "edited": "2015-09-09T21:58:31+02:00",
+                                "editor": "pepa",
+                                "trackType": 1,
+                                "trackSectionCode": 12,
+                                "trackSectionPlacement": 2.75,
+                                "name": "Výtoň",
+                                "note": "mostovka",
+                                "trackLoadClass": 9,
+                                "loadCapacity": 0.75,
+                                "databaseType": 1
+                            }
                         },
                         {
                             "trackId": "b1951f6f-6c65-4d0f-a2ec-64e9b35b60be",
-                            "backward": false
+                            "backward": false,
+                            "track": {
+                                "id": "b1951f6f-6c65-4d0f-a2ec-64e9b35b60be",
+                                "edited": "2015-09-09T21:58:31+02:00",
+                                "editor": "pepa",
+                                "trackType": 1,
+                                "trackSectionCode": 12,
+                                "trackSectionPlacement": 2.75,
+                                "name": "Výtoň",
+                                "note": "mostovka",
+                                "trackLoadClass": 9,
+                                "loadCapacity": 0.75,
+                                "databaseType": 1
+                            }
                         },
                         {
                             "trackId": "9a871e1e-11f0-4960-add6-e2f9eaa4c03d",
-                            "backward": true
+                            "backward": true,
+                            "track": {
+                                "id": "9a871e1e-11f0-4960-add6-e2f9eaa4c03d",
+                                "edited": "2015-09-09T21:58:31+02:00",
+                                "editor": "pepa",
+                                "trackType": 1,
+                                "trackSectionCode": 12,
+                                "trackSectionPlacement": 2.75,
+                                "name": "Výtoň",
+                                "note": "mostovka",
+                                "trackLoadClass": 9,
+                                "loadCapacity": 0.75,
+                                "databaseType": 1
+                            }
                         }
                     ]
                 }
