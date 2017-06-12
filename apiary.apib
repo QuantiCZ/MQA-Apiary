@@ -409,9 +409,503 @@ MQA API is the REST API project for managing trains.
 
 
 
+## IdmAuth (object)
++ username: `idm` (string, required)
++ password: `123456` (string, required)
+
+## IdmSession (object)
++ token: `fc7ef14ba27e29c89ec640cec3b91fb374db9b5abaa5e4699680c8c561bd9f5a` (string, required)
++ timeout: `PT300S` (string, optional)
+
+## IdmUser (object)
++ idmuid: `10000-00000000-00000000000000000000000000000001` (string, required)
++ sid: `S-1-5-21-3405594985-2614012127-2140697856-5776i` (string, required)
++ roles (array[IdmUserRole], required)
++ username: `tomas123` (string, required)
++ password: `Xasd321465D` (string, optional)
++ email: `tomas@szdc.cz` (string, required)
++ name: `Tomáš` (string, required)
++ surname: `Hanák` (string, required)
++ status: `true` (boolean, required)
+
+## IdmCreateUser (object)
++ idmuid: `10000-00000000-00000000000000000000000000000001` (string, required)
++ sid: `S-1-5-21-3405594985-2614012127-2140697856-5776i` (string, required)
++ username: `tomas123` (string, optional)
++ password: `Xasd321465D` (string, optional)
++ email: `tomas@szdc.cz` (string, optional)
++ name: `Tomáš` (string, optional)
++ surname: `Hanák` (string, optional)
++ status: `true` (boolean, optional)
+
+## IdmUpdateUser (object)
++ sid: `S-1-5-21-3405594985-2614012127-2140697856-5776i` (string, required)
++ username: `tomas123` (string, optional)
++ password: `Xasd321465D` (string, optional)
++ email: `tomas@szdc.cz` (string, optional)
++ name: `Tomáš` (string, optional)
++ surname: `Hanák` (string, optional)
++ status: `true` (boolean, optional)
+
+## IdmUserRole (object)
++ id: `1` (number, required)
++ name: `Uživatel` (string, required)
+
+
+# Group IDM 
+The IDM resources can be used for **log in**, **log out** user create and editing users
+
+## /idm/authentication
+
+### POST
+Get user token for IDM managment.
+
++ Request (application/json)
+
+    + Attributes (IdmAuth)
+
+    + Body
+    
+            {
+                "username" : "idm",
+                "password" : "123456"
+            }
+
++ Response 200 (application/json)
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
+    + Attributes
+
+        + session (IdmSession)
+
+    + Body
+
+            {
+                "session": {
+                    "token": "fc7ef14ba27e29c89ec640cec3b91fb374db9b5abaa5e4699680c8c561bd9f5a",
+                    "timeout": "PT300S"
+                }
+            }
+
++ Response 400
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+### DELETE
+Logs IDM manager
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 204
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+
+## /idm/users
+
+### GET
+Get all IDM users
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
+    + Attributes 
+
+        + users (array[IdmUser])
+
+    + Body
+
+            {
+                "users": [
+                    {
+                        "idmuid": "10000-00000000-00000000000000000000000000000001",
+                        "sid": "S-1-5-21-3405594985-2614012127-2140697856-5776i",
+                        "username": "tomas123",
+                        "password": "Xasd321465D",
+                        "email": "tomas@szdc.cz",
+                        "name": "Tomáš",
+                        "surname": "Hanák",
+                        "status": true
+                    },
+                    {
+                        "idmuid": "10000-00000000-00000000000000000000000000000002",
+                        "sid": "S-1-5-21-3405594985-2614012127-99999999-8888i",
+                        "username": "michal999",
+                        "password": "heslo",
+                        "email": "michal@szdc.cz",
+                        "name": "Michal",
+                        "surname": "Kaše",
+                        "status": false
+                    }
+                ]
+            }
+
++ Response 400
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+### POST
+Create IDM user by AD data
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
+    + Attributes (IdmCreateUser)
+
+    + Body
+
+            {
+                "idmuid": "10000-00000000-00000000000000000000000000000001",
+                "sid": "S-1-5-21-3405594985-2614012127-2140697856-5776i",
+                "username": "tomas123",
+                "password": "Xasd321465D",
+                "email": "tomas@szdc.cz",
+                "name": "Tomáš",
+                "surname": "Hanák",
+                "status": true
+            }
+
++ Response 201 (application/json)
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            Location: {host}/idm/users/12834734-42c9-11e6-beb8-9e71128cae77
+
++ Response 400
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+
+## /idm/users/{id}
+
++ Parameters
+
+    + id (required, string, `10000-00000000-00000000000000000000000000000001`) ... `id` identify current user
+
+### GET
+Get user data
+
++ Request (application/json)
+
+    + Header
+
+            X-Idm-Token: <idm-session-token-token>
+
++ Response 200 (application/json)
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
+    + Attributes (IdmUser)
+
+    + Body
+
+            {
+                "idmuid": "10000-00000000-00000000000000000000000000000001",
+                "sid": "S-1-5-21-3405594985-2614012127-2140697856-5776i",
+                "username": "tomas123",
+                "password": "Xasd321465D",
+                "email": "tomas@szdc.cz",
+                "name": "Tomáš",
+                "surname": "Hanák",
+                "status": true
+            }
+
++ Response 400
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+### PUT
+Update user data
+
++ Request (application/json)
+
+    + Header
+
+            X-Idm-Token: <idm-session-token-token>
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
+    + Attributes (IdmUpdateUser)
+
+    + Body
+
+            {
+                "sid": "S-1-5-21-3405594985-2614012127-2140697856-5776i",
+                "username": "tomas123",
+                "password": "Xasd321465D",
+                "email": "tomas@szdc.cz",
+                "name": "Tomáš",
+                "surname": "Hanák",
+                "status": true
+            }
+
++ Response 200 (application/json)
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
++ Response 400
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /idm/users/{id}/active
+
++ Parameters
+
+    + id (required, string, `10000-00000000-00000000000000000000000000000001`) ... `id` identify current user
+
+### PUT
+Active IDM user
+
++ Request (application/json)
+
+    + Header
+
+            X-Idm-Token: <idm-session-token-token>
+
++ Response 200 (application/json)
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
++ Response 400
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+### DELETE
+Deactive IDM user
+
++ Request (application/json)
+
+    + Header
+
+            X-Idm-Token: <idm-session-token-token>
+
++ Response 204 (application/json)
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
++ Response 400
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /idm/users/roles
+
+### GET
+Get users roles
+
++ Request (application/json)
+
+    + Header
+
+            X-Idm-Token: <idm-session-token-token>
+
++ Response 200 (application/json)
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
+    + Attributes
+
+        + roles (array[IdmUserRole])
+
+    + Body
+
+            {
+                "roles": [
+                    {
+                        "id": 1,
+                        "name": "Administrátor"
+                    },
+                    {
+                        "id": 2,
+                        "name": "Uživatel"
+                    },
+                    {
+                        "id": 3,
+                        "name": "Čtenář"
+                    }
+                ]
+            }
+
++ Response 400
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /idm/users/{id}/roles
+
++ Parameters
+
+    + id (required, string, `10000-00000000-00000000000000000000000000000001`) ... `id` identify current user
+
+### GET
+Get IDM user roles
+
++ Request (application/json)
+
+    + Header
+
+            X-Idm-Token: <idm-session-token-token>
+
++ Response 200 (application/json)
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
+    + Attributes
+
+            + roles (array[IdmUserRole])
+
+    + Body
+
+            {
+                "roles": [
+                    {
+                        "id": 1,
+                        "name": "Administrátor"
+                    },
+                    {
+                        "id": 2,
+                        "name": "Uživatel"
+                    }
+                ]
+            }
+
++ Response 400
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+### PUT
+Set IDM user roles
+
++ Request (application/json)
+
+    + Header
+
+            X-Idm-Token: <idm-session-token-token>
+
+    + Attributes
+
+        + roles (array[number])
+
+    + Body
+
+            {
+                "roles": [1, 3]
+            }
+
+
++ Response 200 (application/json)
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
++ Response 400
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
 
 # Group Authentication
-The authentication resources can be used for **log in** and **log out** the user to the Tubis application.
+The authentication resources can be used for **log in** and **log out** the user to the MQA application.
 
 ## /authentication
 
