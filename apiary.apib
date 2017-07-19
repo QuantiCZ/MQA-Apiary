@@ -235,7 +235,7 @@ MQA API is the REST API project for managing trains.
 + creator (User, required)
 + normativeType: `10` (number, required)
 + trainset (TrainsetListItem, required)
-+ trackLoadClassType: `9` (string, optional)
++ trackLoadClassType: `9` (number, optional)
 + maxLoadQuota: `124` (number, optional)
 + fixed: `false` (boolean, required)
 + symmetric: `true` (boolean, required)
@@ -2773,7 +2773,7 @@ Deletes the trainset completely.
 ## /trainsets/classify
 
 ### POST
-Classify track class of trainset
+Classify a trainset to track load class.
 
 + Request (application/json)
 
