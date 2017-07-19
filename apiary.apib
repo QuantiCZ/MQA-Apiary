@@ -134,6 +134,7 @@ MQA API is the REST API project for managing trains.
 ## VehicleChassis (object)
 + id: 1 (number, required)
 + name: `A1` (string, required)
++ type: `SPECIAL` (string, required)
 + totalAxles: 5 (number, required)
 
 ## VehicleListItem (object)
@@ -222,6 +223,32 @@ MQA API is the REST API project for managing trains.
 ## TrainsetGroupType (object)
 + id: 1 (number, required)
 + name: `Uzivatelske soupravy` (string, required)
+
+
+
+## TrainsetClasificationCreate (object)
++ normativeType: `10` (number, required)
++ trainsetId:  `9a871e1e-11f0-4960-add6-e2f9eaa4c03d` (string, required)
+
+## TrainsetClasification (object)
++ created: `2015-09-09T21:58:31+02:00` (string, required)
++ creator (User, required)
++ normativeType: `10` (number, required)
++ trainset (TrainsetListItem, required)
++ trackLoadClassType: `9` (string, optional)
++ maxLoadQuota: `124` (number, optional)
++ fixed: `false` (boolean, required)
++ symmetric: `true` (boolean, required)
++ results (array[TrainsetClasificationResultItem], required)
+
+## TrainsetClasificationResultItem (object)
++ crossbeamSpan: `10` (number, required)
++ loadClassMomentum: `5.6` (number, required)
++ trainsetMomentum: `4.6` (number, required)
++ momentumEfficiency: `0.79` (number, required)
++ loadClassForce: `22.6` (number, required)
++ trainsetForce: `21.38` (number, required)
++ forceEfficiency: `0.79` (number, required)
 
 
 
@@ -490,14 +517,11 @@ Get user token for IDM managment.
                 }
             }
 
+
++ Response 404
 + Response 400
 + Response 401
-+ Response 403
-+ Response 404
-+ Response 405
-+ Response 406
 + Response 500
-+ Response 503
 
 
 ### DELETE
@@ -515,13 +539,11 @@ Logs IDM manager
 
             X-Time: 2014-09-11T17:02:27.761+02:00
 
-+ Response 401
++ Response 400
 + Response 403
 + Response 404
-+ Response 405
-+ Response 406
 + Response 500
-+ Response 503
+
 
 
 
@@ -573,14 +595,11 @@ Get all IDM users
                 ]
             }
 
-+ Response 400
-+ Response 401
+
 + Response 403
 + Response 404
-+ Response 405
-+ Response 406
 + Response 500
-+ Response 503
+
 
 ### POST
 Create IDM user by AD data
@@ -613,22 +632,19 @@ Create IDM user by AD data
             X-Time: 2014-09-11T17:02:27.761+02:00
             Location: {host}/idm/users/12834734-42c9-11e6-beb8-9e71128cae77
 
-+ Response 400
-+ Response 401
 + Response 403
++ Response 400
 + Response 404
-+ Response 405
-+ Response 406
++ Response 409
 + Response 500
-+ Response 503
 
 
 
-## /idm/users/{id}
+## /idm/users/{idmuid}
 
 + Parameters
 
-    + id (required, string, `10000-00000000-00000000000000000000000000000001`) ... `id` identify current user
+    + idmuid (required, string, `10000-00000000-00000000000000000000000000000001`) ... `idmuid` identify current user on system
 
 ### GET
 Get user data
@@ -660,14 +676,9 @@ Get user data
                 "status": true
             }
 
-+ Response 400
-+ Response 401
 + Response 403
 + Response 404
-+ Response 405
-+ Response 406
 + Response 500
-+ Response 503
 
 
 ### PUT
@@ -703,21 +714,18 @@ Update user data
 
             X-Time: 2014-09-11T17:02:27.761+02:00
 
-+ Response 400
-+ Response 401
-+ Response 403
 + Response 404
-+ Response 405
-+ Response 406
++ Response 400
++ Response 403
 + Response 500
-+ Response 503
 
 
-## /idm/users/{id}/active
+
+## /idm/users/{idmuid}/active
 
 + Parameters
 
-    + id (required, string, `10000-00000000-00000000000000000000000000000001`) ... `id` identify current user
+    + idmuid (required, string, `10000-00000000-00000000000000000000000000000001`) ... `idmuid` identify current user on system
 
 ### PUT
 Active IDM user
@@ -734,14 +742,10 @@ Active IDM user
 
             X-Time: 2014-09-11T17:02:27.761+02:00
 
-+ Response 400
-+ Response 401
-+ Response 403
 + Response 404
-+ Response 405
-+ Response 406
++ Response 403
++ Response 400
 + Response 500
-+ Response 503
 
 
 ### DELETE
@@ -759,14 +763,10 @@ Deactive IDM user
 
             X-Time: 2014-09-11T17:02:27.761+02:00
 
-+ Response 400
-+ Response 401
-+ Response 403
 + Response 404
-+ Response 405
-+ Response 406
++ Response 403
++ Response 400
 + Response 500
-+ Response 503
 
 
 ## /idm/users/roles
@@ -809,21 +809,17 @@ Get users roles
                 ]
             }
 
-+ Response 400
-+ Response 401
-+ Response 403
 + Response 404
-+ Response 405
-+ Response 406
++ Response 400
++ Response 403
 + Response 500
-+ Response 503
 
 
-## /idm/users/{id}/roles
+## /idm/users/{idmuid}/roles
 
 + Parameters
 
-    + id (required, string, `10000-00000000-00000000000000000000000000000001`) ... `id` identify current user
+    + idmuid (required, string, `10000-00000000-00000000000000000000000000000001`) ... `idmuid` identify current user on system
 
 ### GET
 Get IDM user roles
@@ -859,14 +855,10 @@ Get IDM user roles
                 ]
             }
 
-+ Response 400
-+ Response 401
-+ Response 403
 + Response 404
-+ Response 405
-+ Response 406
++ Response 400
++ Response 403
 + Response 500
-+ Response 503
 
 ### PUT
 Set IDM user roles
@@ -894,14 +886,10 @@ Set IDM user roles
 
             X-Time: 2014-09-11T17:02:27.761+02:00
 
-+ Response 400
-+ Response 401
-+ Response 403
 + Response 404
-+ Response 405
-+ Response 406
++ Response 400
++ Response 403
 + Response 500
-+ Response 503
 
 
 # Group Authentication
@@ -2405,17 +2393,20 @@ Gets the vehicle groups chassis collection.
                 "chassis": [
                     {
                         "id": 1,
-                        "name": "A1",
-                        "totalAxles": 5
+                        "name": "0 - Obecné vozidlo",
+                        "type": "GENERAL",
+                        "totalAxles": 0
                     },
                     {
                         "id": 2,
-                        "name": "A2",
+                        "name": "1 - Dvounápravové hnací vozidlo",
+                        "type": "STANDARD",
                         "totalAxles": 5
                     },
                     {
                         "id": 3,
-                        "name": "A3",
+                        "name": "A1",
+                        "type": "SPECIAL",
                         "totalAxles": 7
                     }
                 ]
@@ -2768,6 +2759,99 @@ Deletes the trainset completely.
     + Header
     
             X-Time: 2014-09-11T17:02:27.761+02:00
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+
+## /trainsets/classify
+
+### POST
+Classify track class of trainset
+
++ Request (application/json)
+
+    + Attributes(TrainsetClasificationCreate)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
+    + Body
+
+            {
+                "normativeType": 10,
+                "trainsetId": "b1951f6f-6c65-4d0f-a2ec-64e9b35b60be"
+            }
+
++ Response 200 (application/json)
+
+    + Attributes(TrainsetClasification)
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
+    + Body
+    
+            {
+                "created": "2015-09-09T21:58:31+02:00",
+                "creator": {
+                    "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                    "name": "Jan Novák",
+                    "username": "stanek",
+                    "role": 1
+                },
+                "normativeType": 1,
+                "trackLoadClassType": 9,
+                "maxLoadQuota": 124,
+                "fixed": false,
+                "symmetric": true,
+                "trainset": {
+                    "id": "3dc0d33d-fa5c-4e0e-830b-6fb76a41b8ef",
+                    "edited": "2017-04-26T07:58:46.008033+02:00",
+                    "name": "Souprava 2",
+                    "note": "Extra kratky vlak",
+                    "editor": "Test User",
+                    "trainsetType": 3,
+                    "databaseType": 2
+                },
+                "results": [
+                    {
+                        "crossbeamSpan": 1,
+                        "loadClassMomentum": 5.6,
+                        "trainsetMomentum": 4.5,
+                        "momentumEfficiency": 0.80,
+                        "loadClassForce": 22.50,
+                        "trainsetForce": 21.38,
+                        "forceEfficiency": 0.95
+                    },
+                    {
+                        "crossbeamSpan": 10,
+                        "loadClassMomentum": 56.3,
+                        "trainsetMomentum": 28.1,
+                        "momentumEfficiency": 0.50,
+                        "loadClassForce": 225.0,
+                        "trainsetForce": 123.75,
+                        "forceEfficiency": 0.55
+                    },
+                    {
+                        "crossbeamSpan": 100,
+                        "loadClassMomentum": 562.5,
+                        "trainsetMomentum": 337.5,
+                        "momentumEfficiency": 0.60,
+                        "loadClassForce": 2250,
+                        "trainsetForce": 450,
+                        "forceEfficiency": 0.20
+                    }
+                ]
+            }
 
 + Response 401
 + Response 403
