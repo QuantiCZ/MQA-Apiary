@@ -139,6 +139,7 @@ MQA API is the REST API project for managing trains.
 
 ## VehicleListItem (object)
 + id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
++ creator (User, required)
 + edited: `2015-09-09T21:58:31+02:00` (string, required)
 + editor: `karel` (string, required)
 + name: `Mašina1` (string, required)
@@ -201,6 +202,7 @@ MQA API is the REST API project for managing trains.
 
 ## TrainsetListItem (object)
 + id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
++ creator (User, required)
 + edited: `2015-09-09T21:58:31+02:00` (string, required)
 + editor: `Karel Maly` (string, required)
 + name: `Shimns` (string, required)
@@ -243,6 +245,36 @@ MQA API is the REST API project for managing trains.
 + results (array[TrainsetClasificationResultItem], required)
 
 ## TrainsetClasificationResultItem (object)
++ crossbeamSpan: `10` (number, required)
++ loadClassMomentum: `5.6` (number, required)
++ trainsetMomentum: `4.6` (number, required)
++ momentumEfficiency: `0.79` (number, required)
++ loadClassForce: `22.6` (number, required)
++ trainsetForce: `21.38` (number, required)
++ forceEfficiency: `0.79` (number, required)
+
+
+
+## TrainsetPassabilityCreate (object)
++ reliabilityByCSN: `false` (boolean, required)
++ useLoadLimit: `true` (boolean, required)
++ useUsabilityLimit: `false` (boolean, required)
++ maxVelocity: `160.0` (number, required)
++ trainsetId:  `9a871e1e-11f0-4960-add6-e2f9eaa4c03d` (string, required)
++ routeId:  `d08c3852-c87f-43b3-ad30-814efcee255a` (string, required)
+
+## TrainsetPassability (object)
++ created: `2015-09-09T21:58:31+02:00` (string, required)
++ creator (User, required)
++ reliabilityByCSN: `false` (boolean, required)
++ useLoadLimit: `true` (boolean, required)
++ useUsabilityLimit: `false` (boolean, required)
++ maxVelocity: `160.0` (number, required)
++ trainset (TrainsetListItem, required)
++ route (RouteListItem, required)
++ results (array[TrainsetPassabilityResultItem], required)
+
+## TrainsetPassabilityResultItem (object)
 + crossbeamSpan: `10` (number, required)
 + loadClassMomentum: `5.6` (number, required)
 + trainsetMomentum: `4.6` (number, required)
@@ -300,12 +332,14 @@ MQA API is the REST API project for managing trains.
 
 ## TrackTabelizedListItem (object)
 + id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
++ creator (User, required)
 + created: `2015-09-09T21:58:31+02:00` (string, required)
 + name: `Zatřídění soupravy` (string, required)
 + note: `Automatická tabelizace` (string, optional)
 
 ## TrackListItem (object)
 + id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
++ creator (User, required)
 + edited: `2015-09-09T21:58:31+02:00` (string, required)
 + editor: `karel` (string, required)
 + name: `Výtoň` (string, required)
@@ -468,6 +502,7 @@ MQA API is the REST API project for managing trains.
 
 ## RouteListItem (object)
 + id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
++ creator (User, required)
 + edited: `2015-09-09T21:58:31+02:00` (string, required)
 + editor: `Karel Maly` (string, required)
 + databaseType: 1 (number, required)
@@ -484,11 +519,6 @@ MQA API is the REST API project for managing trains.
 ## RouteCreateTrackItem (object)
 + trackId: `9a871e1e-11f0-4960-add6-e2f9eaa4c03d` (string, required)
 + backward: false (boolean, optional)
-
-
-
-## Crossbeams (array)
-+ id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
 
 
 
@@ -534,9 +564,6 @@ MQA API is the REST API project for managing trains.
 + id: `1` (number, required)
 + name: `Uživatel` (string, required)
 
-
-## Normative (object)
-+ type: `SN 1912` (string ,required)
 
 
 # Group IDM 
@@ -1542,6 +1569,12 @@ Gets the collection of vehicles.
                 "vehicles": [
                     {
                         "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                        "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jana Mala",
+                            "username": "lala",
+                            "role":2
+                        },
                         "edited": "2015-09-09T21:58:31+02:00",
                         "name": "Mašina1",
                         "note": "Rychla kola",
@@ -1552,6 +1585,12 @@ Gets the collection of vehicles.
                     },
                     {
                         "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                        "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jana Mala",
+                            "username": "lala",
+                            "role":2
+                        },
                         "edited": "2015-09-09T21:58:31+02:00",
                         "name": "Mašina2",
                         "note": null,
@@ -2561,6 +2600,12 @@ Gets the collection of trainsets.
                 "trainsets": [
                     {
                         "id": "3dc0d33d-fa5c-4e0e-830b-6fb76a41b8ef",
+                        "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jana Mala",
+                            "username": "lala",
+                            "role":2
+                        },
                         "edited": "2017-04-26T07:58:46.008033+02:00",
                         "name": "Souprava 2",
                         "note": "Extra kratky vlak",
@@ -2570,6 +2615,12 @@ Gets the collection of trainsets.
                     },
                     {
                         "id": "1e5178ee-0982-490c-9273-f1cdbaf98273",
+                        "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jana Mala",
+                            "username": "lala",
+                            "role":2
+                        },
                         "edited": "2017-04-25T13:19:39.299362+02:00",
                         "name": "Souprava 1",
                         "note": "Extra dlouhy vlak",
@@ -2876,6 +2927,12 @@ Classify a trainset to track load class.
                 "symmetric": true,
                 "trainset": {
                     "id": "3dc0d33d-fa5c-4e0e-830b-6fb76a41b8ef",
+                    "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jana Mala",
+                            "username": "lala",
+                            "role":2
+                        },
                     "edited": "2017-04-26T07:58:46.008033+02:00",
                     "name": "Souprava 2",
                     "note": "Extra kratky vlak",
@@ -2921,6 +2978,124 @@ Classify a trainset to track load class.
 + Response 406
 + Response 500
 + Response 503
+
+
+## /trainsets/passability
+
+### POST
+Trainset passability check on specific route.
+
++ Request (application/json)
+
+    + Attributes(TrainsetPassabilityCreate)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
+    + Body
+
+            {
+                "reliabilityByCSN": false,
+                "useLoadLimit": true,
+                "useUsabilityLimit": false,
+                "maxVelocity": 160,
+                "trainsetId": "d08c3852-c87f-43b3-ad30-814efcee255a",
+                "routeId": "3dc0d33d-fa5c-4e0e-830b-6fb76a41b8ef"
+            }
+
++ Response 200 (application/json)
+
+    + Attributes(TrainsetPassability)
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
+    + Body
+    
+            {
+                "created": "2015-09-09T21:58:31+02:00",
+                "creator": {
+                    "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                    "name": "Jan Novák",
+                    "username": "stanek",
+                    "role": 1
+                },
+                "reliabilityByCSN": false,
+                "useLoadLimit": true,
+                "useUsabilityLimit": false,
+                "maxVelocity": 160,
+                "trainset": {
+                    "id": "3dc0d33d-fa5c-4e0e-830b-6fb76a41b8ef",
+                    "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jana Mala",
+                            "username": "lala",
+                            "role":2
+                        },
+                    "edited": "2017-04-26T07:58:46.008033+02:00",
+                    "name": "Souprava 2",
+                    "note": "Extra kratky vlak",
+                    "editor": "Test User",
+                    "trainsetType": 3,
+                    "databaseType": 2
+                },
+                "route": {
+                        "id": "3dc0d33d-fa5c-4e0e-830b-6fb76a41b8ef",
+                        "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jana Mala",
+                            "username": "lala",
+                            "role":2
+                        },
+                        "edited": "2017-04-26T07:58:46.008033+02:00",
+                        "editor": "Test User",
+                        "databaseType": 2,
+                        "name": "Cargo",
+                        "startStation": "Pardubice",
+                        "endStation": "Ústí n. Labem",
+                        "note": null
+                },
+                "results": [
+                    {
+                        "crossbeamSpan": 1,
+                        "loadClassMomentum": 5.6,
+                        "trainsetMomentum": 4.5,
+                        "momentumEfficiency": 0.80,
+                        "loadClassForce": 22.50,
+                        "trainsetForce": 21.38,
+                        "forceEfficiency": 0.95
+                    },
+                    {
+                        "crossbeamSpan": 10,
+                        "loadClassMomentum": 56.3,
+                        "trainsetMomentum": 28.1,
+                        "momentumEfficiency": 0.50,
+                        "loadClassForce": 225.0,
+                        "trainsetForce": 123.75,
+                        "forceEfficiency": 0.55
+                    },
+                    {
+                        "crossbeamSpan": 100,
+                        "loadClassMomentum": 562.5,
+                        "trainsetMomentum": 337.5,
+                        "momentumEfficiency": 0.60,
+                        "loadClassForce": 2250,
+                        "trainsetForce": 450,
+                        "forceEfficiency": 0.20
+                    }
+                ]
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
 
 
 ## /trainsets/types
@@ -3013,12 +3188,24 @@ Gets automatic tabelized collection of tracks.
                 "tracks": [
                     {
                         "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                        "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jana Mala",
+                            "username": "lala",
+                            "role":2
+                        },
                         "created": "2015-09-09T21:58:31+02:00",
                         "name": "Zatřídění soupravy",
                         "note": "Automatická tabelizace s příčníky"
                     },
                     {
                         "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                        "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jana Mala",
+                            "username": "lala",
+                            "role":2
+                        },
                         "created": "2015-09-09T21:58:31+02:00",
                         "name": "Zatřídění soupravy",
                         "note": "Automatická tabelizace"
@@ -3062,6 +3249,12 @@ Gets the users collection of tracks.
                 "tracks": [
                     {
                         "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                        "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jana Mala",
+                            "username": "lala",
+                            "role":2
+                        },
                         "edited": "2015-09-09T21:58:31+02:00",
                         "editor": "pepa",
                         "trackType": 1,
@@ -3075,6 +3268,12 @@ Gets the users collection of tracks.
                     },
                     {
                         "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                        "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jana Mala",
+                            "username": "lala",
+                            "role":2
+                        },
                         "edited": "2015-09-09T21:58:31+02:00",
                         "editor": "karel",
                         "trackType": 2,
@@ -3188,7 +3387,7 @@ Creates a track.
                         "parameterH2": 1.0,
                         "parameterL": 1.0,
                         "parameterN": 3,
-                        "parameterLx": [1.0, 2.0, 3.0]
+                        "parameterLx": [1.0, 2.0, 3.0],
                         "parameterLmin": 1.0,
                         "parameterLmax": 1.0,
                         "parameterLs": 1.0,
@@ -3203,7 +3402,7 @@ Creates a track.
                         "trackPlacing": 1,
                         "tracksOnBridge": 2,
                         "bridgeStructure": 3,
-                        "trackConnection": false,
+                        "trackConnection": false
                     }
                 },
                 "plainFieldGroup": {
@@ -3383,7 +3582,7 @@ Gets the track attributes.
                             "parameterH2": 1.0,
                             "parameterL": 1.0,
                             "parameterN": 3,
-                            "parameterLx": [1.0, 2.0, 3.0]
+                            "parameterLx": [1.0, 2.0, ,
                             "parameterLmin": 1.0,
                             "parameterLmax": 1.0,
                             "parameterLs": 1.0,
@@ -3398,7 +3597,7 @@ Gets the track attributes.
                             "trackPlacing": 1,
                             "tracksOnBridge": 2,
                             "bridgeStructure": 3,
-                            "trackConnection": false,
+                            "trackConnection": false
                         }
                     },
                     "plainFieldGroup": {
@@ -3534,7 +3733,7 @@ Updates the track attributes.
                             "parameterH2": 1.0,
                             "parameterL": 1.0,
                             "parameterN": 3,
-                            "parameterLx": [1.0, 2.0, 3.0]
+                            "parameterLx": [1.0, 2.0, 3.0],
                             "parameterLmin": 1.0,
                             "parameterLmax": 1.0,
                             "parameterLs": 1.0,
@@ -3549,7 +3748,7 @@ Updates the track attributes.
                             "trackPlacing": 1,
                             "tracksOnBridge": 2,
                             "bridgeStructure": 3,
-                            "trackConnection": false,
+                            "trackConnection": false
                         }
                     },
                     "plainFieldGroup": {
@@ -4492,6 +4691,12 @@ Gets the collection of routes.
                 "routes": [
                     {
                         "id": "3dc0d33d-fa5c-4e0e-830b-6fb76a41b8ef",
+                        "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jana Mala",
+                            "username": "lala",
+                            "role":2
+                        },
                         "edited": "2017-04-26T07:58:46.008033+02:00",
                         "editor": "Test User",
                         "databaseType": 2,
@@ -4502,6 +4707,12 @@ Gets the collection of routes.
                     },
                     {
                         "id": "1e5178ee-0982-490c-9273-f1cdbaf98273",
+                        "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jana Mala",
+                            "username": "lala",
+                            "role":2
+                        },
                         "edited": "2017-04-25T13:19:39.299362+02:00",
                         "databaseType": 2,
                         "name": "Transformátor",
@@ -4634,6 +4845,12 @@ Gets the route attributes.
                             "backward": true,
                             "track": {
                                 "id": "b1951f6f-6c65-4d0f-a2ec-64e9b35b60be",
+                                "creator": {
+                                    "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                                    "name": "Jana Mala",
+                                    "username": "lala",
+                                    "role":2
+                                },
                                 "edited": "2015-09-09T21:58:31+02:00",
                                 "editor": "pepa",
                                 "trackType": 1,
@@ -4651,6 +4868,12 @@ Gets the route attributes.
                             "backward": false,
                             "track": {
                                 "id": "9a871e1e-11f0-4960-add6-e2f9eaa4c03d",
+                                 "creator": {
+                                    "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                                    "name": "Jana Mala",
+                                    "username": "lala",
+                                    "role":2
+                                },
                                 "edited": "2015-09-09T21:58:31+02:00",
                                 "editor": "pepa",
                                 "trackType": 1,
@@ -4668,6 +4891,12 @@ Gets the route attributes.
                             "backward": false,
                             "track": {
                                 "id": "b1951f6f-6c65-4d0f-a2ec-64e9b35b60be",
+                                 "creator": {
+                                    "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                                    "name": "Jana Mala",
+                                    "username": "lala",
+                                    "role":2
+                                },
                                 "edited": "2015-09-09T21:58:31+02:00",
                                 "editor": "pepa",
                                 "trackType": 1,
@@ -4685,6 +4914,12 @@ Gets the route attributes.
                             "backward": true,
                             "track": {
                                 "id": "9a871e1e-11f0-4960-add6-e2f9eaa4c03d",
+                                 "creator": {
+                                    "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                                    "name": "Jana Mala",
+                                    "username": "lala",
+                                    "role":2
+                                },
                                 "edited": "2015-09-09T21:58:31+02:00",
                                 "editor": "pepa",
                                 "trackType": 1,
@@ -4789,20 +5024,6 @@ Deletes the route completely.
 + Response 406
 + Response 500
 + Response 503
-
-
-
-# Group Crossbeam
-The crossbeam resources can be used for managing crossbeams.
-
-
-## /crossbeams
-<!-- POST s duplikaci, GET vsech -->
-
-
-## /crossbeams/{id}
-<!-- PUT, GET, DELETE -->
-
 
 
 # Group Errors
