@@ -259,6 +259,7 @@ MQA API is the REST API project for managing trains.
 + creator (User, required)
 + edited: `2015-09-09T21:58:31+02:00` (string, optional)
 + editor (User, optional)
++ tabelized: `false` (boolean, required)
 + name: `Ocelový most` (string, required)
 + note: `Jiz notne stary` (string, optional)
 + databaseType: 1 (number, required)
@@ -317,13 +318,49 @@ MQA API is the REST API project for managing trains.
 + databaseType: 1 (number, required)
 
 ## NormativeNKElement (object)
-<!-- TODO: ... -->
++ normativeType: 1 (number, required)
++ calculated: false (boolean, required)
++ loadClassDynamicFactor: `1.2` (number, required)
++ trainsetDynamicFactor: `1.2` (number, required)
++ effectiveBridgeLength: `88` (number, required)
+
+## NormativeDataForm (object)
++ mainBeamType: 4 (number, required)
++ bridgeboardType: 2 (number, required)
++ bridgeboardStructureType: 7 (number, required)
++ parameterApr: `1.0` (number, optional)
++ parameterAz: `1.0` (number, optional)
++ parameterBdk: `1.0` (number, optional)
++ parameterBpo: `1.0` (number, optional)
++ parameterBpr: `1.0` (number, optional)
++ parameterG: `1.0` (number, optional)
++ parameterH: `1.0` (number, optional)
++ parameterH1: `1.0` (number, optional)
++ parameterH2: `1.0` (number, optional)
++ parameterL: `1.0` (number, optional)
++ parameterLmin: `1.0` (number, optional)
++ parameterLmax: `1.0` (number, optional)
++ parameterLpart: `1.0` (number, optional)
++ parameterLp: `1.0` (number, optional)
++ parameterLpr: `1.0` (number, optional)
++ parameterLpo: `1.0` (number, optional)
++ parameterLpo: `1.0` (number, optional)
++ parameterLdk: `1.0` (number, optional)
++ parameterN0: `1.0` (number, optional)
++ parameterN: 3 (number, optional)
++ parameterLx: 3 (array[number], optional)
++ trackQuality: 3 (number, optional)
++ trackPlacing: 3 (number, optional)
++ tracksOnBridge: 3 (number, optional)
++ bridgeStructure: 3 (number, optional)
++ trackConnection: `true` (boolean, optional)
 
 ## TrackNKElement (object)
 + crossbeamType: 2 (number, required)
 + crossbeamLength: 10.8 (number, optional)
 + specialCrossbeam (SpecialCrossbeamNKElement, required)
 + normatives (array[NormativeNKElement], required)
++ normativeForm (NormativeDataForm, required)
 
 ## SpecialCrossbeamNKElement (object)
 + name: `Maly most` (string, required)
@@ -335,6 +372,7 @@ MQA API is the REST API project for managing trains.
 + point: 10 (number, required)
 + leftForce: 40 (number, required)
 + rightForce: 40 (number, required)
++ note: `Bod zlomu` (string, optional)
 
 ## PlainFieldGroup (object)
 + trackQuality: 2 (number, required)
@@ -373,6 +411,23 @@ MQA API is the REST API project for managing trains.
 ## TracksOnBridgeType (object)
 + id: 1 (number, required)
 + name: `Jednokolejný most` (string, required)
+
+## BridgeStructureType (object)
++ id: 1 (number, required)
++ name: `Betonový nebo masivní` (string, required)
+
+## MainBeamType (object)
++ id: 1 (number, required)
++ name: `Prostý nosník / deska` (string, required)
+
+## BridgeboardStructureSubType (object)
++ id: 1 (number, required)
++ name: `Ocelová ortotropní mostovka` (string, required)
+
+## BridgeboardType (object)
++ id: 1 (number, required)
++ name: `Ocelová ortotropní mostovka` (string, required)
++ subtype (array[BridgeboardStructureSubType], optional)
 
 ## TrackSectionType (object)
 + id: 1 (number, required)
@@ -478,6 +533,10 @@ MQA API is the REST API project for managing trains.
 ## IdmUserRole (object)
 + id: `1` (number, required)
 + name: `Uživatel` (string, required)
+
+
+## Normative (object)
++ type: `SN 1912` (string ,required)
 
 
 # Group IDM 
@@ -1455,7 +1514,7 @@ The vehicle resources can be used for managing vehicles.
 
 + Parameters
 
-    + forTrainset (optional, boolean, `true`) ... for `true` value return only vehicles not laod schemas if user is not `admin`.
+    + forTrainset (optional, boolean, `true`) ... for `true` value return only vehicles not load schemas if user is not `admin`.
 
 
 ### GET
@@ -3061,7 +3120,7 @@ Creates a track.
                 "trackSectionPlacementCode": 5,
                 "trackType": 2,
                 "trackLoadClassType": 3,
-                "trackLoadClassVelocity": 7,
+                "trackLoadClassVelocity": 160.0,
                 "loadCapacity": 1.80,
                 "databaseType": 2
                 "older30years": true,
@@ -3076,26 +3135,76 @@ Creates a track.
                             {
                                 "point": 0,
                                 "leftForce": 0,
-                                "rightForce": 0
+                                "rightForce": 0,
+                                "note": null
                             },
                             {
                                 "point": 5,
                                 "leftForce": 20,
-                                "rightForce": 20
+                                "rightForce": 20,
+                                "note": "Bod zlomu 2"
                             },
                             {
                                 "point": 10,
                                 "leftForce": -40,
-                                "rightForce": -40
+                                "rightForce": -40,
+                                "note": "Bod zlomu 3"
                             },
                             {
                                 "point": 15,
                                 "leftForce": 0,
-                                "rightForce": 0
+                                "rightForce": 0,
+                                "note": "Bod zlomu 4"
                             },
                         ]
                     },
-                    "normatives": []
+                    "normatives": [
+                        {
+                            "normativeType": 1,
+                            "loadClassDynamicFactor": 1.1,
+                            "trainsetDynamicFactor": 1.2
+                        },
+                        {
+                            "normativeType": 2,
+                            "loadClassDynamicFactor": null,
+                            "trainsetDynamicFactor": null
+                        },
+                        {
+                            "normativeType": 3
+                        }
+                    ],
+                    "normativeForm": {
+                        "mainBeamType": 4,
+                        "bridgeboardType": 2,
+                        "bridgeboardStructureType": 7,
+                        "parameterApr": 1.0,
+                        "parameterAz": 1.0,
+                        "parameterBdk": 1.0,
+                        "parameterBpo": 1.0,
+                        "parameterBpr": 1.0,
+                        "parameterG": 1.0,
+                        "parameterH": 1.0,
+                        "parameterH1": 1.0,
+                        "parameterH2": 1.0,
+                        "parameterL": 1.0,
+                        "parameterN": 3,
+                        "parameterLx": [1.0, 2.0, 3.0]
+                        "parameterLmin": 1.0,
+                        "parameterLmax": 1.0,
+                        "parameterLs": 1.0,
+                        "parameterLpart": 1.0,
+                        "parameterLpart": 1.0,
+                        "parameterLp": 1.0,
+                        "parameterLpr": 1.0,
+                        "parameterLpo": 1.0,
+                        "parameterLdk": 1.0,
+                        "parameterN0": 1.0,
+                        "trackQuality": 2,
+                        "trackPlacing": 1,
+                        "tracksOnBridge": 2,
+                        "bridgeStructure": 3,
+                        "trackConnection": false,
+                    }
                 },
                 "plainFieldGroup": {
                     "trackQuality": 2,
@@ -3146,7 +3255,6 @@ Creates a track.
 + Response 503
 
 
-
 ## /tracks/{id}
 
 + Parameters:
@@ -3191,6 +3299,7 @@ Gets the track attributes.
                             "username": "stanek",
                             "role": 1
                     },
+                    "tabelized": false,
                     "name": "Ocelový most",
                     "note": null,
                     "trackSectionCode": 12,
@@ -3213,26 +3322,84 @@ Gets the track attributes.
                                 {
                                     "point": 0,
                                     "leftForce": 0,
-                                    "rightForce": 0
+                                    "rightForce": 0,
+                                    "note": "Bod zlomu 2"
                                 },
                                 {
                                     "point": 5,
                                     "leftForce": 20,
-                                    "rightForce": 20
+                                    "rightForce": 20,
+                                    "note": "Bod zlomu 3"
                                 },
                                 {
                                     "point": 10,
                                     "leftForce": -40,
-                                    "rightForce": -40
+                                    "rightForce": -40,
+                                    "note": "Bod zlomu 4"
                                 },
                                 {
                                     "point": 15,
                                     "leftForce": 0,
-                                    "rightForce": 0
+                                    "rightForce": 0,
+                                    "note": null
                                 },
                             ]
                         },
-                        "normatives": []
+                        "normatives": [
+                            {
+                                "normativeType": 1,
+                                "calculated": true,
+                                "loadClassDynamicFactor": 1.1,
+                                "trainsetDynamicFactor": 1.2,
+                                "effectiveBridgeLength": 120.1
+                            },
+                            {
+                                "normativeType": 2,
+                                "calculated": false,
+                                "loadClassDynamicFactor": 1.5,
+                                "trainsetDynamicFactor": 1.7,
+                                "effectiveBridgeLength": 88.0
+                            },
+                            {
+                                "normativeType": 3,
+                                "calculated": false,
+                                "loadClassDynamicFactor": 1.2,
+                                "trainsetDynamicFactor": 1.3,
+                                "effectiveBridgeLength": 60.0
+                            }
+                        ],
+                        "normativeForm": {
+                            "mainBeamType": 4,
+                            "bridgeboardType": 2,
+                            "bridgeboardStructureType": 7,
+                            "parameterApr": 1.0,
+                            "parameterAz": 1.0,
+                            "parameterBdk": 1.0,
+                            "parameterBpo": 1.0,
+                            "parameterBpr": 1.0,
+                            "parameterG": 1.0,
+                            "parameterH": 1.0,
+                            "parameterH1": 1.0,
+                            "parameterH2": 1.0,
+                            "parameterL": 1.0,
+                            "parameterN": 3,
+                            "parameterLx": [1.0, 2.0, 3.0]
+                            "parameterLmin": 1.0,
+                            "parameterLmax": 1.0,
+                            "parameterLs": 1.0,
+                            "parameterLpart": 1.0,
+                            "parameterLpart": 1.0,
+                            "parameterLp": 1.0,
+                            "parameterLpr": 1.0,
+                            "parameterLpo": 1.0,
+                            "parameterLdk": 1.0,
+                            "parameterN0": 1.0,
+                            "trackQuality": 2,
+                            "trackPlacing": 1,
+                            "tracksOnBridge": 2,
+                            "bridgeStructure": 3,
+                            "trackConnection": false,
+                        }
                     },
                     "plainFieldGroup": {
                         "trackQuality": 2,
@@ -3314,26 +3481,76 @@ Updates the track attributes.
                                 {
                                     "point": 0,
                                     "leftForce": 0,
-                                    "rightForce": 0
+                                    "rightForce": 0,
+                                    "note": "Bod zlomu 2"
                                 },
                                 {
                                     "point": 5,
                                     "leftForce": 20,
-                                    "rightForce": 20
+                                    "rightForce": 20,
+                                    "note": "Bod zlomu 3"
                                 },
                                 {
                                     "point": 10,
                                     "leftForce": -40,
-                                    "rightForce": -40
+                                    "rightForce": -40,
+                                    "note": "Bod zlomu 4"
                                 },
                                 {
                                     "point": 15,
                                     "leftForce": 0,
-                                    "rightForce": 0
+                                    "rightForce": 0,
+                                    "note": null
                                 },
                             ]
                         },
-                        "normatives": []
+                        "normatives": [
+                            {
+                                    "normativeType": 1,
+                                    "loadClassDynamicFactor": 1.1,
+                                    "trainsetDynamicFactor": 1.2
+                                },
+                                {
+                                    "normativeType": 2,
+                                    "loadClassDynamicFactor": null,
+                                    "trainsetDynamicFactor": null
+                                },
+                                {
+                                    "normativeType": 3
+                                }
+                        ],
+                        "normativeForm": {
+                            "mainBeamType": 4,
+                            "bridgeboardType": 2,
+                            "bridgeboardStructureType": 7,
+                            "parameterApr": 1.0,
+                            "parameterAz": 1.0,
+                            "parameterBdk": 1.0,
+                            "parameterBpo": 1.0,
+                            "parameterBpr": 1.0,
+                            "parameterG": 1.0,
+                            "parameterH": 1.0,
+                            "parameterH1": 1.0,
+                            "parameterH2": 1.0,
+                            "parameterL": 1.0,
+                            "parameterN": 3,
+                            "parameterLx": [1.0, 2.0, 3.0]
+                            "parameterLmin": 1.0,
+                            "parameterLmax": 1.0,
+                            "parameterLs": 1.0,
+                            "parameterLpart": 1.0,
+                            "parameterLpart": 1.0,
+                            "parameterLp": 1.0,
+                            "parameterLpr": 1.0,
+                            "parameterLpo": 1.0,
+                            "parameterLdk": 1.0,
+                            "parameterN0": 1.0,
+                            "trackQuality": 2,
+                            "trackPlacing": 1,
+                            "tracksOnBridge": 2,
+                            "bridgeStructure": 3,
+                            "trackConnection": false,
+                        }
                     },
                     "plainFieldGroup": {
                         "trackQuality": 2,
@@ -3918,7 +4135,7 @@ Gets the track quality types collection.
 ## /tracks/tracksOnBridgeTypes
 
 ### GET
-Gets the track quality types collection.
+Gets the track count type on bridge
 
 + Request (application/json)
 
@@ -3947,6 +4164,174 @@ Gets the track quality types collection.
                     {
                         "id": 2,
                         "name": "Dvou a více kolejný most"
+                    }
+                ]
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /tracks/bridgeStructureTypes
+
+### GET
+Gets the bridge material structure type
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+
+        + types (array[BridgeStructureType])
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+
+            {
+                "types": [
+                    {
+                        "id": 1,
+                        "name": "Betonový nebo masivní"
+                    },
+                    {
+                        "id": 2,
+                        "name": "Klenbové s přesypávkou"
+                    },
+                ]
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /tracks/mainBeamTypes
+
+### GET
+Gets the main beams types
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+
+        + types (array[MainBeamType])
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+
+            {
+                "types": [
+                    {
+                        "id": 1,
+                        "name": "Spojitý nosník / deska"
+                    },
+                    {
+                        "id": 2,
+                        "name": "Prostý nosník / deska"
+                    },
+                    {
+                        "id": 3,
+                        "name": "Rámy o jednom poli"
+                    }
+                ]
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+## /tracks/bridgeboardTypes
+
+### GET
+Gets the bridge borad material type
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+
+        + types (array[BridgeboardType])
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+
+            {
+                "types": [
+                    {
+                        "id": 1,
+                        "name": "Ocelová ortotropní mostovka",
+                        "subtypes": [
+                            {
+                                "id": 1,
+                                "name": "Plech mostovky, puklovka (pro příčný i podélný směr)"
+                            },
+                            {
+                                "id": 2,
+                                "name": "Spojité podélné výztuhy (podélníky)"
+                            },
+                            {
+                                "id": 3,
+                                "name": "Konzoly podélných výztuh, podélníků a< 0.5 m"
+                            }
+                        ]
+                    },
+                    {
+                        "id": 2,
+                        "name": "Ocelová příčníková mostovka",
+                        "subtypes": [
+                            {
+                                "id": 5,
+                                "name": "Příčné výztuhy (příčníky) - koncové"
+                            },
+                            {
+                                "id": 6,
+                                "name": "Příčné výztuhy (příčníky) - mezilehlé"
+                            }
+                        ]
+                    },
+                    {
+                        "id": 3,
+                        "name": "Betonová horní mostovka",
+                        "subtypes": []
                     }
                 ]
             }
