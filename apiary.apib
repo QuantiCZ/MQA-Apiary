@@ -272,16 +272,32 @@ MQA API is the REST API project for managing trains.
 + maxVelocity: `160.0` (number, required)
 + trainset (TrainsetListItem, required)
 + route (RouteListItem, required)
-+ results (array[TrainsetPassabilityResultItem], required)
++ result (TrainsetPassabilityResult, required)
++ reportData (array[TrainsetPassabilityReport], required)
++ restrictions (array[TrainsetPassabilityRestriction], required)
 
-## TrainsetPassabilityResultItem (object)
-+ crossbeamSpan: `10` (number, required)
-+ loadClassMomentum: `5.6` (number, required)
-+ trainsetMomentum: `4.6` (number, required)
-+ momentumEfficiency: `0.79` (number, required)
-+ loadClassForce: `22.6` (number, required)
-+ trainsetForce: `21.38` (number, required)
-+ forceEfficiency: `0.79` (number, required)
+## TrainsetPassabilityResult (object)
++ routePassable: `true` (boolean, required)
++ maxRouteLoadEfficiency: `0.92` (number, required)
++ maxLoadEfficiencyTrackNo: `3` (number, required)
++ maxVehicleSpeed: `160.0` (number, required)
+
+## TrainsetPassabilityRestriction (object)
++ trackNo: `2` (number, required)
++ restriction: `rychlost` (string, required)
+
+## TrainsetPassabilityReport (object)
++ trackNo: `1` (number, required)
++ trackType: `1` (number, required)
++ trackSectionCode: `12` (number, required)
++ trackSectionPlacement: `5747.0` (number, required)
++ name: `Usek 1` (string, required)
++ trackLoadClassType: `41` (number, required)
++ trackLoadClassVelocity: `80.0` (number, required)
++ loadCapacity: `1.0` (number, optional)
++ maxLoadEfficiency: `0.98` (number, required)
++ maxLoadEfficiency: `60` (number, optional)
++ maxLoadEfficiency: `!omezení rychlosti` (string, optional)
 
 
 
@@ -3057,33 +3073,48 @@ Trainset passability check on specific route.
                         "endStation": "Ústí n. Labem",
                         "note": null
                 },
-                "results": [
+                "result": {
+                    "routePassable": false,
+                    "maxRouteLoadEfficiency": 1.15,
+                    "maxLoadEfficiencyTrackNo": 2,
+                    "maxVehicleSpeed": 0
+                },
+                "restrictions": [
                     {
-                        "crossbeamSpan": 1,
-                        "loadClassMomentum": 5.6,
-                        "trainsetMomentum": 4.5,
-                        "momentumEfficiency": 0.80,
-                        "loadClassForce": 22.50,
-                        "trainsetForce": 21.38,
-                        "forceEfficiency": 0.95
+                        "trackNo": 1,
+                        "restriction": "rychlost"
                     },
                     {
-                        "crossbeamSpan": 10,
-                        "loadClassMomentum": 56.3,
-                        "trainsetMomentum": 28.1,
-                        "momentumEfficiency": 0.50,
-                        "loadClassForce": 225.0,
-                        "trainsetForce": 123.75,
-                        "forceEfficiency": 0.55
+                        "trackNo": 2,
+                        "restriction": "přechodnost"
+                    }
+                ],
+                "reportData": [
+                    {
+                        "trackNo": 1,
+                        "trackType": 1,
+                        "trackSectionCode": 1,
+                        "trackSectionPlacement": 5747,
+                        "name": "Test skupiny prostých polí",
+                        "trackLoadClassType": 49,
+                        "trackLoadClassVelocity": 60,
+                        "loadCapacity": 1,
+                        "maxLoadEfficiency": 0.99,
+                        "passVelocityLimit": 60,
+                        "passNote": "!omezení rychlosti"
                     },
                     {
-                        "crossbeamSpan": 100,
-                        "loadClassMomentum": 562.5,
-                        "trainsetMomentum": 337.5,
-                        "momentumEfficiency": 0.60,
-                        "loadClassForce": 2250,
-                        "trainsetForce": 450,
-                        "forceEfficiency": 0.20
+                        "trackNo": 2,
+                        "trackType": 1,
+                        "trackSectionCode": 1,
+                        "trackSectionPlacement": 5747,
+                        "name": "Test skupiny prostých polí",
+                        "trackLoadClassType": 44,
+                        "trackLoadClassVelocity": 60,
+                        "loadCapacity": 1,
+                        "maxLoadEfficiency": 1.15,
+                        "passVelocityLimit": null,
+                        "passNote": "!není přechodná"
                     }
                 ]
             }
