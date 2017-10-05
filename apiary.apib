@@ -373,6 +373,7 @@ MQA API is the REST API project for managing trains.
 + loadClassDynamicFactor: `1.2` (number, required)
 + trainsetDynamicFactor: `1.2` (number, required)
 + effectiveBridgeLength: `88` (number, required)
++ info: `Pro určení náhradní delka je potřeba vyplnit ...` (string, required)
 
 ## NormativeDataForm (object)
 + mainBeamType: 4 (number, required)
@@ -3585,6 +3586,7 @@ Gets the track attributes.
                             {
                                 "normativeType": 1,
                                 "calculated": true,
+                                "info": "Pro určení náhradní delka je potřeba vyplnit ...",
                                 "loadClassDynamicFactor": 1.1,
                                 "trainsetDynamicFactor": 1.2,
                                 "effectiveBridgeLength": 120.1
@@ -3592,6 +3594,7 @@ Gets the track attributes.
                             {
                                 "normativeType": 2,
                                 "calculated": false,
+                                "info": null,
                                 "loadClassDynamicFactor": 1.5,
                                 "trainsetDynamicFactor": 1.7,
                                 "effectiveBridgeLength": 88.0
@@ -3599,6 +3602,7 @@ Gets the track attributes.
                             {
                                 "normativeType": 3,
                                 "calculated": false,
+                                "info": null,
                                 "loadClassDynamicFactor": 1.2,
                                 "trainsetDynamicFactor": 1.3,
                                 "effectiveBridgeLength": 60.0
