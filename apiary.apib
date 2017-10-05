@@ -402,7 +402,7 @@ MQA API is the REST API project for managing trains.
 + trackQuality: 3 (number, optional)
 + trackPlacing: 3 (number, optional)
 + tracksOnBridge: 3 (number, optional)
-+ bridgeStructure: 3 (number, optional)
++ bridgeMaterial: 3 (number, optional)
 + trackConnection: `true` (boolean, optional)
 
 ## TrackNKElement (object)
@@ -415,6 +415,8 @@ MQA API is the REST API project for managing trains.
 ## SpecialCrossbeamNKElement (object)
 + name: `Maly most` (string, required)
 + descriptionNote: `null` (string, optional)
++ extremeFromPositive: `true` (boolean, required)
++ useLighteningEffect: `false` (boolean, required)
 + sourceNote: `Modernizace Čáslav - Chrudim, SO 28-30-16, Příloha 11, Statický  výpočet, SUDOP PRAHA 2004, str. 498)` (string, optional)
 + beamForces (array[BeamForceNKElement], required)
 
@@ -3360,6 +3362,8 @@ Creates a track.
                     "specialCrossbeam": {
                         "name": "Maly most",
                         "descriptionNote": null,
+                        "extremeFromPositive": true,
+                        "useLighteningEffect": false,
                         "sourceNote": "Modernizace Čáslav - Chrudim, SO 28-30-16, Příloha 11, Statický  výpočet, SUDOP PRAHA 2004, str. 498)",
                         "beamForces": [
                             {
@@ -3432,7 +3436,7 @@ Creates a track.
                         "trackQuality": 2,
                         "trackPlacing": 1,
                         "tracksOnBridge": 2,
-                        "bridgeStructure": 3,
+                        "bridgeMaterial": 3,
                         "trackConnection": false
                     }
                 },
@@ -3547,6 +3551,8 @@ Gets the track attributes.
                         "specialCrossbeam": {
                             "name": "Maly most",
                             "descriptionNote": null,
+                            "extremeFromPositive": true,
+                            "useLighteningEffect": false,
                             "sourceNote": "Modernizace Čáslav - Chrudim, SO 28-30-16, Příloha 11, Statický  výpočet, SUDOP PRAHA 2004, str. 498)",
                             "beamForces": [
                                 {
@@ -3627,7 +3633,7 @@ Gets the track attributes.
                             "trackQuality": 2,
                             "trackPlacing": 1,
                             "tracksOnBridge": 2,
-                            "bridgeStructure": 3,
+                            "bridgeMaterial": 3,
                             "trackConnection": false
                         }
                     },
@@ -3706,6 +3712,8 @@ Updates the track attributes.
                         "specialCrossbeam": {
                             "name": "Maly most",
                             "descriptionNote": null,
+                            "extremeFromPositive": true,
+                            "useLighteningEffect": false,
                             "sourceNote": "Modernizace Čáslav - Chrudim, SO 28-30-16, Příloha 11, Statický  výpočet, SUDOP PRAHA 2004, str. 498)",
                             "beamForces": [
                                 {
@@ -3778,7 +3786,7 @@ Updates the track attributes.
                             "trackQuality": 2,
                             "trackPlacing": 1,
                             "tracksOnBridge": 2,
-                            "bridgeStructure": 3,
+                            "bridgeMaterial": 3,
                             "trackConnection": false
                         }
                     },
