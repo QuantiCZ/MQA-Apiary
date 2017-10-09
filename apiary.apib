@@ -65,6 +65,7 @@ MQA API is the REST API project for managing trains.
 
 ## Vehicle (object)
 + id: `7d4846be-42c4-11e6-beb8-9e71128cae77` (string, required)
++ systemic: `false` (boolean, required)
 + created: `2015-09-09T21:58:31+02:00` (string, required)
 + creator (User, required)
 + edited: `2015-09-09T21:58:31+02:00` (string, optional)
@@ -139,6 +140,7 @@ MQA API is the REST API project for managing trains.
 
 ## VehicleListItem (object)
 + id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
++ systemic: `false` (boolean, required)
 + creator (User, required)
 + edited: `2015-09-09T21:58:31+02:00` (string, required)
 + editor: `karel` (string, required)
@@ -296,9 +298,35 @@ MQA API is the REST API project for managing trains.
 + trackLoadClassVelocity: `80.0` (number, required)
 + loadCapacity: `1.0` (number, optional)
 + maxLoadEfficiency: `0.98` (number, required)
-+ maxLoadEfficiency: `60` (number, optional)
-+ maxLoadEfficiency: `!omezení rychlosti` (string, optional)
++ passVelocityLimit: `60` (number, optional)
++ passNote: `!omezení rychlosti` (string, optional)
++ details (array[TrainsetPassabilityReportDetail], required)
 
+## TrainsetPassabilityReportDetail (object)
++ crossbeamType: `2` (number, required)
++ maxLoadLimitEfficiency: `0.98` (number, required)
++ maxLoadLimitRecordNo: `2` (number, required)
++ maxUsabilityLimitEfficiency: `1.22` (number, required)
++ maxUsabilityLimitRecordNo: `3` (number, required)
++ specialCrossbeamName: `Speciální příčníková čára 2` (string, optional)
++ specialCrossbeamDescription: `Pro testovaci ucely` (string, optional)
++ extremeFromPositive: `true` (boolean, optional)
++ useLighteningEffect: `false` (boolean, optional)
++ useZLM71: `false` (boolean, optional)
++ records (array[TrainsetPassabilityReportDetailRecord], required)
+
+## TrainsetPassabilityReportDetailRecord (object)
++ recordNo: `2` (number, required)
++ crossmemberSpan: `5.0` (number, required)
++ loadClassUsabilityLimitEffect: `22.5` (number, required)
++ trainsetUsabilityLimitEffect: `27.6` (number, optional)
++ loadClassLoadLimitEffect: `57.5` (number, required)
++ trainsetLoadLimitEffect: `88.6` (number, optional)
++ loadClassDynamicFactor: `1.67` (number, required)
++ trainsetDynamicFactor: `1.58` (number, required)
++ trainsetVelocityLimit: `100.0` (number, required)
++ usabilityLimitEfficiency: `0.95` (number, required)
++ loadLimitEfficiency: `0.99` (number, required)
 
 
 ## Track (object)
@@ -1588,6 +1616,7 @@ Gets the collection of vehicles.
                 "vehicles": [
                     {
                         "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                        "systemic": false,
                         "creator": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jana Mala",
@@ -1604,6 +1633,7 @@ Gets the collection of vehicles.
                     },
                     {
                         "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                        "systemic": false,
                         "creator": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jana Mala",
@@ -1752,6 +1782,7 @@ Gets the vehicle attributes.
             {
                 "vehicle": {
                     "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                    "systemic": false,
                     "created": "2015-09-09T21:58:31+02:00",
                     "creator": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
@@ -3355,7 +3386,7 @@ Creates a track.
                 "trackLoadClassType": 3,
                 "trackLoadClassVelocity": 160.0,
                 "loadCapacity": 1.80,
-                "databaseType": 2
+                "databaseType": 2,
                 "older30years": true,
                 "nkElement": {
                     "crossbeamType": 2,
