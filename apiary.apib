@@ -87,7 +87,7 @@ MQA API is the REST API project for managing trains.
 + bumperHeight: 10 (number, required)
 + pivotDistance: 12 (number, required)
 + pivotHeight: 7 (number, required)
-+ dynamicForceFactor: 1.98 (number, required)
++ loadFactorCSN: 1.98 (number, required)
 + basicLoadFactor: 1.7 (number, required)
 + basicPassiveLoadFactor: 1.0 (number, required)
 + totalWorkingVehicles: 8 (number, required)
@@ -114,7 +114,7 @@ MQA API is the REST API project for managing trains.
 + bumperHeight: 10 (number, required)
 + pivotDistance: 12 (number, required)
 + pivotHeight: 7 (number, required)
-+ dynamicForceFactor: 1.98 (number, required)
++ loadFactorCSN: 1.98 (number, required)
 + basicLoadFactor: 1.7 (number, required)
 + basicPassiveLoadFactor: 1.0 (number, required)
 + totalWorkingVehicles: 8 (number, required)
@@ -351,6 +351,58 @@ MQA API is the REST API project for managing trains.
 + created: `2015-09-09T21:58:31+02:00` (string, required)
 + creator (User, required)
 + route (RouteListItem, required)
++ referenceTrainset (TrainsetComparisonData, required)
++ comparedTrainsets (array[TrainsetComparisonData], required)
++ maxTrainsetEfficacies (array[TrainsetComparisonEfficacy], required)
++ reportData (array[TrainsetComparisonReport], required)
+
+## TrainsetComparisonEfficacy (object)
++ trainsetNo: `2` (number, required)
++ efficacy: `0.89` (number, required)
+
+## TrainsetComparisonData (object)
++ trainsetNo: `2` (number, required)
++ trainsetName: `Taurus 217` (string, required)
++ normativeType: `4` (number, required)
++ maxVelocity: `200.0` (number, required)
++ useExtremeVelocity: `true` (boolean, required)
++ useLoadLimit: `true` (boolean, required)
++ useUsabilityLimit: `false` (boolean, required)
+
+## TrainsetComparisonReport (object)
++ trackNo: `2` (number, required)
++ trackType: `1` (number, required)
++ trackSectionCode: `12` (number, required)
++ trackSectionPlacement: `5747.0` (number, required)
++ name: `Usek 1` (string, required)
++ note: `!omezení rychlosti` (string, optional)
++ trainsetEfficacies (array[TrainsetComparisonEfficacy], required)
++ details (array[TrainsetComparisonReportDetail], required)
+
+## TrainsetComparisonReportDetail (object)
++ crossbeamType: `2` (number, required)
++ loadLimitReport: `true` (boolean, required)
++ usabilityLimitReport: `true` (boolean, required)
++ specialCrossbeamName: `Speciální příčníková čára 2` (string, optional)
++ specialCrossbeamDescription: `Pro testovaci ucely` (string, optional)
++ extremeFromPositive: `true` (boolean, optional)
++ useLighteningEffect: `false` (boolean, optional)
++ useZLM71: `false` (boolean, optional)
++ maxTrainsetEfficacies (array[TrainsetComparisonEfficacy], required)
++ records (array[TrainsetComparisonReportDetailRecord], required)
+
+## TrainsetComparisonReportDetailRecord (object)
++ recordNo: `2` (number, required)
++ crossmemberSpan: `5.0` (number, required)
++ note: `!omezení rychlosti` (string, optional)
++ referenceTrainsetData (TrainsetComparisonReportDetailRecordItem, required)
++ comparedTrainsetsData (array[TrainsetComparisonReportDetailRecordItem], required)
+
+## TrainsetComparisonReportDetailRecordItem (object)
++ staticLoadEffect: `225.2` (number, required)
++ maxEfficacy: `0.96` (number, required)
++ dynamicFactor: `1.52` (number, required)
++ velocityLimit: `120.0` (number, required)
 
 
 
@@ -458,6 +510,8 @@ MQA API is the REST API project for managing trains.
 + tracksOnBridge: 3 (number, optional)
 + bridgeMaterial: 3 (number, optional)
 + trackConnection: `true` (boolean, optional)
++ dynamicFactorBy1951: `false` (boolean, optional)
++ dynamicFactorBy1969: `false` (boolean, optional)
 
 ## TrackNKElement (object)
 + crossbeamType: 2 (number, required)
@@ -1720,7 +1774,7 @@ Creates a vehicle.
                 "bumperHeight": 10,
                 "pivotDistance": 1,
                 "pivotHeight": 12.5
-                "dynamicForceFactor": 1.90,
+                "loadFactorCSN": 1.90,
                 "basicLoadFactor": 1.84,
                 "basicPassiveLoadFactor": 1.12,
                 "totalWorkingVehicles": 12,
@@ -1841,7 +1895,7 @@ Gets the vehicle attributes.
                     "bumperHeight": 10,
                     "pivotDistance": 1,
                     "pivotHeight": 12.5
-                    "dynamicForceFactor": 1.90,
+                    "loadFactorCSN": 1.90,
                     "basicLoadFactor": 1.84,
                     "basicPassiveLoadFactor": 1.12,
                     "totalWorkingVehicles": 12,
@@ -1923,7 +1977,7 @@ Updates the vehicle attributes.
                     "bumperHeight": 10,
                     "pivotDistance": 1,
                     "pivotHeight": 12.5
-                    "dynamicForceFactor": 1.90,
+                    "loadFactorCSN": 1.90,
                     "basicLoadFactor": 1.84,
                     "basicPassiveLoadFactor": 1.12,
                     "totalWorkingVehicles": 12,
@@ -3564,17 +3618,13 @@ Comparison trainsets collection with basic trainset
                         "trainsetId": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                         "maxVelocity": 200,
                         "reliabilityByCSN": null,
-                        "useLoadLimit": true,
-                        "useUsabilityLimit": false,
-                        "useExtremeVelocity": false,
+                        "useExtremeVelocity": false
                     },
                     {
                         "trainsetId": "7f1d7286-c87f-43b3-ad30-814efcee255a",
                         "maxVelocity": 160,
                         "reliabilityByCSN": false,
-                        "useLoadLimit": true,
-                        "useUsabilityLimit": true,
-                        "useExtremeVelocity": true,
+                        "useExtremeVelocity": true
                     }
                 ]
             }
@@ -3597,6 +3647,24 @@ Comparison trainsets collection with basic trainset
                     "username": "stanek",
                     "role": 1
                 },
+                "route": {
+                        "id": "3dc0d33d-fa5c-4e0e-830b-6fb76a41b8ef",
+                        "creator": {
+                            "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                            "name": "Jana Mala",
+                            "username": "lala",
+                            "role":2
+                        },
+                        "edited": "2017-04-26T07:58:46.008033+02:00",
+                        "editor": "Test User",
+                        "databaseType": 2,
+                        "name": "Cargo",
+                        "startStation": "Pardubice",
+                        "endStation": "Ústí n. Labem",
+                        "note": null
+                },
+
+
 
             }
 
@@ -3915,7 +3983,9 @@ Creates a track.
                         "trackPlacing": 1,
                         "tracksOnBridge": 2,
                         "bridgeMaterial": 3,
-                        "trackConnection": false
+                        "trackConnection": false,
+                        "dynamicFactorBy1951": false,
+                        "dynamicFactorBy1969": false
                     }
                 },
                 "plainFieldGroup": {
@@ -4115,7 +4185,9 @@ Gets the track attributes.
                             "trackPlacing": 1,
                             "tracksOnBridge": 2,
                             "bridgeMaterial": 3,
-                            "trackConnection": false
+                            "trackConnection": false,
+                            "dynamicFactorBy1951": false,
+                            "dynamicFactorBy1969": false
                         }
                     },
                     "plainFieldGroup": {
@@ -4268,7 +4340,9 @@ Updates the track attributes.
                             "trackPlacing": 1,
                             "tracksOnBridge": 2,
                             "bridgeMaterial": 3,
-                            "trackConnection": false
+                            "trackConnection": false,
+                            "dynamicFactorBy1951": false,
+                            "dynamicFactorBy1969": false
                         }
                     },
                     "plainFieldGroup": {
