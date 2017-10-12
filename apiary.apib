@@ -353,7 +353,6 @@ MQA API is the REST API project for managing trains.
 + route (RouteListItem, required)
 + referenceTrainset (TrainsetComparisonData, required)
 + comparedTrainsets (array[TrainsetComparisonData], required)
-+ maxTrainsetEfficacies (array[TrainsetComparisonEfficacy], required)
 + reportData (array[TrainsetComparisonReport], required)
 
 ## TrainsetComparisonEfficacy (object)
@@ -368,6 +367,7 @@ MQA API is the REST API project for managing trains.
 + useExtremeVelocity: `true` (boolean, required)
 + useLoadLimit: `true` (boolean, required)
 + useUsabilityLimit: `false` (boolean, required)
++ maxEfficacy: `0.88` (number, required)
 
 ## TrainsetComparisonReport (object)
 + trackNo: `2` (number, required)
