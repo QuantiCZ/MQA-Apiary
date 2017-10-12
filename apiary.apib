@@ -382,7 +382,7 @@ MQA API is the REST API project for managing trains.
 ## TrainsetComparisonReportDetail (object)
 + crossbeamType: `2` (number, required)
 + loadLimitReport: `true` (boolean, required)
-+ usabilityLimitReport: `true` (boolean, required)
++ usabilityLimitReport: `false` (boolean, required)
 + specialCrossbeamName: `Speciální příčníková čára 2` (string, optional)
 + specialCrossbeamDescription: `Pro testovaci ucely` (string, optional)
 + extremeFromPositive: `true` (boolean, optional)
@@ -399,6 +399,7 @@ MQA API is the REST API project for managing trains.
 + comparedTrainsetsData (array[TrainsetComparisonReportDetailRecordItem], required)
 
 ## TrainsetComparisonReportDetailRecordItem (object)
++ trainsetNo: `3` (number, required)
 + staticLoadEffect: `225.2` (number, required)
 + maxEfficacy: `0.96` (number, required)
 + dynamicFactor: `1.52` (number, required)
