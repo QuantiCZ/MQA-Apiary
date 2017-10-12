@@ -66,6 +66,7 @@ MQA API is the REST API project for managing trains.
 ## Vehicle (object)
 + id: `7d4846be-42c4-11e6-beb8-9e71128cae77` (string, required)
 + systemic: `false` (boolean, required)
++ isLoadDiagram: `false` (boolean, required)
 + created: `2015-09-09T21:58:31+02:00` (string, required)
 + creator (User, required)
 + edited: `2015-09-09T21:58:31+02:00` (string, optional)
@@ -141,6 +142,7 @@ MQA API is the REST API project for managing trains.
 ## VehicleListItem (object)
 + id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
 + systemic: `false` (boolean, required)
++ isLoadDiagram: `false` (boolean, required)
 + creator (User, required)
 + edited: `2015-09-09T21:58:31+02:00` (string, required)
 + editor: `karel` (string, required)
@@ -193,6 +195,7 @@ MQA API is the REST API project for managing trains.
 + note: `Extra kratky vlak` (string, optional)
 + databaseType: 1 (number, required)
 + trainsetType: 3 (number, required)
++ maxVelocity: 200 (number, required)
 + vehicles (array[TrainsetVehicleItem], required)
 
 ## TrainsetCreate (object)
@@ -210,6 +213,7 @@ MQA API is the REST API project for managing trains.
 + name: `Shimns` (string, required)
 + note: `Strojirna Brno` (string, optional)
 + trainsetType: 5 (number, required)
++ maxVelocity: 200 (number, required)
 + databaseType: 1 (number, required)
 
 ## TrainsetVehicleItem (object)
@@ -327,6 +331,27 @@ MQA API is the REST API project for managing trains.
 + trainsetVelocityLimit: `100.0` (number, required)
 + usabilityLimitEfficiency: `0.95` (number, required)
 + loadLimitEfficiency: `0.99` (number, required)
+
+
+
+## TrainsetComparisonCreate (object)
++ routeId:  `d08c3852-c87f-43b3-ad30-814efcee255a` (string, required)
++ basicTrainset (TrainsetComparisonCreateItem, required)
++ testTrainsets (array[TrainsetComparisonCreateItem], required)
+
+## TrainsetComparisonCreateItem (object)
++ trainsetId:  `9a871e1e-11f0-4960-add6-e2f9eaa4c03d` (string, required)
++ maxVelocity: `160.0` (number, required)
++ reliabilityByCSN: `false` (boolean, optional)
++ useLoadLimit: `true` (boolean, required)
++ useUsabilityLimit: `false` (boolean, required)
++ useExtremeVelocity: `true` (boolean, required)
+
+## TrainsetComparison (object)
++ created: `2015-09-09T21:58:31+02:00` (string, required)
++ creator (User, required)
++ route (RouteListItem, required)
+
 
 
 ## Track (object)
@@ -1617,6 +1642,7 @@ Gets the collection of vehicles.
                     {
                         "id": "12834734-42c9-11e6-beb8-9e71128cae77",
                         "systemic": false,
+                        "isLoadDiagram": false,
                         "creator": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jana Mala",
@@ -1634,6 +1660,7 @@ Gets the collection of vehicles.
                     {
                         "id": "12834734-42c9-11e6-beb8-9e71128cae77",
                         "systemic": false,
+                        "isLoadDiagram": false,
                         "creator": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jana Mala",
@@ -1783,6 +1810,7 @@ Gets the vehicle attributes.
                 "vehicle": {
                     "id": "12834734-42c9-11e6-beb8-9e71128cae77",
                     "systemic": false,
+                    "isLoadDiagram": false,
                     "created": "2015-09-09T21:58:31+02:00",
                     "creator": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
@@ -2661,6 +2689,7 @@ Gets the collection of trainsets.
                         "note": "Extra kratky vlak",
                         "editor": "Test User",
                         "trainsetType": 3,
+                        "maxVelocity": 200.0,
                         "databaseType": 2
                     },
                     {
@@ -2676,6 +2705,7 @@ Gets the collection of trainsets.
                         "note": "Extra dlouhy vlak",
                         "editor": "Test User",
                         "trainsetType": 2,
+                        "maxVelocity": 200.0,
                         "databaseType": 1
                     }
                 ]
@@ -2801,6 +2831,7 @@ Gets the trainset attributes.
                     "note": "Extra kratky vlak",
                     "databaseType": 2,
                     "trainsetType": 3,
+                    "maxVelocity": 200.0,
                     "vehicles": [
                         {
                             "order": 1,
@@ -2988,6 +3019,7 @@ Classify a trainset to track load class.
                     "note": "Extra kratky vlak",
                     "editor": "Test User",
                     "trainsetType": 3,
+                    "maxVelocity": 200.0,
                     "databaseType": 2
                 },
                 "results": [
@@ -3089,6 +3121,7 @@ Trainset passability check on specific route.
                     "note": "Extra kratky vlak",
                     "editor": "Test User",
                     "trainsetType": 3,
+                    "maxVelocity": 200.0,
                     "databaseType": 2
                 },
                 "route": {
@@ -3123,34 +3156,444 @@ Trainset passability check on specific route.
                         "restriction": "přechodnost"
                     }
                 ],
-                "reportData": [
+                "reportData":[  
+                    {  
+                       "trackNo":1,
+                       "trackType":1,
+                       "trackSectionCode":5,
+                       "trackSectionPlacement":23.3750,
+                       "name":"Prechodnost Usek 1",
+                       "trackLoadClassType":46,
+                       "trackLoadClassVelocity":80.0,
+                       "loadCapacity":1.02,
+                       "maxLoadEfficiency":0.7549668874172185430463576159,
+                       "passVelocityLimit":120.0,
+                       "passNote":"",
+                       "details":[  
+                          {  
+                             "crossbeamType":1,
+                             "maxTrainsetVelocity":120.0,
+                             "maxTrainsetVelocityRecordNo":1,
+                             "maxLoadLimitEfficiency":0.7549668874172185430463576159,
+                             "maxLoadLimitRecordNo":1,
+                             "maxUsabilityLimitEfficiency":0.8928571428571428571428571429,
+                             "maxUsabilityLimitRecordNo":1,
+                             "specialCrossbeamName":null,
+                             "specialCrossbeamDescription":null,
+                             "extremeFromPositive":null,
+                             "useLighteningEffect":null,
+                             "useZLM71":false,
+                             "records":[  
+                                {  
+                                   "recordNo":1,
+                                   "crossmemberSpan":1.0,
+                                   "loadClassUsabilityLimitEffect":5.6,
+                                   "trainsetUsabilityLimitEffect":5.0,
+                                   "loadClassLoadLimitEffect":30.2,
+                                   "trainsetLoadLimitEffect":22.8,
+                                   "loadClassDynamicFactor":1.2,
+                                   "trainsetDynamicFactor":1.3,
+                                   "trainsetVelocityLimit":120.0,
+                                   "usabilityLimitEfficiency":0.8928571428571428571428571429,
+                                   "loadLimitEfficiency":0.7549668874172185430463576159
+                                },
+                                {  
+                                   "recordNo":2,
+                                   "crossmemberSpan":2.0,
+                                   "loadClassUsabilityLimitEffect":5.6,
+                                   "trainsetUsabilityLimitEffect":5.0,
+                                   "loadClassLoadLimitEffect":30.2,
+                                   "trainsetLoadLimitEffect":22.8,
+                                   "loadClassDynamicFactor":1.2,
+                                   "trainsetDynamicFactor":1.3,
+                                   "trainsetVelocityLimit":120.0,
+                                   "usabilityLimitEfficiency":0.8928571428571428571428571429,
+                                   "loadLimitEfficiency":0.7549668874172185430463576159
+                                },
+                                {  
+                                   "recordNo":18,
+                                   "crossmemberSpan":50.0,
+                                   "loadClassUsabilityLimitEffect":5.6,
+                                   "trainsetUsabilityLimitEffect":5.0,
+                                   "loadClassLoadLimitEffect":30.2,
+                                   "trainsetLoadLimitEffect":22.8,
+                                   "loadClassDynamicFactor":1.2,
+                                   "trainsetDynamicFactor":1.3,
+                                   "trainsetVelocityLimit":120.0,
+                                   "usabilityLimitEfficiency":0.8928571428571428571428571429,
+                                   "loadLimitEfficiency":0.7549668874172185430463576159
+                                }
+                             ]
+                          }
+                       ]
+                    },
+                    {  
+                       "trackNo":2,
+                       "trackType":2,
+                       "trackSectionCode":5,
+                       "trackSectionPlacement":25.7340,
+                       "name":"Prechodnost Usek 2",
+                       "trackLoadClassType":52,
+                       "trackLoadClassVelocity":100.0,
+                       "loadCapacity":null,
+                       "maxLoadEfficiency":0.7549668874172185430463576159,
+                       "passVelocityLimit":120.0,
+                       "passNote":"",
+                       "details":[  
+                          {  
+                             "crossbeamType":4,
+                             "maxTrainsetVelocity":120.0,
+                             "maxTrainsetVelocityRecordNo":1,
+                             "maxLoadLimitEfficiency":0.7549668874172185430463576159,
+                             "maxLoadLimitRecordNo":1,
+                             "maxUsabilityLimitEfficiency":0.8928571428571428571428571429,
+                             "maxUsabilityLimitRecordNo":1,
+                             "specialCrossbeamName":"Název S",
+                             "specialCrossbeamDescription":"Popis S",
+                             "extremeFromPositive":true,
+                             "useLighteningEffect":false,
+                             "useZLM71":false,
+                             "records":[  
+                                {  
+                                   "recordNo":1,
+                                   "crossmemberSpan":50.0,
+                                   "loadClassUsabilityLimitEffect":5.6,
+                                   "trainsetUsabilityLimitEffect":5.0,
+                                   "loadClassLoadLimitEffect":30.2,
+                                   "trainsetLoadLimitEffect":22.8,
+                                   "loadClassDynamicFactor":1.1,
+                                   "trainsetDynamicFactor":1.2,
+                                   "trainsetVelocityLimit":120.0,
+                                   "usabilityLimitEfficiency":0.8928571428571428571428571429,
+                                   "loadLimitEfficiency":0.7549668874172185430463576159
+                                }
+                             ]
+                          }
+                       ]
+                    },
+                    {  
+                       "trackNo":3,
+                       "trackType":1,
+                       "trackSectionCode":1,
+                       "trackSectionPlacement":5.7470,
+                       "name":"Test skupiny prostých polí",
+                       "trackLoadClassType":45,
+                       "trackLoadClassVelocity":60.0,
+                       "loadCapacity":1.0,
+                       "maxLoadEfficiency":0.7549668874172185430463576159,
+                       "passVelocityLimit":120.0,
+                       "passNote":"",
+                       "details":[  
+                          {  
+                             "crossbeamType":1,
+                             "maxTrainsetVelocity":120.0,
+                             "maxTrainsetVelocityRecordNo":1,
+                             "maxLoadLimitEfficiency":0.7549668874172185430463576159,
+                             "maxLoadLimitRecordNo":1,
+                             "maxUsabilityLimitEfficiency":0.8928571428571428571428571429,
+                             "maxUsabilityLimitRecordNo":1,
+                             "specialCrossbeamName":null,
+                             "specialCrossbeamDescription":null,
+                             "extremeFromPositive":null,
+                             "useLighteningEffect":null,
+                             "useZLM71":null,
+                             "records":[  
+                                {  
+                                   "recordNo":1,
+                                   "crossmemberSpan":3.0,
+                                   "loadClassUsabilityLimitEffect":5.6,
+                                   "trainsetUsabilityLimitEffect":5.0,
+                                   "loadClassLoadLimitEffect":30.2,
+                                   "trainsetLoadLimitEffect":22.8,
+                                   "loadClassDynamicFactor":1.2,
+                                   "trainsetDynamicFactor":1.3,
+                                   "trainsetVelocityLimit":120.0,
+                                   "usabilityLimitEfficiency":0.8928571428571428571428571429,
+                                   "loadLimitEfficiency":0.7549668874172185430463576159
+                                },
+                                {  
+                                   "recordNo":2,
+                                   "crossmemberSpan":4.0,
+                                   "loadClassUsabilityLimitEffect":5.6,
+                                   "trainsetUsabilityLimitEffect":5.0,
+                                   "loadClassLoadLimitEffect":30.2,
+                                   "trainsetLoadLimitEffect":22.8,
+                                   "loadClassDynamicFactor":1.2,
+                                   "trainsetDynamicFactor":1.3,
+                                   "trainsetVelocityLimit":120.0,
+                                   "usabilityLimitEfficiency":0.8928571428571428571428571429,
+                                   "loadLimitEfficiency":0.7549668874172185430463576159
+                                },
+                                {  
+                                   "recordNo":24,
+                                   "crossmemberSpan":50.0,
+                                   "loadClassUsabilityLimitEffect":5.6,
+                                   "trainsetUsabilityLimitEffect":5.0,
+                                   "loadClassLoadLimitEffect":30.2,
+                                   "trainsetLoadLimitEffect":22.8,
+                                   "loadClassDynamicFactor":1.2,
+                                   "trainsetDynamicFactor":1.3,
+                                   "trainsetVelocityLimit":120.0,
+                                   "usabilityLimitEfficiency":0.8928571428571428571428571429,
+                                   "loadLimitEfficiency":0.7549668874172185430463576159
+                                }
+                             ]
+                          },
+                          {  
+                             "crossbeamType":2,
+                             "maxTrainsetVelocity":120.0,
+                             "maxTrainsetVelocityRecordNo":1,
+                             "maxLoadLimitEfficiency":0.7549668874172185430463576159,
+                             "maxLoadLimitRecordNo":1,
+                             "maxUsabilityLimitEfficiency":0.8928571428571428571428571429,
+                             "maxUsabilityLimitRecordNo":1,
+                             "specialCrossbeamName":null,
+                             "specialCrossbeamDescription":null,
+                             "extremeFromPositive":null,
+                             "useLighteningEffect":null,
+                             "useZLM71":null,
+                             "records":[  
+                                {  
+                                   "recordNo":1,
+                                   "crossmemberSpan":3.0,
+                                   "loadClassUsabilityLimitEffect":5.6,
+                                   "trainsetUsabilityLimitEffect":5.0,
+                                   "loadClassLoadLimitEffect":30.2,
+                                   "trainsetLoadLimitEffect":22.8,
+                                   "loadClassDynamicFactor":1.2,
+                                   "trainsetDynamicFactor":1.3,
+                                   "trainsetVelocityLimit":120.0,
+                                   "usabilityLimitEfficiency":0.8928571428571428571428571429,
+                                   "loadLimitEfficiency":0.7549668874172185430463576159
+                                },
+                                {  
+                                   "recordNo":2,
+                                   "crossmemberSpan":4.0,
+                                   "loadClassUsabilityLimitEffect":5.6,
+                                   "trainsetUsabilityLimitEffect":5.0,
+                                   "loadClassLoadLimitEffect":30.2,
+                                   "trainsetLoadLimitEffect":22.8,
+                                   "loadClassDynamicFactor":1.2,
+                                   "trainsetDynamicFactor":1.3,
+                                   "trainsetVelocityLimit":120.0,
+                                   "usabilityLimitEfficiency":0.8928571428571428571428571429,
+                                   "loadLimitEfficiency":0.7549668874172185430463576159
+                                },
+                                {  
+                                   "recordNo":24,
+                                   "crossmemberSpan":50.0,
+                                   "loadClassUsabilityLimitEffect":5.6,
+                                   "trainsetUsabilityLimitEffect":5.0,
+                                   "loadClassLoadLimitEffect":30.2,
+                                   "trainsetLoadLimitEffect":22.8,
+                                   "loadClassDynamicFactor":1.2,
+                                   "trainsetDynamicFactor":1.3,
+                                   "trainsetVelocityLimit":120.0,
+                                   "usabilityLimitEfficiency":0.8928571428571428571428571429,
+                                   "loadLimitEfficiency":0.7549668874172185430463576159
+                                }
+                             ]
+                          }
+                       ]
+                    },
+                    {  
+                       "trackNo":4,
+                       "trackType":1,
+                       "trackSectionCode":1,
+                       "trackSectionPlacement":5.7470,
+                       "name":"Test skupiny prostých polí",
+                       "trackLoadClassType":49,
+                       "trackLoadClassVelocity":60.0,
+                       "loadCapacity":1.0,
+                       "maxLoadEfficiency":0.7549668874172185430463576159,
+                       "passVelocityLimit":120.0,
+                       "passNote":"",
+                       "details":[  
+                          {  
+                             "crossbeamType":1,
+                             "maxTrainsetVelocity":120.0,
+                             "maxTrainsetVelocityRecordNo":1,
+                             "maxLoadLimitEfficiency":0.7549668874172185430463576159,
+                             "maxLoadLimitRecordNo":1,
+                             "maxUsabilityLimitEfficiency":0.8928571428571428571428571429,
+                             "maxUsabilityLimitRecordNo":1,
+                             "specialCrossbeamName":null,
+                             "specialCrossbeamDescription":null,
+                             "extremeFromPositive":null,
+                             "useLighteningEffect":null,
+                             "useZLM71":null,
+                             "records":[  
+                                {  
+                                   "recordNo":1,
+                                   "crossmemberSpan":3.0,
+                                   "loadClassUsabilityLimitEffect":5.6,
+                                   "trainsetUsabilityLimitEffect":5.0,
+                                   "loadClassLoadLimitEffect":30.2,
+                                   "trainsetLoadLimitEffect":22.8,
+                                   "loadClassDynamicFactor":1.2,
+                                   "trainsetDynamicFactor":1.3,
+                                   "trainsetVelocityLimit":120.0,
+                                   "usabilityLimitEfficiency":0.8928571428571428571428571429,
+                                   "loadLimitEfficiency":0.7549668874172185430463576159
+                                },
+                                {  
+                                   "recordNo":2,
+                                   "crossmemberSpan":4.0,
+                                   "loadClassUsabilityLimitEffect":5.6,
+                                   "trainsetUsabilityLimitEffect":5.0,
+                                   "loadClassLoadLimitEffect":30.2,
+                                   "trainsetLoadLimitEffect":22.8,
+                                   "loadClassDynamicFactor":1.2,
+                                   "trainsetDynamicFactor":1.3,
+                                   "trainsetVelocityLimit":120.0,
+                                   "usabilityLimitEfficiency":0.8928571428571428571428571429,
+                                   "loadLimitEfficiency":0.7549668874172185430463576159
+                                },
+                                {  
+                                   "recordNo":28,
+                                   "crossmemberSpan":20.00,
+                                   "loadClassUsabilityLimitEffect":5.6,
+                                   "trainsetUsabilityLimitEffect":5.0,
+                                   "loadClassLoadLimitEffect":30.2,
+                                   "trainsetLoadLimitEffect":22.8,
+                                   "loadClassDynamicFactor":1.2,
+                                   "trainsetDynamicFactor":1.3,
+                                   "trainsetVelocityLimit":120.0,
+                                   "usabilityLimitEfficiency":0.8928571428571428571428571429,
+                                   "loadLimitEfficiency":0.7549668874172185430463576159
+                                }
+                             ]
+                          },
+                          {  
+                             "crossbeamType":2,
+                             "maxTrainsetVelocity":120.0,
+                             "maxTrainsetVelocityRecordNo":1,
+                             "maxLoadLimitEfficiency":0.7549668874172185430463576159,
+                             "maxLoadLimitRecordNo":1,
+                             "maxUsabilityLimitEfficiency":0.8928571428571428571428571429,
+                             "maxUsabilityLimitRecordNo":1,
+                             "specialCrossbeamName":null,
+                             "specialCrossbeamDescription":null,
+                             "extremeFromPositive":null,
+                             "useLighteningEffect":null,
+                             "useZLM71":null,
+                             "records":[  
+                                {  
+                                   "recordNo":1,
+                                   "crossmemberSpan":3.0,
+                                   "loadClassUsabilityLimitEffect":5.6,
+                                   "trainsetUsabilityLimitEffect":5.0,
+                                   "loadClassLoadLimitEffect":30.2,
+                                   "trainsetLoadLimitEffect":22.8,
+                                   "loadClassDynamicFactor":1.2,
+                                   "trainsetDynamicFactor":1.3,
+                                   "trainsetVelocityLimit":120.0,
+                                   "usabilityLimitEfficiency":0.8928571428571428571428571429,
+                                   "loadLimitEfficiency":0.7549668874172185430463576159
+                                },
+                                {  
+                                   "recordNo":2,
+                                   "crossmemberSpan":4.0,
+                                   "loadClassUsabilityLimitEffect":5.6,
+                                   "trainsetUsabilityLimitEffect":5.0,
+                                   "loadClassLoadLimitEffect":30.2,
+                                   "trainsetLoadLimitEffect":22.8,
+                                   "loadClassDynamicFactor":1.2,
+                                   "trainsetDynamicFactor":1.3,
+                                   "trainsetVelocityLimit":120.0,
+                                   "usabilityLimitEfficiency":0.8928571428571428571428571429,
+                                   "loadLimitEfficiency":0.7549668874172185430463576159
+                                },
+                                {
+                                   "recordNo":28,
+                                   "crossmemberSpan":20.00,
+                                   "loadClassUsabilityLimitEffect":5.6,
+                                   "trainsetUsabilityLimitEffect":5.0,
+                                   "loadClassLoadLimitEffect":30.2,
+                                   "trainsetLoadLimitEffect":22.8,
+                                   "loadClassDynamicFactor":1.2,
+                                   "trainsetDynamicFactor":1.3,
+                                   "trainsetVelocityLimit":120.0,
+                                   "usabilityLimitEfficiency":0.8928571428571428571428571429,
+                                   "loadLimitEfficiency":0.7549668874172185430463576159
+                                }
+                             ]
+                          }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
+
+
+## /trainsets/comparison
+
+### POST
+Comparison trainsets collection with basic trainset
+
++ Request (application/json)
+
+    + Attributes(TrainsetComparisonCreate)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
+    + Body
+
+            {
+                "routeId": "3dc0d33d-fa5c-4e0e-830b-6fb76a41b8ef",
+                "basicTrainset": {
+                    "trainsetId": "d08c3852-c87f-43b3-ad30-814efcee255a",
+                    "maxVelocity": 160,
+                    "reliabilityByCSN": false,
+                    "useLoadLimit": true,
+                    "useUsabilityLimit": false,
+                    "useExtremeVelocity": true,
+                },
+                "basicTrainset": [
                     {
-                        "trackNo": 1,
-                        "trackType": 1,
-                        "trackSectionCode": 1,
-                        "trackSectionPlacement": 5747,
-                        "name": "Test skupiny prostých polí",
-                        "trackLoadClassType": 49,
-                        "trackLoadClassVelocity": 60,
-                        "loadCapacity": 1,
-                        "maxLoadEfficiency": 0.99,
-                        "passVelocityLimit": 60,
-                        "passNote": "!omezení rychlosti"
+                        "trainsetId": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                        "maxVelocity": 200,
+                        "reliabilityByCSN": null,
+                        "useLoadLimit": true,
+                        "useUsabilityLimit": false,
+                        "useExtremeVelocity": false,
                     },
                     {
-                        "trackNo": 2,
-                        "trackType": 1,
-                        "trackSectionCode": 1,
-                        "trackSectionPlacement": 5747,
-                        "name": "Test skupiny prostých polí",
-                        "trackLoadClassType": 44,
-                        "trackLoadClassVelocity": 60,
-                        "loadCapacity": 1,
-                        "maxLoadEfficiency": 1.15,
-                        "passVelocityLimit": null,
-                        "passNote": "!není přechodná"
+                        "trainsetId": "7f1d7286-c87f-43b3-ad30-814efcee255a",
+                        "maxVelocity": 160,
+                        "reliabilityByCSN": false,
+                        "useLoadLimit": true,
+                        "useUsabilityLimit": true,
+                        "useExtremeVelocity": true,
                     }
                 ]
+            }
+
++ Response 200 (application/json)
+
+    + Attributes(TrainsetComparison)
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+
+    + Body
+
+            {
+                "created": "2015-09-09T21:58:31+02:00",
+                "creator": {
+                    "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
+                    "name": "Jan Novák",
+                    "username": "stanek",
+                    "role": 1
+                },
+
             }
 
 + Response 401
@@ -3185,7 +3628,6 @@ Gets the trainsets types collection.
             X-Time: 2014-09-11T17:02:27.761+02:00
 
     + Body
-    
 
             {
                 "types": [
