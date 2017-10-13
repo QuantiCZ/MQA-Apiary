@@ -316,7 +316,7 @@ MQA API is the REST API project for managing trains.
 + specialCrossbeamDescription: `Pro testovaci ucely` (string, optional)
 + extremeFromPositive: `true` (boolean, optional)
 + useLighteningEffect: `false` (boolean, optional)
-+ useZLM71: `false` (boolean, optional)
++ isLM71Report: `false` (boolean, optional)
 + records (array[TrainsetPassabilityReportDetailRecord], required)
 
 ## TrainsetPassabilityReportDetailRecord (object)
@@ -340,6 +340,7 @@ MQA API is the REST API project for managing trains.
 + comparedTrainsets (array[TrainsetComparisonCreateItem], required)
 
 ## TrainsetComparisonCreateItem (object)
++ trainsetNo:  `1` (number, required)
 + trainsetId:  `9a871e1e-11f0-4960-add6-e2f9eaa4c03d` (string, required)
 + maxVelocity: `160.0` (number, required)
 + reliabilityByCSN: `false` (boolean, optional)
@@ -357,6 +358,7 @@ MQA API is the REST API project for managing trains.
 
 ## TrainsetComparisonEfficacy (object)
 + trainsetNo: `2` (number, required)
++ recordNo: `5` (number, required)
 + efficacy: `0.89` (number, required)
 
 ## TrainsetComparisonData (object)
@@ -367,7 +369,7 @@ MQA API is the REST API project for managing trains.
 + useExtremeVelocity: `true` (boolean, required)
 + useLoadLimit: `true` (boolean, required)
 + useUsabilityLimit: `false` (boolean, required)
-+ maxEfficacy: `0.88` (number, required)
++ maxEfficacy (TrainsetComparisonEfficacy, required)
 
 ## TrainsetComparisonReport (object)
 + trackNo: `2` (number, required)
@@ -387,7 +389,6 @@ MQA API is the REST API project for managing trains.
 + specialCrossbeamDescription: `Pro testovaci ucely` (string, optional)
 + extremeFromPositive: `true` (boolean, optional)
 + useLighteningEffect: `false` (boolean, optional)
-+ useZLM71: `false` (boolean, optional)
 + maxTrainsetEfficacies (array[TrainsetComparisonEfficacy], required)
 + records (array[TrainsetComparisonReportDetailRecord], required)
 
@@ -419,11 +420,11 @@ MQA API is the REST API project for managing trains.
 + databaseType: 1 (number, required)
 + trackType: 2 (number, required)
 + trackSectionCode: 12 (number, required)
-+ trackSectionPlacementCode: 5 (number, required)
-+ trackSectionPlacement: 12.11 (number, required)
-+ trackLoadClassType: 3 (number, required)
-+ trackLoadClassVelocity: 160 (number, required)
-+ loadCapacity: 1.80 (number, required)
++ trackSectionPlacementCode: 5 (number, optional)
++ trackSectionPlacement: 12.11 (number, optional)
++ trackLoadClassType: 3 (number, optional)
++ trackLoadClassVelocity: 160 (number, optional)
++ loadCapacity: 1.80 (number, optional)
 + older30years: true (boolean, required)
 + nkElement (TrackNKElement, required)
 + plainFieldGroup (PlainFieldGroup, required)
@@ -434,10 +435,10 @@ MQA API is the REST API project for managing trains.
 + databaseType: 1 (number, required)
 + trackType: 2 (number, required)
 + trackSectionCode: 12 (number, required)
-+ trackSectionPlacementCode: 5 (number, required)
-+ trackLoadClassType: 3 (number, required)
-+ trackLoadClassVelocity: 160 (number, required)
-+ loadCapacity: 1.80 (number, required)
++ trackSectionPlacementCode: 5 (number, optional)
++ trackLoadClassType: 3 (number, optional)
++ trackLoadClassVelocity: 160 (number, optional)
++ loadCapacity: 1.80 (number, optional)
 + older30years: true (boolean, required)
 + nkElement (TrackNKElement, required)
 + plainFieldGroup (PlainFieldGroup, required)
@@ -468,9 +469,10 @@ MQA API is the REST API project for managing trains.
 + note: `mostovka` (string, optional)
 + trackType: 1 (number, required)
 + trackSectionCode: 12 (number, required)
-+ trackSectionPlacement: 2.75 (number, required)
-+ trackLoadClassType: 9 (number, required)
-+ loadCapacity: 0.75 (number, required)
++ trackSectionPlacement: 2.75 (number, optional)
++ trackLoadClassType: 9 (number, optional)
++ trackLoadClassVelocity: 160 (number, optional)
++ loadCapacity: 0.75 (number, optional)
 + databaseType: 1 (number, required)
 
 ## NormativeNKElement (object)
@@ -511,8 +513,9 @@ MQA API is the REST API project for managing trains.
 + tracksOnBridge: 3 (number, optional)
 + bridgeMaterial: 3 (number, optional)
 + trackConnection: `true` (boolean, optional)
-+ dynamicFactorBy1951: `false` (boolean, optional)
-+ dynamicFactorBy1969: `false` (boolean, optional)
++ alterDynamicFactor1951: `false` (boolean, optional)
++ alterDynamicFactor1969: `false` (boolean, optional)
++ alterBridgeboardType: `3` (number, optional)
 
 ## TrackNKElement (object)
 + crossbeamType: 2 (number, required)
@@ -589,6 +592,10 @@ MQA API is the REST API project for managing trains.
 + id: 1 (number, required)
 + name: `Ocelová ortotropní mostovka` (string, required)
 + subtype (array[BridgeboardStructureSubType], optional)
+
+## AlterBridgeboardType (object)
++ id: 1 (number, required)
++ name: `Prvková mostovka - horní` (string, required)
 
 ## TrackSectionType (object)
 + id: 1 (number, required)
@@ -3237,7 +3244,7 @@ Trainset passability check on specific route.
                              "specialCrossbeamDescription":null,
                              "extremeFromPositive":null,
                              "useLighteningEffect":null,
-                             "useZLM71":false,
+                             "isLM71Report":false,
                              "records":[  
                                 {  
                                    "recordNo":1,
@@ -3307,7 +3314,7 @@ Trainset passability check on specific route.
                              "specialCrossbeamDescription":"Popis S",
                              "extremeFromPositive":true,
                              "useLighteningEffect":false,
-                             "useZLM71":false,
+                             "isLM71Report":false,
                              "records":[  
                                 {  
                                    "recordNo":1,
@@ -3321,7 +3328,36 @@ Trainset passability check on specific route.
                                    "trainsetVelocityLimit":120.0,
                                    "usabilityLimitEfficiency":0.8928571428571428571428571429,
                                    "loadLimitEfficiency":0.7549668874172185430463576159
-                                }
+                                },
+                             ]
+                          },
+                          {  
+                             "crossbeamType":4,
+                             "maxTrainsetVelocity":120.0,
+                             "maxTrainsetVelocityRecordNo":1,
+                             "maxLoadLimitEfficiency":0.7549668874172185430463576159,
+                             "maxLoadLimitRecordNo":1,
+                             "maxUsabilityLimitEfficiency":0.8928571428571428571428571429,
+                             "maxUsabilityLimitRecordNo":1,
+                             "specialCrossbeamName":"Název S",
+                             "specialCrossbeamDescription":"Popis S",
+                             "extremeFromPositive":true,
+                             "useLighteningEffect":false,
+                             "isLM71Report":true,
+                             "records":[  
+                                {  
+                                   "recordNo":1,
+                                   "crossmemberSpan":50.0,
+                                   "loadClassUsabilityLimitEffect":5.6,
+                                   "trainsetUsabilityLimitEffect":5.0,
+                                   "loadClassLoadLimitEffect":30.2,
+                                   "trainsetLoadLimitEffect":22.8,
+                                   "loadClassDynamicFactor":1.1,
+                                   "trainsetDynamicFactor":1.2,
+                                   "trainsetVelocityLimit":120.0,
+                                   "usabilityLimitEfficiency":0.8928571428571428571428571429,
+                                   "loadLimitEfficiency":0.7549668874172185430463576159
+                                },
                              ]
                           }
                        ]
@@ -3351,7 +3387,7 @@ Trainset passability check on specific route.
                              "specialCrossbeamDescription":null,
                              "extremeFromPositive":null,
                              "useLighteningEffect":null,
-                             "useZLM71":null,
+                             "isLM71Report":null,
                              "records":[  
                                 {  
                                    "recordNo":1,
@@ -3406,7 +3442,7 @@ Trainset passability check on specific route.
                              "specialCrossbeamDescription":null,
                              "extremeFromPositive":null,
                              "useLighteningEffect":null,
-                             "useZLM71":null,
+                             "isLM71Report":null,
                              "records":[  
                                 {  
                                    "recordNo":1,
@@ -3476,7 +3512,7 @@ Trainset passability check on specific route.
                              "specialCrossbeamDescription":null,
                              "extremeFromPositive":null,
                              "useLighteningEffect":null,
-                             "useZLM71":null,
+                             "isLM71Report":null,
                              "records":[  
                                 {  
                                    "recordNo":1,
@@ -3531,7 +3567,7 @@ Trainset passability check on specific route.
                              "specialCrossbeamDescription":null,
                              "extremeFromPositive":null,
                              "useLighteningEffect":null,
-                             "useZLM71":null,
+                             "isLM71Report":null,
                              "records":[  
                                 {  
                                    "recordNo":1,
@@ -3606,7 +3642,8 @@ Comparison trainsets collection with basic trainset
 
             {
                 "routeId": "3dc0d33d-fa5c-4e0e-830b-6fb76a41b8ef",
-                "basicTrainset": {
+                "referenceTrainset": {
+                    "trainsetNo": 0,
                     "trainsetId": "d08c3852-c87f-43b3-ad30-814efcee255a",
                     "maxVelocity": 160,
                     "reliabilityByCSN": false,
@@ -3614,14 +3651,16 @@ Comparison trainsets collection with basic trainset
                     "useUsabilityLimit": false,
                     "useExtremeVelocity": true,
                 },
-                "basicTrainset": [
+                "comparedTrainset": [   
                     {
+                        "trainsetNo": 1,
                         "trainsetId": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                         "maxVelocity": 200,
                         "reliabilityByCSN": null,
                         "useExtremeVelocity": false
                     },
                     {
+                        "trainsetNo": 2,
                         "trainsetId": "7f1d7286-c87f-43b3-ad30-814efcee255a",
                         "maxVelocity": 160,
                         "reliabilityByCSN": false,
@@ -3664,6 +3703,7 @@ Comparison trainsets collection with basic trainset
                         "endStation": "Ústí n. Labem",
                         "note": null
                 },
+
 
 
 
@@ -3842,7 +3882,8 @@ Gets the users collection of tracks.
                         "trackSectionPlacement": 2.75,
                         "name": "Výtoň",
                         "note": "mostovka",
-                        "trackLoadClass": 9,
+                        "trackLoadClassType": 9,
+                        "trackLoadClassVelocity":80.0,
                         "loadCapacity": 0.75,
                         "databaseType": 1
                     },
@@ -3985,8 +4026,9 @@ Creates a track.
                         "tracksOnBridge": 2,
                         "bridgeMaterial": 3,
                         "trackConnection": false,
-                        "dynamicFactorBy1951": false,
-                        "dynamicFactorBy1969": false
+                        "alterDynamicFactor1951": false,
+                        "alterDynamicFactor1969": false,
+                        "alterBridgeboardType": 3
                     }
                 },
                 "plainFieldGroup": {
@@ -4187,8 +4229,9 @@ Gets the track attributes.
                             "tracksOnBridge": 2,
                             "bridgeMaterial": 3,
                             "trackConnection": false,
-                            "dynamicFactorBy1951": false,
-                            "dynamicFactorBy1969": false
+                            "alterDynamicFactor1951": false,
+                            "alterDynamicFactor1969": false,
+                            "alterBridgeboardType": 3
                         }
                     },
                     "plainFieldGroup": {
@@ -4342,8 +4385,9 @@ Updates the track attributes.
                             "tracksOnBridge": 2,
                             "bridgeMaterial": 3,
                             "trackConnection": false,
-                            "dynamicFactorBy1951": false,
-                            "dynamicFactorBy1969": false
+                            "alterDynamicFactor1951": false,
+                            "alterDynamicFactor1969": false,
+                            "alterBridgeboardType": 3
                         }
                     },
                     "plainFieldGroup": {
@@ -4912,6 +4956,14 @@ Gets the track quality types collection.
                     },
                     {
                         "id": 2,
+                        "name": "Přímé uložení"
+                    },
+                    {
+                        "id": 3,
+                        "name": "Uložení na mostnicích"
+                    },
+                    {
+                        "id": 4,
                         "name": "Jiný"
                     }
                 ]
@@ -5003,6 +5055,18 @@ Gets the bridge material structure type
                     {
                         "id": 2,
                         "name": "Klenbové s přesypávkou"
+                    },
+                    {
+                        "id": 3,
+                        "name": "Ocelový, spřažený, předpjatý  bez kolejového lože"
+                    },
+                    {
+                        "id": 4,
+                        "name": "celový, spřažený, předpjatý s kolejovým ložem"
+                    },
+                    {
+                        "id": 5,
+                        "name": "Jiná"
                     },
                 ]
             }
@@ -5137,6 +5201,56 @@ Gets the bridge borad material type
 + Response 406
 + Response 500
 + Response 503
+
+
+## /tracks/alterBridgeboardTypes
+
+### GET
+Gets the alternative (for historical normativs) bridge borad material type.
+
++ Request (application/json)
+
+    + Header
+
+            X-Api-Key: <your-private-token-key>
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+
+        + types (array[AlterBridgeboardType])
+
+    + Header
+
+            X-Time: 2014-09-11T17:02:27.761+02:00
+            
+    + Body
+
+            {
+                "types": [
+                    {
+                        "id": 1,
+                        "name": "S průběžným kolejovým ložem"
+                    },
+                    {
+                        "id": 2,
+                        "name": "Prvková mostovka - horní"
+                    },
+                    {
+                        "id": 3,
+                        "name": "Prvková mostovka- dolní/mezilehlá"
+                    }
+                ]
+            }
+
++ Response 401
++ Response 403
++ Response 404
++ Response 405
++ Response 406
++ Response 500
++ Response 503
+
 
 
 ## /tracks/sections
@@ -5453,7 +5567,8 @@ Gets the route attributes.
                                 "trackSectionPlacement": 2.75,
                                 "name": "Výtoň",
                                 "note": "mostovka",
-                                "trackLoadClass": 9,
+                                "trackLoadClassType": 9,
+                                "trackLoadClassVelocity":80.0,
                                 "loadCapacity": 0.75,
                                 "databaseType": 1
                             }
@@ -5476,7 +5591,8 @@ Gets the route attributes.
                                 "trackSectionPlacement": 2.75,
                                 "name": "Výtoň",
                                 "note": "mostovka",
-                                "trackLoadClass": 9,
+                                "trackLoadClassType": 9,
+                                "trackLoadClassVelocity":80.0,
                                 "loadCapacity": 0.75,
                                 "databaseType": 1
                             }
@@ -5499,7 +5615,8 @@ Gets the route attributes.
                                 "trackSectionPlacement": 2.75,
                                 "name": "Výtoň",
                                 "note": "mostovka",
-                                "trackLoadClass": 9,
+                                "trackLoadClassType": 9,
+                                "trackLoadClassVelocity":80.0,
                                 "loadCapacity": 0.75,
                                 "databaseType": 1
                             }
@@ -5522,7 +5639,8 @@ Gets the route attributes.
                                 "trackSectionPlacement": 2.75,
                                 "name": "Výtoň",
                                 "note": "mostovka",
-                                "trackLoadClass": 9,
+                                "trackLoadClassType": 9,
+                                "trackLoadClassVelocity":80.0,
                                 "loadCapacity": 0.75,
                                 "databaseType": 1
                             }
