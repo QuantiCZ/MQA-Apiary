@@ -244,7 +244,8 @@ MQA API is the REST API project for managing trains.
 + creator (User, required)
 + normativeType: `10` (number, required)
 + trainset (TrainsetListItem, required)
-+ trackLoadClassType: `9` (number, optional)
++ loadClassType: `9` (number, optional)
++ loadClassName: `A1` (string, optional)
 + maxLoadQuota: `124` (number, optional)
 + fixed: `false` (boolean, required)
 + symmetric: `true` (boolean, required)
@@ -281,6 +282,13 @@ MQA API is the REST API project for managing trains.
 + result (TrainsetPassabilityResult, required)
 + reportData (array[TrainsetPassabilityReport], required)
 + restrictions (array[TrainsetPassabilityRestriction], required)
++ success: `true` (boolean, required)
++ missingDataInfo (MissingParameterInfo, optional)
+
+## MissingParameterInfo (object)
++ trackId: `d08c3852-c87f-43b3-ad30-814efcee255a` (string, required)
++ normativeType: `2` (number, required)
++ message: `Zadaj parameter strupe` (string, required)
 
 ## TrainsetPassabilityResult (object)
 + routePassable: `true` (boolean, required)
@@ -355,6 +363,8 @@ MQA API is the REST API project for managing trains.
 + referenceTrainset (TrainsetComparisonData, required)
 + comparedTrainsets (array[TrainsetComparisonData], required)
 + reportData (array[TrainsetComparisonReport], required)
++ success: `true` (boolean, required)
++ missingDataInfo (MissingParameterInfo, optional)
 
 ## TrainsetComparisonEfficacy (object)
 + trainsetNo: `2` (number, required)
@@ -3064,7 +3074,8 @@ Classify a trainset to track load class.
                     "role": 1
                 },
                 "normativeType": 1,
-                "trackLoadClassType": 9,
+                "loadClassType": 9,
+                "loadClassName": "A1",
                 "maxLoadQuota": 124,
                 "fixed": false,
                 "symmetric": true,
@@ -3159,6 +3170,7 @@ Trainset passability check on specific route.
     + Body
     
             {
+                "success": true,
                 "created": "2015-09-09T21:58:31+02:00",
                 "creator": {
                     "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
@@ -3680,6 +3692,7 @@ Comparison trainsets collection with basic trainset
     + Body
 
             {  
+                "success": true,
                 "created":"2017-10-13T12:50:38.7062072+02:00",
                 "creator":{  
                    "id":"00000000-0000-0000-0000-000000000000",
