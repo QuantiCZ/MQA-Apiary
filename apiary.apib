@@ -187,6 +187,7 @@ MQA API is the REST API project for managing trains.
 
 ## Trainset (object)
 + id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
++ systemic: `false` (boolean, required)
 + created: `2015-09-09T21:58:31+02:00` (string, required)
 + creator (User, required)
 + edited: `2015-09-09T21:58:31+02:00` (string, optional)
@@ -207,6 +208,7 @@ MQA API is the REST API project for managing trains.
 
 ## TrainsetListItem (object)
 + id: `d93f61c2-42c5-11e6-beb8-9e71128cae77` (string, required)
++ systemic: `false` (boolean, required)
 + creator (User, required)
 + edited: `2015-09-09T21:58:31+02:00` (string, required)
 + editor: `Karel Maly` (string, required)
@@ -288,7 +290,7 @@ MQA API is the REST API project for managing trains.
 ## MissingParameterInfo (object)
 + trackId: `d08c3852-c87f-43b3-ad30-814efcee255a` (string, required)
 + normativeType: `2` (number, required)
-+ message: `Zadaj parameter strupe` (string, required)
++ message: `Pro určení dynamickeho soucinitele je potřeba vyplnit ...` (string, required)
 
 ## TrainsetPassabilityResult (object)
 + routePassable: `true` (boolean, required)
@@ -2750,6 +2752,7 @@ Gets the collection of trainsets.
                 "trainsets": [
                     {
                         "id": "3dc0d33d-fa5c-4e0e-830b-6fb76a41b8ef",
+                        "systemic": false,
                         "creator": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jana Mala",
@@ -2766,6 +2769,7 @@ Gets the collection of trainsets.
                     },
                     {
                         "id": "1e5178ee-0982-490c-9273-f1cdbaf98273",
+                        "systemic": true,
                         "creator": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jana Mala",
@@ -2885,6 +2889,7 @@ Gets the trainset attributes.
             {
                 "trainset": {
                     "id": "12834734-42c9-11e6-beb8-9e71128cae77",
+                    "systemic": false,
                     "created": "2015-09-09T21:58:31+02:00",
                     "creator": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
@@ -3081,6 +3086,7 @@ Classify a trainset to track load class.
                 "symmetric": true,
                 "trainset": {
                     "id": "3dc0d33d-fa5c-4e0e-830b-6fb76a41b8ef",
+                    "systemic": false,
                     "creator": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jana Mala",
@@ -3184,6 +3190,7 @@ Trainset passability check on specific route.
                 "maxVelocity": 160,
                 "trainset": {
                     "id": "3dc0d33d-fa5c-4e0e-830b-6fb76a41b8ef",
+                    "systemic": false,
                     "creator": {
                             "id": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                             "name": "Jana Mala",
