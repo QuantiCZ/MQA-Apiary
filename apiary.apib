@@ -310,7 +310,7 @@ MQA API is the REST API project for managing trains.
 + name: `Usek 1` (string, required)
 + trackLoadClassType: `41` (number, required)
 + trackLoadClassVelocity: `80.0` (number, required)
-+ loadCapacity: `1.0` (number, optional)
++ lm71LoadFactor: `1.0` (number, optional)
 + maxLoadEfficiency: `0.98` (number, required)
 + passVelocityLimit: `60` (number, optional)
 + passNote: `!omezení rychlosti` (string, optional)
@@ -350,7 +350,6 @@ MQA API is the REST API project for managing trains.
 + comparedTrainsets (array[TrainsetComparisonCreateItem], required)
 
 ## TrainsetComparisonCreateItem (object)
-+ trainsetNo:  `1` (number, required)
 + trainsetId:  `9a871e1e-11f0-4960-add6-e2f9eaa4c03d` (string, required)
 + maxVelocity: `160.0` (number, required)
 + reliabilityByCSN: `false` (boolean, optional)
@@ -436,7 +435,7 @@ MQA API is the REST API project for managing trains.
 + trackSectionPlacement: 12.11 (number, optional)
 + trackLoadClassType: 3 (number, optional)
 + trackLoadClassVelocity: 160 (number, optional)
-+ loadCapacity: 1.80 (number, optional)
++ lm71LoadFactor: 1.80 (number, optional)
 + older30years: true (boolean, required)
 + nkElement (TrackNKElement, required)
 + plainFieldGroup (PlainFieldGroup, required)
@@ -450,7 +449,7 @@ MQA API is the REST API project for managing trains.
 + trackSectionPlacementCode: 5 (number, optional)
 + trackLoadClassType: 3 (number, optional)
 + trackLoadClassVelocity: 160 (number, optional)
-+ loadCapacity: 1.80 (number, optional)
++ lm71LoadFactor: 1.80 (number, optional)
 + older30years: true (boolean, required)
 + nkElement (TrackNKElement, required)
 + plainFieldGroup (PlainFieldGroup, required)
@@ -484,7 +483,7 @@ MQA API is the REST API project for managing trains.
 + trackSectionPlacement: 2.75 (number, optional)
 + trackLoadClassType: 9 (number, optional)
 + trackLoadClassVelocity: 160 (number, optional)
-+ loadCapacity: 0.75 (number, optional)
++ lm71LoadFactor: 0.75 (number, optional)
 + databaseType: 1 (number, required)
 
 ## NormativeNKElement (object)
@@ -3246,7 +3245,7 @@ Trainset passability check on specific route.
                        "name":"Prechodnost Usek 1",
                        "trackLoadClassType":46,
                        "trackLoadClassVelocity":80.0,
-                       "loadCapacity":1.02,
+                       "lm71LoadFactor":1.02,
                        "maxLoadEfficiency":0.7549668874172185430463576159,
                        "passVelocityLimit":120.0,
                        "passNote":"",
@@ -3316,7 +3315,7 @@ Trainset passability check on specific route.
                        "name":"Prechodnost Usek 2",
                        "trackLoadClassType":52,
                        "trackLoadClassVelocity":100.0,
-                       "loadCapacity":null,
+                       "lm71LoadFactor":null,
                        "maxLoadEfficiency":0.7549668874172185430463576159,
                        "passVelocityLimit":120.0,
                        "passNote":"",
@@ -3389,7 +3388,7 @@ Trainset passability check on specific route.
                        "name":"Test skupiny prostých polí",
                        "trackLoadClassType":45,
                        "trackLoadClassVelocity":60.0,
-                       "loadCapacity":1.0,
+                       "lm71LoadFactor":1.0,
                        "maxLoadEfficiency":0.7549668874172185430463576159,
                        "passVelocityLimit":120.0,
                        "passNote":"",
@@ -3514,7 +3513,7 @@ Trainset passability check on specific route.
                        "name":"Test skupiny prostých polí",
                        "trackLoadClassType":49,
                        "trackLoadClassVelocity":60.0,
-                       "loadCapacity":1.0,
+                       "lm71LoadFactor":1.0,
                        "maxLoadEfficiency":0.7549668874172185430463576159,
                        "passVelocityLimit":120.0,
                        "passNote":"",
@@ -3662,7 +3661,6 @@ Comparison trainsets collection with basic trainset
             {
                 "routeId": "3dc0d33d-fa5c-4e0e-830b-6fb76a41b8ef",
                 "referenceTrainset": {
-                    "trainsetNo": 0,
                     "trainsetId": "d08c3852-c87f-43b3-ad30-814efcee255a",
                     "maxVelocity": 160,
                     "reliabilityByCSN": false,
@@ -3672,14 +3670,12 @@ Comparison trainsets collection with basic trainset
                 },
                 "comparedTrainsets": [   
                     {
-                        "trainsetNo": 1,
                         "trainsetId": "125f9669-af7a-4eeb-b7e5-7f1d7286e195",
                         "maxVelocity": 200,
                         "reliabilityByCSN": null,
                         "useExtremeVelocity": false
                     },
                     {
-                        "trainsetNo": 2,
                         "trainsetId": "7f1d7286-c87f-43b3-ad30-814efcee255a",
                         "maxVelocity": 160,
                         "reliabilityByCSN": false,
@@ -4647,7 +4643,7 @@ Gets the users collection of tracks.
                         "note": "mostovka",
                         "trackLoadClassType": 9,
                         "trackLoadClassVelocity":80.0,
-                        "loadCapacity": 0.75,
+                        "lm71LoadFactor": 0.75,
                         "databaseType": 1
                     },
                     {
@@ -4666,7 +4662,7 @@ Gets the users collection of tracks.
                         "name": "Ocelový most",
                         "note": null,
                         "trackLoadClass": 7,
-                        "loadCapacity": 1.80,
+                        "lm71LoadFactor": 1.80,
                         "databaseType": 2
                     }
                ]
@@ -4704,7 +4700,7 @@ Creates a track.
                 "trackType": 2,
                 "trackLoadClassType": 3,
                 "trackLoadClassVelocity": 160.0,
-                "loadCapacity": 1.80,
+                "lm71LoadFactor": 1.80,
                 "databaseType": 2,
                 "older30years": true,
                 "nkElement": {
@@ -4896,7 +4892,7 @@ Gets the track attributes.
                     "trackType": 2,
                     "trackLoadClassType": 3,
                     "trackLoadClassVelocity": 7,
-                    "loadCapacity": 1.80,
+                    "lm71LoadFactor": 1.80,
                     "databaseType": 2
                     "older30years": true,
                     "nkElement": {
@@ -5063,7 +5059,7 @@ Updates the track attributes.
                     "trackType": 2,
                     "trackLoadClassType": 3,
                     "trackLoadClassVelocity": 7,
-                    "loadCapacity": 1.80,
+                    "lm71LoadFactor": 1.80,
                     "databaseType": 2
                     "older30years": true,
                     "nkElement": {
@@ -6332,7 +6328,7 @@ Gets the route attributes.
                                 "note": "mostovka",
                                 "trackLoadClassType": 9,
                                 "trackLoadClassVelocity":80.0,
-                                "loadCapacity": 0.75,
+                                "lm71LoadFactor": 0.75,
                                 "databaseType": 1
                             }
                         },
@@ -6356,7 +6352,7 @@ Gets the route attributes.
                                 "note": "mostovka",
                                 "trackLoadClassType": 9,
                                 "trackLoadClassVelocity":80.0,
-                                "loadCapacity": 0.75,
+                                "lm71LoadFactor": 0.75,
                                 "databaseType": 1
                             }
                         },
@@ -6380,7 +6376,7 @@ Gets the route attributes.
                                 "note": "mostovka",
                                 "trackLoadClassType": 9,
                                 "trackLoadClassVelocity":80.0,
-                                "loadCapacity": 0.75,
+                                "lm71LoadFactor": 0.75,
                                 "databaseType": 1
                             }
                         },
@@ -6404,7 +6400,7 @@ Gets the route attributes.
                                 "note": "mostovka",
                                 "trackLoadClassType": 9,
                                 "trackLoadClassVelocity":80.0,
-                                "loadCapacity": 0.75,
+                                "lm71LoadFactor": 0.75,
                                 "databaseType": 1
                             }
                         }
