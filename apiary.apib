@@ -300,6 +300,7 @@ MQA API is the REST API project for managing trains.
 
 ## TrainsetPassabilityRestriction (object)
 + trackNo: `2` (number, required)
++ trackName: `Usek X` (string, required)
 + restriction: `rychlost` (string, required)
 
 ## TrainsetPassabilityReport (object)
@@ -3229,10 +3230,12 @@ Trainset passability check on specific route.
                 "restrictions": [
                     {
                         "trackNo": 1,
+                        "trackName": "Usek 1",
                         "restriction": "rychlost"
                     },
                     {
                         "trackNo": 2,
+                        "trackName": "Usek 2",
                         "restriction": "přechodnost"
                     }
                 ],
